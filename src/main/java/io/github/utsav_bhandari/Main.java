@@ -1,4 +1,4 @@
-package io.github.utsav-bhandari;
+package io.github.utsav_bhandari;
 
 public class Main {
     public static void main(String[] args) {
