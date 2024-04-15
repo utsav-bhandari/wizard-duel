@@ -10,6 +10,8 @@ repositories {
 }
 
 dependencies {
+    implementation(files(project.file("algs4.jar")))
+
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
