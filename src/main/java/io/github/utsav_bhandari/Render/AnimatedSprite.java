@@ -6,7 +6,6 @@ import io.github.utsav_bhandari.Lib.ICounter;
 import io.github.utsav_bhandari.Lib.ZigzagCounter;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
 
 public class AnimatedSprite implements IRenderable {
@@ -41,7 +40,6 @@ public class AnimatedSprite implements IRenderable {
 
         var frame = root.frames.get(frameIdx);
 
-        // TODO support rot sx sy using affine transform matrix
         g.drawImage(frame, op, x, y);
     }
 }
