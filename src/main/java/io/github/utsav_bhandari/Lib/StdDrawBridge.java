@@ -41,6 +41,8 @@ public class StdDrawBridge {
         // Unfortunately, there will be a initial window flicker and this cannot be disabled
         StdDraw.setCanvasSize(width, height);
         StdDraw.setXscale(0, width);
+
+        // Hack #1.5. Invert Y axis because StdDraw uses bottom-left as origin
         StdDraw.setYscale(height, 0);
 
         // Hack #2. Enable double buffering in order to better optimize draw cycle
