@@ -4,6 +4,8 @@ import edu.princeton.cs.algs4.StdDraw;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.NoninvertibleTransformException;
 import java.awt.image.BufferedImage;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -17,6 +19,9 @@ public class StdDrawBridge {
 
     private static int frameCounter = 0;
 
+    private static int width;
+    private static int height;
+
     private static final Timer frameCounterTimer = new Timer(1000, e -> {
         System.out.println("FPS: " + frameCounter);
         frameCounter = 0;
@@ -29,11 +34,14 @@ public class StdDrawBridge {
             throw new IllegalStateException(".init() can only be called once");
         }
 
+        StdDrawBridge.width = width;
+        StdDrawBridge.height = height;
+
         // Hack #1. Give correct dimensions to StdDraw, so it doesn't mess with the frame
         // Unfortunately, there will be a initial window flicker and this cannot be disabled
         StdDraw.setCanvasSize(width, height);
         StdDraw.setXscale(0, width);
-        StdDraw.setYscale(0, height);
+        StdDraw.setYscale(height, 0);
 
         // Hack #2. Enable double buffering in order to better optimize draw cycle
         StdDraw.enableDoubleBuffering();
@@ -79,13 +87,14 @@ public class StdDrawBridge {
 
         Toolkit tk = root.getToolkit();
 
-
         timer = new Timer(0, e -> {
             screen.setBackground(Color.WHITE);
             screen.clearRect(0, 0, frame.getWidth(), frame.getHeight());
+
             for (Consumer<Graphics2D> cb : callbacks) {
                 cb.accept(screen);
             }
+
             frame.repaint();
             frameCounter++;
         });
