@@ -1,3 +1,5 @@
+!./algs4.jar
+
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
