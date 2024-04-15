@@ -88,11 +88,18 @@ public class AnimatedSpriteDemo {
 
         var op = new AffineTransformOp(transform, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
 
+        for (var sprite : sprites) {
+            sprite.op = op;
+        }
+
         StdDrawProvider.run(g -> {
             for (int i = 0; i < sprites.size(); i++) {
                 var sprite = sprites.get(i);
 
-                sprite.render(g, i * 100, 100, op);
+                sprite.x = i * 100;
+                sprite.y = 100;
+
+                sprite.render(g);
             }
         });
     }

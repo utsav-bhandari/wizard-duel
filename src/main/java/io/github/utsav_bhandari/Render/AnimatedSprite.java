@@ -9,12 +9,15 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
 
-public class AnimatedSprite {
+public class AnimatedSprite implements IRenderable {
     public final AnimatedSpriteRoot root;
 
     protected final ICounter frameCounter;
-
     protected final FrameMixer frameMixer;
+
+    public BufferedImageOp op;
+    public int x;
+    public int y;
 
     protected AnimatedSprite(AnimatedSpriteRoot r) {
         root = r;
@@ -29,7 +32,7 @@ public class AnimatedSprite {
     /**
      * Rotation is applied first. Rotation is in radians
      */
-    public void render(Graphics2D g, int x, int y, BufferedImageOp op) {
+    public void render(Graphics2D g) {
         if (frameMixer.tick() > 0) {
             frameCounter.increment();
         }
@@ -40,9 +43,5 @@ public class AnimatedSprite {
 
         // TODO support rot sx sy using affine transform matrix
         g.drawImage(frame, op, x, y);
-    }
-
-    public void render(Graphics2D g, int x, int y) {
-        render(g, x, y, null);
     }
 }
