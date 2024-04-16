@@ -18,6 +18,8 @@ public class AnimatedSprite implements IRenderable {
     public int x;
     public int y;
 
+    protected int repeatCount = 0;
+
     protected AnimatedSprite(AnimatedSpriteRoot r) {
         root = r;
         if (r.zigzag) {
@@ -32,8 +34,11 @@ public class AnimatedSprite implements IRenderable {
      * Rotation is applied first. Rotation is in radians
      */
     public void render(Graphics2D g) {
-        if (frameMixer.tick() > 0) {
+        if (frameMixer.tick() > 0 && repeatCount < root.repeat) {
             frameCounter.increment();
+            if (frameCounter.isMax()) {
+                repeatCount++;
+            }
         }
 
         int frameIdx = frameCounter.getValue();

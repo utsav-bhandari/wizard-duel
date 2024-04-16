@@ -30,6 +30,7 @@ public class AnimatedSpriteDemo {
                     18,
                     60,
                     10,
+                    10,
                     false
             );
             AnimatedSpriteRoot.registerAnimatedSprite(
@@ -44,6 +45,7 @@ public class AnimatedSpriteDemo {
                     18,
                     60,
                     20,
+                    10,
                     true
             );
             AnimatedSpriteRoot.registerAnimatedSprite(
@@ -58,6 +60,7 @@ public class AnimatedSpriteDemo {
                     18,
                     60,
                     30,
+                    10,
                     false
             );
         } catch (IOException e) {
