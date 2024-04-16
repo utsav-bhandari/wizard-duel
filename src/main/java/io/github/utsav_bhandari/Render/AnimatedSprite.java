@@ -30,6 +30,10 @@ public class AnimatedSprite implements IRenderable {
         frameMixer = new FrameMixer(r.sourceTargetFps, r.destRenderFps);
     }
 
+    public boolean isDone() {
+        return repeatCount >= root.repeat;
+    }
+
     /**
      * Rotation is applied first. Rotation is in radians
      */
