@@ -4,10 +4,15 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Terrible implementation. Should be <code>SpriteManager -> AnimatedSpriteRoot -> AnimatedSprite</code>
+ * <br>
+ * But then this is already very complicated
+ */
 public class AnimatedSpriteRoot {
 
     // Cache
-    static HashMap<String, AnimatedSpriteRoot> animatedSpriteRoots = new HashMap<>();
+    static final HashMap<String, AnimatedSpriteRoot> animatedSpriteRoots = new HashMap<>();
     public final String id;
     public final ArrayList<BufferedImage> frames = new ArrayList<>();
     public final int width;
