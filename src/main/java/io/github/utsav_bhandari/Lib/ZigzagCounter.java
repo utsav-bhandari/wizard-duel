@@ -57,6 +57,8 @@ public class ZigzagCounter implements ICounter {
             v += d2;
         }
 
+        incrementing = v < max;
+
         // if v is greater than max, fold it the other way
         if (v >= max) {
             v = d2 - v;
