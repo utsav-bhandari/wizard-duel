@@ -46,7 +46,7 @@ public class CyclicCounter implements ICounter {
      * Efficient increment
      */
     public int increment() {
-        if (value == max - 1) {
+        if (isMax()) {
             value = min;
         } else {
             value++;
