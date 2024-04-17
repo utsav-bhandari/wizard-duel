@@ -1,4 +1,4 @@
 package io.github.utsav_bhandari.Engine;
 
-public class TextEffectCard {
+public class TextEffectList {
 }

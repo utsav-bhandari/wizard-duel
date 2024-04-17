@@ -55,8 +55,8 @@ public class StdDrawBridgeDemo {
             double y = 540 + Math.sin(0.5 * angle + i * angleIncrement) * (270 + (i % 10 * 20));
 //            g.drawOval((int) x - 50, (int) y - 50, 100, 100);
 //            StdDraw.circle((int) x, (int) y, 50);
-            x = 960 + Math.cos(-angle + i * angleIncrement) * (250 + -(i % 10 * 20));
-            y = 540 + Math.sin(-angle + i * angleIncrement) * (250 + -(i % 10 * 20));
+//            x = 960 + Math.cos(-angle + i * angleIncrement) * (250 + -(i % 10 * 20));
+//            y = 540 + Math.sin(-angle + i * angleIncrement) * (250 + -(i % 10 * 20));
 //            g.drawOval((int) x - 50, (int) y - 50, 100, 100);
             StdDraw.circle((int) x, (int) y, 50);
         }

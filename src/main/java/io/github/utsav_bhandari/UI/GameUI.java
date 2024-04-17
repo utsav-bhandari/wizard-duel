@@ -64,6 +64,10 @@ public class GameUI implements IRenderable {
             StdDraw.setPenColor(Color.BLACK);
             StdDraw.setFont(new Font("Arial", Font.PLAIN, 50));
             StdDraw.text(960, 100, visibleText);
+        } else if (game.getGameState() == Game.GameState.GAME_RUNNING) {
+            // Draw game
+        } else if (game.getGameState() == Game.GameState.GAME_OVER) {
+            // Draw game over
         }
     }
 }

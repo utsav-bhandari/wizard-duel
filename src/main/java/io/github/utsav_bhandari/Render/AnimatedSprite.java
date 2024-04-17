@@ -11,12 +11,12 @@ import java.awt.image.BufferedImageOp;
 public class AnimatedSprite implements IRenderable {
     public final AnimatedSpriteRoot root;
 
-    protected final ICounter frameCounter;
+    public final ICounter frameCounter;
     protected final FrameMixer frameMixer;
 
     public BufferedImageOp op;
-    public int x;
-    public int y;
+    public float x;
+    public float y;
 
     protected int repeatCount = 0;
 
@@ -38,7 +38,7 @@ public class AnimatedSprite implements IRenderable {
      * Rotation is applied first. Rotation is in radians
      */
     public void render(Graphics2D g) {
-        if (frameMixer.tick() > 0 && repeatCount < root.repeat) {
+        if (frameMixer.tick() > 0 && (repeatCount <= root.repeat || root.repeat < 0)) {
             frameCounter.increment();
             if (frameCounter.isMax()) {
                 repeatCount++;
@@ -49,6 +49,12 @@ public class AnimatedSprite implements IRenderable {
 
         var frame = root.frames.get(frameIdx);
 
-        g.drawImage(frame, op, x, y);
+        g.drawImage(frame, op, (int) x, (int) y);
+    }
+
+    public void reset() {
+        frameCounter.reset();
+        frameMixer.reset();
+        repeatCount = 0;
     }
 }

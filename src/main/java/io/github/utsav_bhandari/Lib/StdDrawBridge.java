@@ -22,8 +22,9 @@ public class StdDrawBridge {
     private static int width;
     private static int height;
 
+    private static int frameCounterDisplay = 0;
     private static final Timer frameCounterTimer = new Timer(1000, e -> {
-        System.out.println("FPS: " + frameCounter);
+        frameCounterDisplay = frameCounter;
         frameCounter = 0;
     });
 
@@ -42,7 +43,7 @@ public class StdDrawBridge {
         StdDraw.setCanvasSize(width, height);
         StdDraw.setXscale(0, width);
 
-        // Hack #1.5. Invert Y axis because StdDraw uses bottom-left as origin
+        // Hack #1.5. Invert Y axis because StdDraw uses top-left as origin
         StdDraw.setYscale(height, 0);
 
         // Hack #2. Enable double buffering in order to better optimize draw cycle
@@ -93,6 +94,8 @@ public class StdDrawBridge {
 
         Toolkit tk = root.getToolkit();
 
+        var systemFont = new Font("Arial", Font.PLAIN, 12);
+
         timer = new Timer(0, e -> {
             screen.setBackground(Color.WHITE);
             screen.clearRect(0, 0, frame.getWidth(), frame.getHeight());
@@ -100,6 +103,10 @@ public class StdDrawBridge {
             for (Consumer<Graphics2D> cb : callbacks) {
                 cb.accept(screen);
             }
+
+            screen.setFont(systemFont);
+            screen.setColor(Color.BLACK);
+            screen.drawString("FPS: " + frameCounterDisplay, 0, 12);
 
             frame.repaint();
             frameCounter++;
@@ -140,6 +147,6 @@ public class StdDrawBridge {
     }
 
     public int getFramesPerSecond() {
-        return frameCounter;
+        return frameCounterDisplay;
     }
 }

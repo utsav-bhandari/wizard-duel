@@ -1,5 +1,6 @@
 package io.github.utsav_bhandari.Engine;
 
+import io.github.utsav_bhandari.Render.AnimatedSprite;
 import io.github.utsav_bhandari.Render.AnimatedSpriteRoot;
 
 import javax.imageio.ImageIO;
@@ -11,11 +12,6 @@ import java.io.IOException;
  */
 public final class Resource {
     private static Resource instance;
-
-    /**
-     * Simple alias
-     */
-    public final Class<AnimatedSpriteRoot> sprites = AnimatedSpriteRoot.class;
 
     public static final BufferedImage NULL = loadResourceImage("/NULL.png");
     public final BufferedImage titleScreen;
@@ -53,5 +49,9 @@ public final class Resource {
             instance = new Resource();
         }
         return instance;
+    }
+
+    public AnimatedSprite getAnimatedSprite(String id) {
+        return AnimatedSpriteRoot.getAnimatedSprite(id);
     }
 }

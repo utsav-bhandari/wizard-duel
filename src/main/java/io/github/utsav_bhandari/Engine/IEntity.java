@@ -6,9 +6,5 @@ public interface IEntity {
      */
     void update();
 
-    /**
-     * Renders the entity on screen
-     */
-    void render();
     void destroy();
 }

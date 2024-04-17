@@ -22,4 +22,8 @@ public class FrameMixer {
         }
         return count;
     }
+
+    public void reset() {
+        time = 0;
+    }
 }
