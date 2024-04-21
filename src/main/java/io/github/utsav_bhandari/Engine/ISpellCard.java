@@ -5,7 +5,7 @@ import io.github.utsav_bhandari.Render.IRenderable;
 import java.awt.*;
 import java.awt.image.AffineTransformOp;
 
-public interface ISpellCard extends IRenderable {
+public interface ISpellCard extends ICard, IRenderable {
     float getDamage();
     void setDamage(float damage);
 

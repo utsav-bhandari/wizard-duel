@@ -1,6 +1,8 @@
 package io.github.utsav_bhandari.Engine.SpellCard;
 
-public interface ISpellCard {
+import io.github.utsav_bhandari.Engine.ICard;
+
+public interface ISpellCard extends ICard {
     /**
      * Minimum required charges
      */
