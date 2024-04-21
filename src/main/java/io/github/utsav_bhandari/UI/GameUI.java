@@ -7,7 +7,6 @@ import io.github.utsav_bhandari.Render.IRenderable;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.function.Function;
 
@@ -15,8 +14,6 @@ import static io.github.utsav_bhandari.Lib.Util.*;
 
 public class GameUI implements IRenderable {
     private final Game game;
-
-    private final KeyboardInputHandler keyboardInputHandler = new KeyboardInputHandler();
 
     private String visibleText = "";
 
@@ -38,6 +35,7 @@ public class GameUI implements IRenderable {
         }));
 
         // Configure keyboard input handler
+        var keyboardInputHandler = new KeyboardInputHandler();
         keyboardInputHandler.addKeymap(
                 "TITLE_SCREEN",
                 titleScreenHandlers
@@ -54,7 +52,6 @@ public class GameUI implements IRenderable {
         visibleText = "WizardDuel";
     }
 
-    @Override
     public void render(Graphics2D g) {
         var r = game.resource;
 

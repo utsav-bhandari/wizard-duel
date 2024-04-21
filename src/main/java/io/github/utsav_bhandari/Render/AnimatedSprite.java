@@ -34,11 +34,9 @@ public class AnimatedSprite implements IRenderable {
         return repeatCount >= root.repeat;
     }
 
-    /**
-     * Rotation is applied first. Rotation is in radians
-     */
     public void render(Graphics2D g) {
-        if (frameMixer.tick() > 0 && (repeatCount <= root.repeat || root.repeat < 0)) {
+        // TODO fix tick return value
+        if (frameMixer.tick() > 0 && (repeatCount < root.repeat || root.repeat < 0)) {
             frameCounter.increment();
             if (frameCounter.isMax()) {
                 repeatCount++;

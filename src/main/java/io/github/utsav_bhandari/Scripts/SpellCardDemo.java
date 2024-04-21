@@ -2,7 +2,6 @@ package io.github.utsav_bhandari.Scripts;
 
 import io.github.utsav_bhandari.Engine.KeyboardInputHandler;
 import io.github.utsav_bhandari.Engine.SpellCard.ThePowerOfExample;
-import io.github.utsav_bhandari.Lib.StdDrawBridge;
 import io.github.utsav_bhandari.Render.AnimatedSpriteRoot;
 
 import javax.imageio.ImageIO;
@@ -14,8 +13,6 @@ import java.util.function.Function;
 
 public class SpellCardDemo {
     public static void main(String[] args) {
-        StdDrawProvider.init();
-
         BufferedImage image;
 
         try (var stream = AnimatedSpriteDemo.class.getResourceAsStream("/sprites/pixel-spell-effect/spells-0.png")) {
@@ -24,13 +21,13 @@ public class SpellCardDemo {
             AnimatedSpriteRoot.registerAnimatedSprite(
                     "WHIRLWIND",
                     image,
-                    64,
-                    64,
+                    250,
+                    250,
                     0,
-                    64,
-                    64,
                     0,
-                    18,
+                    250,
+                    0,
+                    8,
                     60,
                     10,
                     -1,
@@ -42,8 +39,8 @@ public class SpellCardDemo {
 
         var spell = new ThePowerOfExample();
 
-        spell.x = 300;
-        spell.y = 540;
+        spell.x = 0;
+        spell.y = 0;
 
         var kh = new KeyboardInputHandler();
 
@@ -52,13 +49,13 @@ public class SpellCardDemo {
         keys.add(e -> {
             // If space is pressed, cast the spell
             if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                if (!spell.isPrimed()) {
+                if (spell.isNeutral()) {
                     spell.prime();
                     return true;
                 }
 
                 spell.cast();
-                spell.dx = 10;
+                spell.vx = 10;
 
                 return true;
             }
@@ -78,7 +75,6 @@ public class SpellCardDemo {
 
         kh.useKeymap("MAIN");
 
-        StdDrawProvider.frame.addKeyListener(kh);
 
         StdDrawProvider.run(g -> {
             spell.updatePosition();
@@ -89,5 +85,6 @@ public class SpellCardDemo {
 
             spell.render(g);
         });
+        StdDrawProvider.frame.addKeyListener(kh);
     }
 }

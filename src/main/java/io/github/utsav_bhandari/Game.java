@@ -20,9 +20,6 @@ public final class Game {
 
     private final World world;
     private final GameUI ui;
-
-    private boolean keyPressed = false;
-
     public final Resource resource;
 
     public Game(JFrame frame) {

@@ -36,7 +36,7 @@ public class ThePowerOfExample extends ASpellCard implements ISpellCard {
 
     @Override
     public void setDamage(float damage) {
-        int numOfSprites = calculateReqNumSprite((int) damage);
+        int numOfSprites = calculateReqNumSprite(damage);
 
         if (numOfSprites > sprites.size()) {
             for (int i = sprites.size(); i < numOfSprites; i++) {
@@ -51,21 +51,22 @@ public class ThePowerOfExample extends ASpellCard implements ISpellCard {
             }
         } else if (numOfSprites < sprites.size()) {
             sprites.subList(numOfSprites, sprites.size()).clear();
+            assert sprites.size() == numOfSprites;
         }
 
         super.setDamage(damage);
     }
 
-    private static int calculateReqNumSprite(int damage) {
-        int SPRITE_PER_DAMAGE = 2;
+    private static int calculateReqNumSprite(float damage) {
+        float SPRITE_PER_DAMAGE = 2;
 
-        return damage / SPRITE_PER_DAMAGE;
+        return (int) (damage / SPRITE_PER_DAMAGE);
     }
 
     @Override
     public void render(Graphics2D g) {
         if (isPrimed() || isCasting()) {
-            float RADIUS = 300;
+            float RADIUS = 100;
 
             angle += 0.04f;
 

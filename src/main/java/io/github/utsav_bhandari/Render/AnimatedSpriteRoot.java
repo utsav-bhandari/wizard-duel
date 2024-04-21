@@ -17,8 +17,6 @@ public class AnimatedSpriteRoot {
     public final ArrayList<BufferedImage> frames = new ArrayList<>();
     public final int width;
     public final int height;
-    public final int x;
-    public final int y;
     public final int frameCount;
     public final int sourceTargetFps;
     public final int destRenderFps;
@@ -30,8 +28,6 @@ public class AnimatedSpriteRoot {
         id = ID;
         this.width = width;
         this.height = height;
-        this.x = x;
-        this.y = y;
         this.frameCount = frameCount;
         this.sourceTargetFps = sourceTargetFps;
         this.destRenderFps = destRenderFps;

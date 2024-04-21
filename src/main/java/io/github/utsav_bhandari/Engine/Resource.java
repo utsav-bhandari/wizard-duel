@@ -13,7 +13,7 @@ import java.io.IOException;
 public final class Resource {
     private static Resource instance;
 
-    public static final BufferedImage NULL = loadResourceImage("/NULL.png");
+    private static final BufferedImage NULL = loadResourceImage("/NULL.png");
     public final BufferedImage titleScreen;
 
     private Resource() {

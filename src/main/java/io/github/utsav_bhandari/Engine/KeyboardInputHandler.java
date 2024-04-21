@@ -31,6 +31,7 @@ public class KeyboardInputHandler implements KeyListener {
     // All I know is that this event will be triggered 3 times regardless of the key event type
     // Just don't get confused later on
     public void waitKeyEvent(int keyEventType) {
+        keyEventPending = 0;
         synchronized (keyLock) {
             while ((keyEventPending & keyEventType) == 0) {
                 try {
