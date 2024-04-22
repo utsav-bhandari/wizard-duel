@@ -19,12 +19,10 @@ public class ThePowerOfExample extends ASpellCard implements ISpellCard {
         setDamage(5);
     }
 
-    @Override
     public String getName() {
         return "The Power of Example";
     }
 
-    @Override
     public String getDescription() {
         return "Harness the power of showing";
     }
