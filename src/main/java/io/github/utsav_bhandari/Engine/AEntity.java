@@ -11,4 +11,12 @@ public abstract class AEntity {
         x += vx;
         y += vy;
     }
+    
+    public void update() {
+
+    }
+
+    public void destroy() {
+
+    }
 }
