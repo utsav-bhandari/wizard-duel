@@ -2,9 +2,11 @@ package io.github.utsav_bhandari.Scripts;
 
 import io.github.utsav_bhandari.Engine.KeyboardInputHandler;
 import io.github.utsav_bhandari.Engine.SpellCard.ThePowerOfExample;
+import io.github.utsav_bhandari.Lib.StdDrawBridge;
 import io.github.utsav_bhandari.Render.AnimatedSpriteRoot;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -13,34 +15,36 @@ import java.util.function.Function;
 
 public class SpellCardDemo {
     public static void main(String[] args) {
+        StdDrawProvider.init();
+
         BufferedImage image;
 
-        try (var stream = AnimatedSpriteDemo.class.getResourceAsStream("/sprites/pixel-spell-effect/spells-0.png")) {
-            image = ImageIO.read(stream);
-
-            AnimatedSpriteRoot.registerAnimatedSprite(
-                    "WHIRLWIND",
-                    image,
-                    64,
-                    64,
-                    0,
-                    0,
-                    64,
-                    0,
-                    9,
-                    60,
-                    10,
-                    -1,
-                    true
-            );
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+//        try (var stream = AnimatedSpriteDemo.class.getResourceAsStream("/sprites/pixel-spell-effect/spells-1.png")) {
+//            image = ImageIO.read(stream);
+//
+//            AnimatedSpriteRoot.registerAnimatedSprite(
+//                    "WHIRLWIND",
+//                    image,
+//                    64,
+//                    64,
+//                    0,
+//                    64 * 3,
+//                    64,
+//                    0,
+//                    9,
+//                    60,
+//                    10,
+//                    -1,
+//                    true,
+//            );
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
 
         var spell = new ThePowerOfExample();
 
-        spell.x = 0;
-        spell.y = 0;
+        spell.x = 300;
+        spell.y = 540;
 
         var kh = new KeyboardInputHandler();
 
@@ -49,7 +53,7 @@ public class SpellCardDemo {
         keys.add(e -> {
             // If space is pressed, cast the spell
             if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                if (spell.isNeutral()) {
+                if (!spell.isPrimed()) {
                     spell.prime();
                     return true;
                 }
@@ -75,8 +79,12 @@ public class SpellCardDemo {
 
         kh.useKeymap("MAIN");
 
+        StdDrawProvider.frame.addKeyListener(kh);
 
         StdDrawProvider.run(g -> {
+            g.setColor(Color.BLACK);
+            g.fillRect(0, 0, 1920, 1080);
+
             spell.updatePosition();
 
             if (spell.x > 1920) {
@@ -85,6 +93,5 @@ public class SpellCardDemo {
 
             spell.render(g);
         });
-        StdDrawProvider.frame.addKeyListener(kh);
     }
 }
