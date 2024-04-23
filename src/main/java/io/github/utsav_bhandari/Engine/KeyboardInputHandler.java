@@ -18,9 +18,14 @@ public class KeyboardInputHandler implements KeyListener {
 
     protected final Object keyLock = new Object();
     protected int keyEventPending = 0;
+    private KeyEvent lastKey;
 
-    public void waitKeyEvent() {
+    /**
+     * May return null in case it was INTERRUPTED
+     */
+    public KeyEvent waitKeyEvent() {
         waitKeyEvent(KEY_PRESSED);
+        return lastKey;
     }
 
     // To future me
@@ -44,8 +49,9 @@ public class KeyboardInputHandler implements KeyListener {
         keyEventPending = 0;
     }
 
-    protected void notifyLock(int keyEventType) {
+    protected void notifyLock(int keyEventType, KeyEvent e) {
         keyEventPending |= keyEventType;
+        lastKey = e;
         synchronized (keyLock) {
             keyLock.notify();
         }
@@ -53,7 +59,7 @@ public class KeyboardInputHandler implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        notifyLock(KEY_PRESSED);
+        notifyLock(KEY_PRESSED, e);
 
         if (currentKeymap == null) {
             return;
@@ -72,12 +78,12 @@ public class KeyboardInputHandler implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        notifyLock(KEY_RELEASED);
+        notifyLock(KEY_RELEASED, e);
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        notifyLock(KEY_TYPED);
+        notifyLock(KEY_TYPED, e);
     }
 
     public void addKeymap(String keymap, Iterable<Function<KeyEvent, Boolean>> handlers) {
