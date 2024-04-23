@@ -9,7 +9,7 @@ public class InfernalCircle extends ASpellCard implements ISpellCard {
         return "Infernal Circle";
     }
     public String getDescription() {
-        return " Conjures a ring of searing flames. 40% chance to amplify damage by 1.5x.\n " +
+        return "Conjures a ring of searing flames. 40% chance to amplify damage by 1.5x.\n " +
                 "However, there's a 20% chance of being singed, dealing half the damage to yourself.";
     }
 
