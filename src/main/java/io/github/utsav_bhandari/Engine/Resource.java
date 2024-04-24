@@ -37,7 +37,7 @@ public final class Resource {
                 17,
                 60,
                 10,
-                10,
+                -1,
                 false
         );
 
@@ -53,7 +53,7 @@ public final class Resource {
                 15,
                 60,
                 10,
-                10,
+                -1,
                 false
         );
 
@@ -69,7 +69,7 @@ public final class Resource {
                 18,
                 60,
                 10,
-                10,
+                -1,
                 false
         );
 
@@ -85,7 +85,7 @@ public final class Resource {
                 7,
                 60,
                 10,
-                10,
+                -1,
                 false
         );
 
@@ -101,7 +101,7 @@ public final class Resource {
                 9,
                 60,
                 10,
-                10,
+                -1,
                 false
         );
 
@@ -117,7 +117,7 @@ public final class Resource {
                 9,
                 60,
                 10,
-                10,
+                -1,
                 false
         );
 
@@ -133,7 +133,7 @@ public final class Resource {
                 9,
                 60,
                 10,
-                10,
+                -1,
                 false
         );
 
@@ -149,7 +149,7 @@ public final class Resource {
                 10,
                 60,
                 10,
-                10,
+                -1,
                 false
         );
 
