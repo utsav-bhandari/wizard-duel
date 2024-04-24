@@ -21,10 +21,8 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
     private ISpellCard currentSpellCard;
     private ITextEffectCard currentTextEffectCard;
 
-    /**
-     * Be careful using this variable (frequently null)
-     */
-    private Selection selection;
+    private PlayerKeymap keymap;
+
 
     final private List<ITextEffectCard> textEffectCards = new ArrayList<>();
 
@@ -70,17 +68,6 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
         this.maxCharge = maxCharge;
     }
 
-    /**
-     * May be null
-     */
-    public Selection getSelection() {
-        return selection;
-    }
-
-    public void setSelection(Selection selection) {
-        this.selection = selection;
-    }
-
     @Override
     public void toggleChargeUse() {
         var turn = world.getCurrentTurn();
@@ -115,5 +102,13 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
         g.drawString("Player " + id, 10, 10);
 
         g.translate(-x, -y);
+    }
+
+    public PlayerKeymap getKeymap() {
+        return keymap;
+    }
+
+    public void setKeymap(PlayerKeymap keymap) {
+        this.keymap = keymap;
     }
 }

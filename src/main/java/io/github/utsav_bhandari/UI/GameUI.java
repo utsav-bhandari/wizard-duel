@@ -2,6 +2,8 @@ package io.github.utsav_bhandari.UI;
 
 import edu.princeton.cs.algs4.StdDraw;
 import io.github.utsav_bhandari.Engine.KeyboardInputHandler;
+import io.github.utsav_bhandari.Engine.PlayerKeymap;
+import io.github.utsav_bhandari.Engine.World;
 import io.github.utsav_bhandari.Game;
 import io.github.utsav_bhandari.Render.IRenderable;
 
@@ -10,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.function.Function;
 
+import static io.github.utsav_bhandari.Engine.PlayerKeymap.Action;
 import static io.github.utsav_bhandari.Lib.Util.*;
 
 public class GameUI implements IRenderable {
@@ -40,10 +43,34 @@ public class GameUI implements IRenderable {
 
         var gameScreenHandlers = new ArrayList<Function<KeyEvent, Boolean>>();
 
-        gameScreenHandlers.add(KeyboardInputHandler.createKeyHandler('q', () -> {
-            System.out.println("Exiting game");
-            game.world.notifyUi();
-        }));
+        gameScreenHandlers.add(e -> {
+            if (game.world.getWorldState() == World.WORLD_STATE_SELECTION_STARTED) {
+                var round = game.world.getCurrentRound();
+
+                for (int i = 0; i < game.world.players.length; i++) {
+                    var p = game.world.players[i];
+
+                    var km = p.getKeymap();
+
+                    var action = km.getAction(e.getKeyCode());
+
+                    if (action == null) continue;
+
+                    var selection = round.getPlayerSelection(p);
+
+                    if (selection == null) continue;
+
+                    switch (action) {
+                        case Action.MOVE_LEFT -> selection.moveSelection(180);
+                        case Action.MOVE_RIGHT -> selection.moveSelection(0);
+                        case Action.SELECT -> selection.confirmSelection();
+                        default -> {}
+                    }
+                }
+            }
+
+            return false;
+        });
 
         // Configure keyboard input handler
         var keyboardInputHandler = new KeyboardInputHandler();

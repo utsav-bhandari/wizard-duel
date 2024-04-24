@@ -89,5 +89,8 @@ public class Selection implements IRenderable {
         g.fillRect(20, 200, targetWidth, targetHeight);
         g.setColor(Color.BLACK);
         g.drawString("Choose a text effect card", 30, 220);
+        g.drawString("Text effect " + textEffectCardChoice, 30, 240);
+        g.drawString("Spell effect " + spellCardChoice, 30, 260);
+        g.drawString("State " + state, 30, 280);
     }
 }

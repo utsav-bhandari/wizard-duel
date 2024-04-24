@@ -20,5 +20,8 @@ public interface IPlayerControl {
      */
     void confirmChoice();
 
+    /**
+     * Toggle the help screen
+     */
     void toggleHelp();
 }

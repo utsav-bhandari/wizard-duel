@@ -55,6 +55,7 @@ public class World {
     // number of internal modifiers
     private static final int _WORLD_STATE_MODIFIER_WIDTH = 1;
     private int worldState;
+    private Player winner;
 
     private static int worldStateOn(int idx) {
         return idx << _WORLD_STATE_MODIFIER_WIDTH | _WORLD_STATE_MODIFIER_CANCELLABLE;
@@ -69,6 +70,7 @@ public class World {
     }
 
     public static final int WORLD_STATE_ON_ROUND = worldStateOn(0);
+    public static final int WORLD_STATE_SELECTION_STARTED = worldStateOn(50);
     public static final int WORLD_STATE_ON_TURN = worldStateOn(10);
 
     // TODO add more i guess
@@ -96,6 +98,23 @@ public class World {
         players[0] = new Player(0);
         players[1] = new Player(1);
 
+        var km = new PlayerKeymap();
+
+        km.setKey('a', PlayerKeymap.Action.MOVE_LEFT);
+        km.setKey('d', PlayerKeymap.Action.MOVE_RIGHT);
+        km.setKey('z', PlayerKeymap.Action.HELP);
+        km.setKey('x', PlayerKeymap.Action.SELECT);
+
+        players[0].setKeymap(km);
+
+        km = new PlayerKeymap();
+        km.setKey('j', PlayerKeymap.Action.MOVE_LEFT);
+        km.setKey('l', PlayerKeymap.Action.MOVE_RIGHT);
+        km.setKey('/', PlayerKeymap.Action.HELP);
+        km.setKey('.', PlayerKeymap.Action.SELECT);
+
+        players[1].setKeymap(km);
+
         for (int i = 0; i < 8; i++) {
             spellCardPile.add(new ThePowerOfExample());
             textEffectCardPile.add(new ThePowerOfYapping());
@@ -106,21 +125,23 @@ public class World {
      * Blocking
      */
     public void run() throws InterruptedException {
-        while (true) {
-            waitForUi();
+        while (winner != null) {
+            var round = new Round(this);
+            rounds.add(round);
 
-            for (int i = 0; i < 10; i++) {
-                debugStatus += i;
-                Util.unsafeWait(100);
-            }
+            round.run();
         }
     }
 
     /**
      * Literally just stops until the UI "frees" the world to run again
      */
-    public synchronized void waitForUi() throws InterruptedException {
-        this.wait();
+    public synchronized void waitForUi() {
+        try {
+            this.wait();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public synchronized void notifyUi() {

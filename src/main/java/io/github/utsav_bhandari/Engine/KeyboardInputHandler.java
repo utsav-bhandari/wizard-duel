@@ -66,7 +66,6 @@ public class KeyboardInputHandler implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        notifyLock(KEY_PRESSED, e);
 
         if (currentKeymap == null) {
             return;
@@ -74,13 +73,13 @@ public class KeyboardInputHandler implements KeyListener {
 
         var keyHandlers = keyMap.get(currentKeymap);
 
-        if (keyHandlers == null) {
-            return;
+        if (keyHandlers != null) {
+            for (var handler : keyHandlers) {
+                if (handler.apply(e)) return;
+            }
         }
 
-        for (var handler : keyHandlers) {
-            if (handler.apply(e)) break;
-        }
+        notifyLock(KEY_PRESSED, e);
     }
 
     @Override

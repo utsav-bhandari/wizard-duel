@@ -24,4 +24,8 @@ public class Turn {
     public void setUsingCharge(boolean usingCharge) {
         isUsingCharge = usingCharge;
     }
+
+    public void update() {
+        // do nothing
+    }
 }

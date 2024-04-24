@@ -3,7 +3,15 @@ package io.github.utsav_bhandari.Engine;
 import java.util.HashMap;
 
 public class PlayerKeymap {
-    private final HashMap<Action, Integer> map = new HashMap<>();
+    private final HashMap<Integer, Action> map = new HashMap<>();
+
+    public Object getAction(int keyCode) {
+        if (map.containsKey(keyCode)) {
+            return map.get(keyCode);
+        }
+
+        return null;
+    }
 
     public enum Action {
         MOVE_LEFT,
@@ -12,8 +20,8 @@ public class PlayerKeymap {
         HELP,
     }
 
-    public PlayerKeymap setKey(Action action, int keyCode) {
-        map.put(action, keyCode);
+    public PlayerKeymap setKey(int keyCode, Action action) {
+        map.put(keyCode, action);
         return this;
     }
 
@@ -22,8 +30,8 @@ public class PlayerKeymap {
      * <br>
      * Make sure to test it using KeyHandlerDemo first
      */
-    public PlayerKeymap setKey(Action action, char keyChar) {
-        map.put(action, (int) keyChar);
+    public PlayerKeymap setKey(char keyChar, Action action) {
+        map.put((int) keyChar, action);
         return this;
     }
 }
