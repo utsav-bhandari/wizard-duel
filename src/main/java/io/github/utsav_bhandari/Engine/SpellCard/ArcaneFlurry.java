@@ -15,13 +15,8 @@ public class ArcaneFlurry extends ASpellCard implements ISpellCard {
     }
 
     @Override
-    public int getMinCharge() {
-        return 0;
-    }
-
-    @Override
-    public int getMaxCharge() {
-        return 0;
+    public int getCharge() {
+        return 2;
     }
 
     @Override

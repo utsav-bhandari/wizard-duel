@@ -98,12 +98,7 @@ public class ThePowerOfExample extends ASpellCard implements ISpellCard {
     }
 
     @Override
-    public int getMinCharge() {
-        return 1;
-    }
-
-    @Override
-    public int getMaxCharge() {
+    public int getCharge() {
         return 1;
     }
 }

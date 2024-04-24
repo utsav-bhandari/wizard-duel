@@ -16,13 +16,8 @@ public class ChargeCascade extends ASpellCard implements ISpellCard {
     }
 
     @Override
-    public int getMinCharge() {
-        return 0;
-    }
-
-    @Override
-    public int getMaxCharge() {
-        return 0;
+    public int getCharge() {
+        return 1;
     }
 
     @Override

@@ -9,7 +9,7 @@ public class ArcaneQuota extends ASpellCard implements ISpellCard {
 
     public String getDescription() {
         return " Unleashes arcane energy in a structured pattern.\n" +
-                "Damage scales based on charges spent."; // +1/2/3 for now
+                "Damage scales based on charges spent so far."; // +1/2/3 for now
     }
 
     @Override
@@ -17,13 +17,8 @@ public class ArcaneQuota extends ASpellCard implements ISpellCard {
     }
 
     @Override
-    public int getMinCharge() {
-        return 0;
-    }
-
-    @Override
-    public int getMaxCharge() {
-        return 0;
+    public int getCharge() {
+        return 2;
     }
 
     @Override
