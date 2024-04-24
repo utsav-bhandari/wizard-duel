@@ -2,10 +2,7 @@ package io.github.utsav_bhandari.Engine.SpellCard;
 
 import io.github.utsav_bhandari.Engine.Resource;
 import io.github.utsav_bhandari.Render.AnimatedSprite;
-import io.github.utsav_bhandari.Render.AnimatedSpriteRoot;
-import io.github.utsav_bhandari.Scripts.AnimatedSpriteDemo;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
@@ -37,33 +34,6 @@ public class ThePowerOfExample extends ASpellCard implements ISpellCard {
         trans.scale(4, 4);
 
         op = new AffineTransformOp(trans, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-    }
-
-
-    static {
-        // TODO: move this to Resources and properly load all resources
-        System.out.println("ThePowerOfExample: PLEASE REMOVE THIS");
-        try (var stream = AnimatedSprite.class.getResourceAsStream("/sprites/pixel-spell-effect/spells-0.png")) {
-            var image = ImageIO.read(stream);
-
-            AnimatedSpriteRoot.registerAnimatedSprite(
-                    "WHIRLWIND",
-                    image,
-                    64,
-                    64,
-                    0,
-                    128,
-                    64,
-                    0,
-                    18,
-                    60,
-                    10,
-                    10,
-                    false
-            );
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private static AnimatedSprite getNewSprite() {
