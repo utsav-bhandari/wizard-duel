@@ -19,27 +19,27 @@ public class SpellCardDemo {
 
         BufferedImage image;
 
-        try (var stream = AnimatedSpriteDemo.class.getResourceAsStream("/sprites/pixel-spell-effect/spells-1.png")) {
-            image = ImageIO.read(stream);
-
-            AnimatedSpriteRoot.registerAnimatedSprite(
-                    "WHIRLWIND",
-                    image,
-                    64,
-                    64,
-                    0,
-                    64 * 3,
-                    64,
-                    0,
-                    9,
-                    60,
-                    10,
-                    -1,
-                    true
-            );
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+//        try (var stream = AnimatedSpriteDemo.class.getResourceAsStream("/sprites/pixel-spell-effect/spells-1.png")) {
+//            image = ImageIO.read(stream);
+//
+//            AnimatedSpriteRoot.registerAnimatedSprite(
+//                    "WHIRLWIND",
+//                    image,
+//                    64,
+//                    64,
+//                    0,
+//                    64 * 3,
+//                    64,
+//                    0,
+//                    9,
+//                    60,
+//                    10,
+//                    -1,
+//                    true,
+//            );
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
 
         var spell = new ThePowerOfExample();
 

@@ -15,7 +15,7 @@ public class StdDrawBridge {
     public static JFrame frame;
     ;
     private static ArrayList<Consumer<Graphics2D>> callbacks = new ArrayList<>();
-    private static Graphics2D screen;
+    public static Graphics2D screen;
 
     private static int frameCounter = 0;
 

@@ -9,7 +9,7 @@ public class ArcaneFlurry extends ASpellCard implements ISpellCard {
         return "Arcane Flurry";
     }
     public String getDescription() {
-        return "Unleashes a flurry of mystical energy. 33% chance to inflict double damage.";
+        return "Unleashes a flurry of mystical energy. 1/3 chance to inflict double damage.";
     }
 
     @Override
