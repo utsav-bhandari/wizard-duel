@@ -1,6 +1,5 @@
 package io.github.utsav_bhandari.Engine.SpellCard;
 
-import edu.princeton.cs.algs4.Graph;
 import io.github.utsav_bhandari.Engine.ICard;
 
 import java.awt.*;
@@ -8,14 +7,9 @@ import java.awt.image.AffineTransformOp;
 
 public interface ISpellCard extends ICard {
     /**
-     * Minimum required charges
-     */
-    int getMinCharge();
-
-    /**
      * Maximum charges you can spend on this card
      */
-    int getMaxCharge();
+    int getCharge();
 
     float getDamage();
     void setDamage(float damage);
