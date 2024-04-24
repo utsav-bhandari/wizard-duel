@@ -9,6 +9,7 @@ import io.github.utsav_bhandari.Scripts.StdDrawProvider;
 import javax.imageio.event.IIOReadProgressListener;
 import java.awt.*;
 
+import static io.github.utsav_bhandari.Lib.StdDrawBridge.frame;
 import static io.github.utsav_bhandari.Lib.StdDrawBridge.screen;
 
 public final class HelpDisplay implements IRenderable {
@@ -28,8 +29,8 @@ public final class HelpDisplay implements IRenderable {
 //      screen.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         screen.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // looks like this is good enough
 
-        int screenWidth = 1920;
-        int screenHeight = 1080;
+        int screenWidth = StdDrawBridge.width;
+        int screenHeight = StdDrawBridge.height;
         int helpScreenWidth = screenWidth/2;
 
         int xPosition;

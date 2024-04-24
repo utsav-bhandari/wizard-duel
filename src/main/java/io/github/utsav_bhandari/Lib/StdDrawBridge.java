@@ -19,8 +19,8 @@ public class StdDrawBridge {
 
     private static int frameCounter = 0;
 
-    private static int width;
-    private static int height;
+    public static int width;
+    public static int height;
 
     private static int frameCounterDisplay = 0;
     private static final Timer frameCounterTimer = new Timer(1000, e -> {
