@@ -71,7 +71,7 @@ public class World {
 
     public static final int WORLD_STATE_ON_ROUND = worldStateOn(0);
     public static final int WORLD_STATE_SELECTION_STARTED = worldStateOn(50);
-    public static final int WORLD_STATE_ON_TURN = worldStateOn(10);
+    public static final int WORLD_STATE_ON_TURN = worldStateOn(70);
 
     // TODO add more i guess
     public static final int WORLD_STATE_ON_CHARGE_ADD = worldStateOn(100);
@@ -98,18 +98,21 @@ public class World {
         players[0] = new Player(0);
         players[1] = new Player(1);
 
+        players[0].world = this;
+        players[1].world = this;
+
         var km = new PlayerKeymap();
 
-        km.setKey('a', PlayerKeymap.Action.MOVE_LEFT);
-        km.setKey('d', PlayerKeymap.Action.MOVE_RIGHT);
-        km.setKey('z', PlayerKeymap.Action.HELP);
-        km.setKey('x', PlayerKeymap.Action.SELECT);
+        km.setKey('A', PlayerKeymap.Action.MOVE_LEFT);
+        km.setKey('D', PlayerKeymap.Action.MOVE_RIGHT);
+        km.setKey('Z', PlayerKeymap.Action.HELP);
+        km.setKey('X', PlayerKeymap.Action.SELECT);
 
         players[0].setKeymap(km);
 
         km = new PlayerKeymap();
-        km.setKey('j', PlayerKeymap.Action.MOVE_LEFT);
-        km.setKey('l', PlayerKeymap.Action.MOVE_RIGHT);
+        km.setKey('J', PlayerKeymap.Action.MOVE_LEFT);
+        km.setKey('L', PlayerKeymap.Action.MOVE_RIGHT);
         km.setKey('/', PlayerKeymap.Action.HELP);
         km.setKey('.', PlayerKeymap.Action.SELECT);
 
@@ -125,11 +128,15 @@ public class World {
      * Blocking
      */
     public void run() throws InterruptedException {
-        while (winner != null) {
+        while (winner == null) {
             var round = new Round(this);
             rounds.add(round);
 
+            System.out.println("Round " + rounds.size() + " started");
+
             round.run();
+
+            System.out.println("Round " + rounds.size() + " ended");
         }
     }
 
@@ -174,5 +181,31 @@ public class World {
         }
 
         currentRound.update();
+    }
+
+    /**
+     * Take the last spell card from the pile and remove it
+     */
+    public ISpellCard drawSpellCard() {
+        if (spellCardPile.isEmpty()) {
+            return null;
+        }
+
+        int lastIndex = spellCardPile.size() - 1;
+
+        return spellCardPile.remove(lastIndex);
+    }
+
+    /**
+     * Take the last text effect card from the pile and remove it
+     */
+    public ITextEffectCard drawTextEffectCard() {
+        if (textEffectCardPile.isEmpty()) {
+            return null;
+        }
+
+        int lastIndex = textEffectCardPile.size() - 1;
+
+        return textEffectCardPile.remove(lastIndex);
     }
 }

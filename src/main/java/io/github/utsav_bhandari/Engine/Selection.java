@@ -19,42 +19,56 @@ public class Selection implements IRenderable {
     private final List<ITextEffectCard> textEffectCardChoices;
     private final List<ISpellCard> spellCardChoices;
 
-    private int spellCardChoice = 0;
     private int textEffectCardChoice = 0;
-
-    private int currentChoice = 0;
+    private int spellCardChoice = 0;
 
     private int state = 0;
 
-    public Selection(List<ISpellCard> spellCardChoices, List<ITextEffectCard> textEffectCardChoices) {
-        this.spellCardChoices = spellCardChoices;
+    public Selection(List<ITextEffectCard> textEffectCardChoices, List<ISpellCard> spellCardChoices) {
         this.textEffectCardChoices = textEffectCardChoices;
+        this.spellCardChoices = spellCardChoices;
     }
 
     /**
-     * 0 right 180 left
+     * 1 for right, -1 for left
      */
     public void moveSelection(int direction) {
+        int d = direction == 0 ? 1 : -1;
+
         if (state == 0) {
-            currentChoice = (currentChoice + direction + textEffectCardChoices.size()) % textEffectCardChoices.size();
+            setCurrentChoice((getCurrentChoice() + direction + textEffectCardChoices.size()) % textEffectCardChoices.size());
         } else if (state == 1) {
-            currentChoice = (currentChoice + direction + spellCardChoices.size()) % spellCardChoices.size();
-        } else {
-            throw new IllegalStateException("Selection already confirmed");
+            setCurrentChoice((getCurrentChoice() + direction + spellCardChoices.size()) % spellCardChoices.size());
         }
     }
 
     public void confirmSelection() {
         if (state == 0) {
-            textEffectCardChoice = currentChoice;
             state = 1;
         } else if (state == 1) {
-            spellCardChoice = currentChoice;
             state = 2;
-        } else {
-            throw new IllegalStateException("Selection already confirmed");
         }
-        currentChoice = 0;
+    }
+
+    private void setCurrentChoice(int choice) {
+        if (state == 0) {
+            textEffectCardChoice = choice;
+        } else if (state == 1) {
+            spellCardChoice = choice;
+        }
+    }
+
+    /**
+     * Get the current choice. Returns last choice if not able to change choice
+     */
+    private int getCurrentChoice() {
+        if (state == 0) {
+            return textEffectCardChoice;
+        } else if (state == 1) {
+            return spellCardChoice;
+        }
+
+        return spellCardChoice;
     }
 
     public boolean isUnconfirmed() {

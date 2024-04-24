@@ -1,7 +1,7 @@
 package io.github.utsav_bhandari.Engine;
 
 /**
- * Keyboard inputs
+ * Keyboard inputs. Might not be needed
  */
 public interface IPlayerControl {
     /**
@@ -11,7 +11,7 @@ public interface IPlayerControl {
 
     /**
      * Move the choice
-     * @param direction 0 for right, 180 for left (this kinda makes sense in my head)
+     * @param direction 1 for right, -1 for left
      */
     void moveChoice(int direction);
 

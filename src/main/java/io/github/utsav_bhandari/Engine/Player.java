@@ -79,14 +79,30 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
         }
     }
 
+    private Selection getPlayerSelection() {
+        var round = world.getCurrentRound();
+
+        if (round == null) return null;
+
+        return round.getPlayerSelection(this);
+    }
+
     @Override
     public void moveChoice(int direction) {
-        // TODO
+        var selection = getPlayerSelection();
+
+        if (selection == null) return;
+
+        selection.moveSelection(direction);
     }
 
     @Override
     public void confirmChoice() {
-        // TODO
+        var selection = getPlayerSelection();
+
+        if (selection == null) return;
+
+        selection.confirmSelection();
     }
 
     @Override

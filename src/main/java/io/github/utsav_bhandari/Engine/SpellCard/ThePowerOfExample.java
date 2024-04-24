@@ -37,7 +37,7 @@ public class ThePowerOfExample extends ASpellCard implements ISpellCard {
     }
 
     private static AnimatedSprite getNewSprite() {
-        return Resource.getInstance().getAnimatedSprite("WHIRLWIND");
+        return Resource.getInstance().getAnimatedSprite("Charge Cascade");
     }
 
     @Override
