@@ -1,9 +1,14 @@
 package io.github.utsav_bhandari.Engine;
 
+import io.github.utsav_bhandari.Engine.SpellCard.ISpellCard;
+import io.github.utsav_bhandari.Engine.TextEffectCard.ITextEffectCard;
+import io.github.utsav_bhandari.Render.IRenderable;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player extends AEntity implements IEntity{
+public class Player extends AEntity implements IEntity, IPlayerControl, IRenderable {
     private final int id;
 
     private int health = 80;
@@ -74,5 +79,41 @@ public class Player extends AEntity implements IEntity{
 
     public void setSelection(Selection selection) {
         this.selection = selection;
+    }
+
+    @Override
+    public void toggleChargeUse() {
+        var turn = world.getCurrentTurn();
+        if (turn == null) return;
+        if (turn.attacker != this) return;
+
+        if (world.getWorldState() >= World.WORLD_STATE_CHARGE_ADDED && world.getWorldState() < World.WORLD_STATE_ON_SPELL_PRIME) {
+            turn.setUsingCharge(!turn.isUsingCharge());
+        }
+    }
+
+    @Override
+    public void moveChoice(int direction) {
+        // TODO
+    }
+
+    @Override
+    public void confirmChoice() {
+        // TODO
+    }
+
+    @Override
+    public void toggleHelp() {
+        isViewingHelp = !isViewingHelp;
+    }
+
+    @Override
+    public void render(Graphics2D g) {
+        g.translate(x, y);
+
+        g.setColor(Color.BLACK);
+        g.drawString("Player " + id, 10, 10);
+
+        g.translate(-x, -y);
     }
 }

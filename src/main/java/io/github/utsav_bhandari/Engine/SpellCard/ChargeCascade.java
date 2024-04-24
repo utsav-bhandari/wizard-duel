@@ -1,9 +1,8 @@
 package io.github.utsav_bhandari.Engine.SpellCard;
-import io.github.utsav_bhandari.Engine.ISpellCard;
 
 import java.awt.*;
 
-public class ChargeCascade extends ASpellCard implements ISpellCard{
+public class ChargeCascade extends ASpellCard implements ISpellCard {
     public String getName() {
         return "Charge Cascade";
     }
@@ -14,5 +13,20 @@ public class ChargeCascade extends ASpellCard implements ISpellCard{
 
     @Override
     public void render(Graphics2D g) {
+    }
+
+    @Override
+    public int getMinCharge() {
+        return 0;
+    }
+
+    @Override
+    public int getMaxCharge() {
+        return 0;
+    }
+
+    @Override
+    public void renderSpell(Graphics2D g) {
+
     }
 }

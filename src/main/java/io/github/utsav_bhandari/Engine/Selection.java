@@ -1,5 +1,11 @@
 package io.github.utsav_bhandari.Engine;
 
+import io.github.utsav_bhandari.Engine.SpellCard.ISpellCard;
+import io.github.utsav_bhandari.Engine.TextEffectCard.ITextEffectCard;
+import io.github.utsav_bhandari.Lib.StdDrawBridge;
+import io.github.utsav_bhandari.Render.IRenderable;
+
+import java.awt.*;
 import java.util.List;
 
 /**
@@ -9,7 +15,7 @@ import java.util.List;
  * <br>
  * and also some spell cards and player chooses one
  */
-public class Selection {
+public class Selection implements IRenderable {
     private final List<ITextEffectCard> textEffectCardChoices;
     private final List<ISpellCard> spellCardChoices;
 
@@ -69,5 +75,19 @@ public class Selection {
 
     public int getTextEffectCardChoice() {
         return textEffectCardChoice;
+    }
+
+    /**
+     * Origin should be top left of whatever player's owner screen is
+     */
+    @Override
+    public void render(Graphics2D g) {
+        int targetWidth = StdDrawBridge.width / 2 - 40;
+        int targetHeight = StdDrawBridge.height - 400;
+
+        g.setColor(Color.BLUE);
+        g.fillRect(20, 200, targetWidth, targetHeight);
+        g.setColor(Color.BLACK);
+        g.drawString("Choose a text effect card", 30, 220);
     }
 }

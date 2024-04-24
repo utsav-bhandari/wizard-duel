@@ -15,10 +15,12 @@ public final class Resource {
 
     private static final BufferedImage NULL = loadResourceImage("/NULL.png");
     public final BufferedImage titleScreen;
+    public final BufferedImage gameBackground;
 
     private Resource() {
         // TODO: init stuff here
-        titleScreen = loadResourceImage("/sprites/title_screen.png");
+        titleScreen = loadResourceImage("/backgrounds/title_screen.png");
+        gameBackground = loadResourceImage("/backgrounds/game_background.png");
     }
 
     /**

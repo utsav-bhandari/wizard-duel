@@ -20,13 +20,16 @@ public class KeyHandlerDemo {
         };
         
         var keys = new ArrayList<Function<KeyEvent, Boolean>>();
-        
+
         keys.add(KeyboardInputHandler.createKeyHandler('a', () -> {
             ref.out += "<SPECIAL A>";
         }));
 
         keys.add(e -> {
-            ref.out += "<" + e.getKeyChar() + ">";
+            // Check actual char value. If irrelevant char returns -1
+            System.out.println(Character.getNumericValue(e.getKeyChar()));
+
+            ref.out += e.getKeyChar() + "[" + e.getKeyCode() + "]";
 
             return false;
         });

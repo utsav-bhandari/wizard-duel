@@ -25,9 +25,16 @@ public class KeyboardInputHandler implements KeyListener {
      */
     public KeyEvent waitKeyEvent() {
         waitKeyEvent(KEY_PRESSED);
-        return lastKey;
+        var t = lastKey;
+        lastKey = null;
+        return t;
     }
 
+    public void interruptAnyWaitKey() {
+        synchronized (keyLock) {
+            keyLock.notify();
+        }
+    }
     // To future me
     // I am not smart enough to understand whether it is better to do the keyEvent checking
     // before the notify call or right here.

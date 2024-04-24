@@ -1,9 +1,11 @@
 package io.github.utsav_bhandari.Engine.SpellCard;
 
-import io.github.utsav_bhandari.Engine.ISpellCard;
 import io.github.utsav_bhandari.Engine.Resource;
 import io.github.utsav_bhandari.Render.AnimatedSprite;
+import io.github.utsav_bhandari.Render.AnimatedSpriteRoot;
+import io.github.utsav_bhandari.Scripts.AnimatedSpriteDemo;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
@@ -27,7 +29,7 @@ public class ThePowerOfExample extends ASpellCard implements ISpellCard {
         return "Harness the power of showing";
     }
 
-    private static final AffineTransformOp op ;
+    private static final AffineTransformOp op;
 
     static {
         var trans = new AffineTransform();
@@ -37,6 +39,32 @@ public class ThePowerOfExample extends ASpellCard implements ISpellCard {
         op = new AffineTransformOp(trans, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
     }
 
+
+    static {
+        // TODO: move this to Resources and properly load all resources
+        System.out.println("ThePowerOfExample: PLEASE REMOVE THIS");
+        try (var stream = AnimatedSprite.class.getResourceAsStream("/sprites/pixel-spell-effect/spells-0.png")) {
+            var image = ImageIO.read(stream);
+
+            AnimatedSpriteRoot.registerAnimatedSprite(
+                    "WHIRLWIND",
+                    image,
+                    64,
+                    64,
+                    0,
+                    128,
+                    64,
+                    0,
+                    18,
+                    60,
+                    10,
+                    10,
+                    false
+            );
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     private static AnimatedSprite getNewSprite() {
         return Resource.getInstance().getAnimatedSprite("WHIRLWIND");
@@ -65,6 +93,28 @@ public class ThePowerOfExample extends ASpellCard implements ISpellCard {
         super.setDamage(damage);
     }
 
+    @Override
+    public void renderSpell(Graphics2D g) {
+        float RADIUS = 100;
+
+        angle += 0.04f;
+
+        for (int i = 0; i < sprites.size(); i++) {
+            float angleOffset = (float) Math.PI * 2 / sprites.size() * i;
+
+            var sprite = sprites.get(i);
+
+            float r = (float) Math.sin(angle / 4) * RADIUS;
+
+            sprite.x = (int) (x + Math.cos(angle + angleOffset) * r);
+            sprite.y = (int) (y + Math.sin(angle + angleOffset) * r);
+
+            sprite.op = op;
+
+            sprite.render(g);
+        }
+    }
+
     private static int calculateReqNumSprite(float damage) {
         float SPRITE_PER_DAMAGE = 2;
 
@@ -73,28 +123,17 @@ public class ThePowerOfExample extends ASpellCard implements ISpellCard {
 
     @Override
     public void render(Graphics2D g) {
-        if (isPrimed() || isCasting()) {
-            float RADIUS = 100;
+        g.setColor(Color.RED);
+        g.drawString("The Power of Example", x, y);
+    }
 
-            angle += 0.04f;
+    @Override
+    public int getMinCharge() {
+        return 1;
+    }
 
-            for (int i = 0; i < sprites.size(); i++) {
-                float angleOffset = (float) Math.PI * 2 / sprites.size() * i;
-
-                var sprite = sprites.get(i);
-
-                float r = (float) Math.sin(angle / 4) * RADIUS;
-
-                sprite.x = (int) (x + Math.cos(angle + angleOffset) * r);
-                sprite.y = (int) (y + Math.sin(angle + angleOffset) * r);
-
-                sprite.op = op;
-
-                sprite.render(g);
-            }
-        } else {
-            g.setColor(Color.RED);
-            g.drawString("The Power of Example, ready to cast", x, y);
-        }
+    @Override
+    public int getMaxCharge() {
+        return 1;
     }
 }

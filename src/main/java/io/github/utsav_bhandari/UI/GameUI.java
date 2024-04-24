@@ -15,10 +15,13 @@ import static io.github.utsav_bhandari.Lib.Util.*;
 public class GameUI implements IRenderable {
     private final Game game;
 
+    private final DebugOverlay debugOverlay;
+
     private String visibleText = "";
 
     public GameUI(Game game) {
         this.game = game;
+        this.debugOverlay = new DebugOverlay(game);
 
         var titleScreenHandlers = new ArrayList<Function<KeyEvent, Boolean>>();
 
@@ -27,23 +30,44 @@ public class GameUI implements IRenderable {
 
             unsafeWait(1000);
 
-            game.setGameState(Game.GameState.GAME_RUNNING);
+            game.startGame();
         };
 
         titleScreenHandlers.add(KeyboardInputHandler.createKeyHandler('a', () -> {
             runSyncThread(enterPress);
         }));
 
+
+        var gameScreenHandlers = new ArrayList<Function<KeyEvent, Boolean>>();
+
+        gameScreenHandlers.add(KeyboardInputHandler.createKeyHandler('q', () -> {
+            System.out.println("Exiting game");
+            game.world.notifyUi();
+        }));
+
         // Configure keyboard input handler
         var keyboardInputHandler = new KeyboardInputHandler();
+
         keyboardInputHandler.addKeymap(
                 "TITLE_SCREEN",
                 titleScreenHandlers
+        );
+        keyboardInputHandler.addKeymap(
+                "GAME_SCREEN",
+                gameScreenHandlers
         );
 
         keyboardInputHandler.useKeymap("TITLE_SCREEN");
 
         game.frame.addKeyListener(keyboardInputHandler);
+
+        game.onGameStateUpdate(gameState -> {
+            if (gameState == Game.GameState.TITLE_SCREEN) {
+                keyboardInputHandler.useKeymap("TITLE_SCREEN");
+            } else if (gameState == Game.GameState.GAME_RUNNING) {
+                keyboardInputHandler.useKeymap("GAME_SCREEN");
+            }
+        });
 
         resetText();
     }
@@ -62,9 +86,16 @@ public class GameUI implements IRenderable {
             StdDraw.setFont(new Font("Arial", Font.PLAIN, 50));
             StdDraw.text(960, 100, visibleText);
         } else if (game.getGameState() == Game.GameState.GAME_RUNNING) {
-            // Draw game
+            g.drawImage(r.gameBackground, 0, 0, 1920, 1080, null);
         } else if (game.getGameState() == Game.GameState.GAME_OVER) {
-            // Draw game over
+            g.drawImage(r.titleScreen, 0, 0, 1920, 200, null);
+
+            StdDraw.setPenColor(Color.BLACK);
+            StdDraw.setFont(new Font("Arial", Font.PLAIN, 50));
+
+            StdDraw.text(960, 100, "GAME OVER");
         }
+
+        debugOverlay.render(g);
     }
 }

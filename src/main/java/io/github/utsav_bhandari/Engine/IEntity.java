@@ -2,9 +2,8 @@ package io.github.utsav_bhandari.Engine;
 
 public interface IEntity {
     /**
-     * 1 update per fps
+     * Update and render are pretty much the same thing in this game
      */
     void update();
-
-    void destroy();
+    void dispose();
 }

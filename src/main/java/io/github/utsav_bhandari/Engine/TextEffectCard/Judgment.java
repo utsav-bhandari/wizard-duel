@@ -1,10 +1,11 @@
 package io.github.utsav_bhandari.Engine.TextEffectCard;
 
-import io.github.utsav_bhandari.Engine.ITextEffectCard;
+import io.github.utsav_bhandari.Engine.ICard;
+import io.github.utsav_bhandari.Render.IRenderable;
 
 import java.awt.*;
 
-public class Judgment extends ATextEffectCard implements ITextEffectCard {
+public class Judgment extends ATextEffectCard implements IRenderable, ICard {
     @Override
     public void render(Graphics2D g) {
         g.drawString("Judgment", 100, 100);

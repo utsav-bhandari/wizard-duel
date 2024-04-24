@@ -13,10 +13,8 @@ import java.util.ArrayList;
 
 public class AnimatedSpriteDemo {
     public static void main(String[] args) {
-        BufferedImage image;
-
         try (var stream = AnimatedSpriteDemo.class.getResourceAsStream("/sprites/pixel-spell-effect/spells-0.png")) {
-            image = ImageIO.read(stream);
+            var image = ImageIO.read(stream);
 
             AnimatedSpriteRoot.registerAnimatedSprite(
                     "WHIRLWIND",

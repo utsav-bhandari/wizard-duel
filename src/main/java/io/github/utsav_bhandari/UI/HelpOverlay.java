@@ -1,23 +1,18 @@
 package io.github.utsav_bhandari.UI;
 
-import edu.princeton.cs.algs4.StdDraw;
-import edu.princeton.cs.algs4.StdOut;
 import io.github.utsav_bhandari.Lib.StdDrawBridge;
 import io.github.utsav_bhandari.Render.IRenderable;
-import io.github.utsav_bhandari.Scripts.StdDrawProvider;
 
-import javax.imageio.event.IIOReadProgressListener;
 import java.awt.*;
 
-import static io.github.utsav_bhandari.Lib.StdDrawBridge.frame;
 import static io.github.utsav_bhandari.Lib.StdDrawBridge.screen;
 
-public final class HelpDisplay implements IRenderable {
-    private int side;
+public final class HelpOverlay implements IRenderable {
+    private final int side;
     private final Color helpBackgroundColorRight;
     private final Color helpBackgroundColorLeft;
     /* side of 0 represents the left and side of 1 represents the right side of the screen */
-    public HelpDisplay(int side) {
+    public HelpOverlay(int side) {
         this.side = side;
         this.helpBackgroundColorRight = new Color(1f, 0f, 0f, 0.2f);
         this.helpBackgroundColorLeft = new Color(0f, 0f, 1f, 0.2f);
@@ -25,10 +20,6 @@ public final class HelpDisplay implements IRenderable {
 
     @Override
     public void render(Graphics2D g) {
-//      screen.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-//      screen.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-        screen.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // looks like this is good enough
-
         int screenWidth = StdDrawBridge.width;
         int screenHeight = StdDrawBridge.height;
         int helpScreenWidth = screenWidth/2;
