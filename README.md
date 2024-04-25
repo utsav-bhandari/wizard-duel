@@ -6,3 +6,19 @@ Spell cards do damage, have an effect, and have fancy animations.
 
 Complied using gradle and jvm version 21.0.2. 
 Game can be run by running main in the main direcotry.
+
+# Running the game
+
+## Bash
+
+```sh
+$ ./gradlew shadowJar
+$ java -jar build/libs/wizard-duel-1.0-SNAPSHOT-all.jar
+```
+
+## Windows
+
+```ps
+> .\gradlew.bat shadowJar
+> java -jar build\libs\wizard-duel-1.0-SNAPSHOT-all.jar
+```
