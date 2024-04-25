@@ -6,24 +6,27 @@ import io.github.utsav_bhandari.Render.AnimatedSprite;
 import io.github.utsav_bhandari.Render.IRenderable;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public final class HelpOverlay implements IRenderable {
     private final int side;
     private final Color helpBackgroundColorRight;
     private final Color helpBackgroundColorLeft;
+    private final BufferedImage scroll;
     private ArrayList<AnimatedSprite> animatedSprites;
     private AlphaComposite alphaComposite;
 
     /* side of 0 represents the left and side of 1 represents the right side of the screen */
     public HelpOverlay(int side) {
-        alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f);
+        alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
 
         this.side = side;
         this.helpBackgroundColorRight = new Color(1f, 0f, 0f);
         this.helpBackgroundColorLeft = new Color(0f, 0f, 1f);
 
         var r = Resource.getInstance();
+        scroll = r.scroll;
         var spriteIDs = new ArrayList<String>();
 
         spriteIDs.add("Charge Cascade");
@@ -34,7 +37,7 @@ public final class HelpOverlay implements IRenderable {
         spriteIDs.add("Infernal Circle");
         spriteIDs.add("Tempest Reversal");
         spriteIDs.add("Arcane Quota");
-        spriteIDs.add("Wizard Attack 1");
+//        spriteIDs.add("Wizard Attack 1");
 
         this.animatedSprites = new ArrayList<>();
 
@@ -60,22 +63,22 @@ public final class HelpOverlay implements IRenderable {
             xPosition = screenWidth - helpScreenWidth;
             g.setColor(helpBackgroundColorRight);
         }
-        g.fillRect(xPosition + 10, 10, helpScreenWidth - 20 , screenHeight - 20);
+        g.drawImage(scroll, null, xPosition + 10, 10);
+        g.setComposite(t);
 
         int spriteStartX;
         if (side == 0) {
-            spriteStartX = xPosition + 20; // Start position for left side
+            spriteStartX = xPosition + 40; // Start position for left side
         } else {
-            spriteStartX = xPosition + 10; // Adjusted start position for right side
+            spriteStartX = xPosition + 40; // Adjusted start position for right side
         }
 
-        int i = 0;
-        for (var sprite : animatedSprites) {
-            sprite.x = spriteStartX + i * 50; // Adjusted x position
-            sprite.y = 50;
+        for (int i = 0; i < animatedSprites.size(); i++) {
+            var sprite = animatedSprites.get(i);
+            sprite.x = spriteStartX + i * 100; // Adjusted x position
+            sprite.y = 230;
             sprite.render(g);
-            i += 2;
         }
-        g.setComposite(t);
+
     }
 }

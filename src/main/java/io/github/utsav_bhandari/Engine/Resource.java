@@ -12,15 +12,16 @@ import java.io.IOException;
  */
 public final class Resource {
     private static Resource instance;
-
     private static final BufferedImage NULL = loadResourceImage("/NULL.png");
     public final BufferedImage titleScreen;
     public final BufferedImage gameBackground;
+    public final BufferedImage scroll;
 
     private Resource() {
         // TODO: init stuff here
         titleScreen = loadResourceImage("/backgrounds/title_screen.png");
         gameBackground = loadResourceImage("/backgrounds/game_background.png");
+        scroll = loadResourceImage("/backgrounds/scroll.png");
 
         var spells1 = loadResourceImage("/sprites/pixel-spell-effect/spells-0.png");
         var spells2 = loadResourceImage("/sprites/pixel-spell-effect/spells-1.png");
