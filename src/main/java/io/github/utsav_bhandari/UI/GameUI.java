@@ -21,6 +21,8 @@ public class GameUI implements IRenderable {
     private final DebugOverlay debugOverlay;
     private final HelpOverlay[] helpOverlays;
 
+    private final Font splashScreenFont = new Font("Arial", Font.PLAIN, 100);
+
     private String visibleText = "";
 
     public GameUI(Game game) {
@@ -163,6 +165,12 @@ public class GameUI implements IRenderable {
                 if (p.isViewingHelp()) {
                     helpOverlays[i].render(g);
                 }
+            }
+
+            if (game.world.splashScreenText != null) {
+                g.setColor(Color.BLACK);
+                g.setFont(splashScreenFont);
+                g.drawString(game.world.splashScreenText, 600, 400);
             }
         } else if (game.getGameState() == Game.GameState.GAME_OVER) {
             g.drawImage(r.titleScreen, 0, 0, 1920, 200, null);

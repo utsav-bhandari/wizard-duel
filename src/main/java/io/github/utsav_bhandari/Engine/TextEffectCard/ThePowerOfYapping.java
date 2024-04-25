@@ -1,6 +1,7 @@
 package io.github.utsav_bhandari.Engine.TextEffectCard;
 
 import io.github.utsav_bhandari.Engine.TurnEventHook;
+import io.github.utsav_bhandari.Lib.Util;
 import io.github.utsav_bhandari.Render.IRenderable;
 
 import java.awt.*;
@@ -23,6 +24,7 @@ public class ThePowerOfYapping extends ATextEffectCard implements IRenderable, I
 
     @Override
     public boolean hook(TurnEventHook event) {
+        Util.unsafeWait(1000);
         System.out.println("Yap Yap Yap");
         return true;
     }

@@ -2,6 +2,7 @@ package io.github.utsav_bhandari.Engine;
 
 import io.github.utsav_bhandari.Engine.SpellCard.ISpellCard;
 import io.github.utsav_bhandari.Engine.TextEffectCard.ITextEffectCard;
+import io.github.utsav_bhandari.Lib.Util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,6 +39,8 @@ public class Round {
 
         System.out.println("Giving player choices");
 
+        world.splashScreenText("Choose your cards!");
+
         while (!allPlayersSelected()) {
             world.setWorldState(World.WORLD_STATE_SELECTION_STARTED);
             world.waitForUi();
@@ -52,6 +55,8 @@ public class Round {
             var defender = world.players[1 - attackerIdx];
 
             var turn = new Turn(this, attacker, defender);
+
+            world.splashScreenText("Player " + attackerIdx + " is attacking");
 
             turns.add(turn);
 

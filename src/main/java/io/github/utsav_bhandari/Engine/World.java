@@ -5,9 +5,12 @@ import io.github.utsav_bhandari.Engine.SpellCard.ThePowerOfExample;
 import io.github.utsav_bhandari.Engine.TextEffectCard.ITextEffectCard;
 import io.github.utsav_bhandari.Engine.TextEffectCard.ThePowerOfYapping;
 import io.github.utsav_bhandari.Game;
+import io.github.utsav_bhandari.Lib.Util;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class World {
     public final Game game;
@@ -26,6 +29,8 @@ public class World {
     public final Player[] players = new Player[2];
 
     public String debugStatus = "";
+
+    public String splashScreenText = null;
 
     /*
      * Internal docs:
@@ -140,7 +145,11 @@ public class World {
             var round = new Round(this);
             rounds.add(round);
 
+            int roundIdx = rounds.size();
+
             System.out.println("Round " + rounds.size() + " started");
+
+            splashScreenText("Round " + roundIdx + " started");
 
             round.run();
 
@@ -161,6 +170,14 @@ public class World {
 
     public synchronized void notifyUi() {
         this.notify();
+    }
+
+    public void splashScreenText(String text) {
+        splashScreenText = text;
+
+        Util.unsafeWait(1000);
+
+        splashScreenText = null;
     }
 
     public Round getCurrentRound() {
