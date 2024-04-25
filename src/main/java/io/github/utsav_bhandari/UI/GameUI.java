@@ -3,8 +3,6 @@ package io.github.utsav_bhandari.UI;
 import edu.princeton.cs.algs4.StdDraw;
 import io.github.utsav_bhandari.Engine.KeyboardInputHandler;
 import io.github.utsav_bhandari.Engine.Player;
-import io.github.utsav_bhandari.Engine.PlayerKeymap;
-import io.github.utsav_bhandari.Engine.World;
 import io.github.utsav_bhandari.Game;
 import io.github.utsav_bhandari.Lib.StdDrawBridge;
 import io.github.utsav_bhandari.Render.IRenderable;
@@ -21,6 +19,7 @@ public class GameUI implements IRenderable {
     private final Game game;
 
     private final DebugOverlay debugOverlay;
+    private final HelpOverlay[] helpOverlays;
 
     private String visibleText = "";
 
@@ -70,40 +69,50 @@ public class GameUI implements IRenderable {
         });
 
         resetText();
+
+        helpOverlays = new HelpOverlay[game.world.players.length];
+        for (int i = 0; i < game.world.players.length; i++) {
+            helpOverlays[i] = new HelpOverlay(i);
+        }
     }
 
     private static ArrayList<Function<KeyEvent, Boolean>> getGameScreenHandlers(Game game) {
         var gameScreenHandlers = new ArrayList<Function<KeyEvent, Boolean>>();
 
         gameScreenHandlers.add(e -> {
-            if (game.world.getWorldState() >= World.WORLD_STATE_SELECTION_STARTED
-                    && game.world.getWorldState() < World.WORLD_STATE_ON_TURN
-            ) {
-                var round = game.world.getCurrentRound();
+            for (int i = 0; i < game.world.players.length; i++) {
+                var p = game.world.players[i];
 
-                for (int i = 0; i < game.world.players.length; i++) {
-                    var p = game.world.players[i];
+                var km = p.getKeymap();
 
-                    var km = p.getKeymap();
+                var action = km.getAction(e.getKeyCode());
 
-                    var action = km.getAction(e.getKeyCode());
+                if (action == null) continue;
 
-                    if (action == null) continue;
+                if (action == Action.HELP) p.toggleHelp();
 
+                if (game.world.getWorldState() >= io.github.utsav_bhandari.Engine.World.WORLD_STATE_SELECTION_STARTED
+                        && game.world.getWorldState() < io.github.utsav_bhandari.Engine.World.WORLD_STATE_ON_TURN
+                ) {
                     switch (action) {
                         case Action.MOVE_LEFT -> p.moveChoice(-1);
                         case Action.MOVE_RIGHT -> p.moveChoice(1);
                         case Action.SELECT -> p.confirmChoice();
-                        case Action.HELP -> p.toggleHelp();
                         default -> {}
                     }
 
                     game.world.notifyUi();
                 }
+
+                if (game.world.getWorldState() >= io.github.utsav_bhandari.Engine.World.WORLD_STATE_ON_CHARGE_PROMPT
+                        && game.world.getWorldState() < io.github.utsav_bhandari.Engine.World.WORLD_STATE_ON_TURN) {
+                    //
+                }
             }
 
             return false;
         });
+
         return gameScreenHandlers;
     }
 
@@ -123,10 +132,13 @@ public class GameUI implements IRenderable {
         } else if (game.getGameState() == Game.GameState.GAME_RUNNING) {
             g.drawImage(r.gameBackground, 0, 0, 1920, 1080, null);
 
-            if (game.world.getWorldState() >= World.WORLD_STATE_SELECTION_STARTED
-                    && game.world.getWorldState() < World.WORLD_STATE_ON_TURN) {
-                var round = game.world.getCurrentRound();
+            for (var p : game.world.players) {
+                p.render(g);
+            }
 
+            if (game.world.getWorldState() >= io.github.utsav_bhandari.Engine.World.WORLD_STATE_SELECTION_STARTED
+                    && game.world.getWorldState() < io.github.utsav_bhandari.Engine.World.WORLD_STATE_ON_TURN) {
+                var round = game.world.getCurrentRound();
                 Player[] players = game.world.players;
                 for (int i = 0; i < players.length; i++) {
                     var p = players[i];
@@ -142,6 +154,15 @@ public class GameUI implements IRenderable {
                     selection.render(g);
 
                     g.translate(-off, 0);
+                }
+            }
+
+
+            Player[] players = game.world.players;
+            for (int i = 0; i < players.length; i++) {
+                var p = players[i];
+                if (p.isViewingHelp()) {
+                    helpOverlays[i].render(g);
                 }
             }
         } else if (game.getGameState() == Game.GameState.GAME_OVER) {

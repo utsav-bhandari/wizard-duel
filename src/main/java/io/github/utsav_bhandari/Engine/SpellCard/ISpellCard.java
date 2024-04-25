@@ -1,11 +1,16 @@
 package io.github.utsav_bhandari.Engine.SpellCard;
 
 import io.github.utsav_bhandari.Engine.ICard;
+import io.github.utsav_bhandari.Engine.Player;
 
 import java.awt.*;
 import java.awt.image.AffineTransformOp;
 
 public interface ISpellCard extends ICard {
+    Player getTarget();
+
+    void setTarget(Player target);
+
     /**
      * Maximum charges you can spend on this card
      */

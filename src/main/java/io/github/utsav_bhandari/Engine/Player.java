@@ -6,7 +6,6 @@ import io.github.utsav_bhandari.Render.IRenderable;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Player extends AEntity implements IEntity, IPlayerControl, IRenderable {
     private final int id;
@@ -24,12 +23,9 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
     private PlayerKeymap keymap;
 
 
-    final private List<ITextEffectCard> textEffectCards = new ArrayList<>();
+    public ArrayList<ITextEffectCard> textEffectCards = new ArrayList<>();
 
-    /**
-     * If true, display help page on their screen
-     */
-    public boolean isViewingHelp = false;
+    private boolean viewingHelp = false;
 
     public Player(int id) {
         this.id = id;
@@ -107,7 +103,7 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
 
     @Override
     public void toggleHelp() {
-        isViewingHelp = !isViewingHelp;
+        setViewingHelp(!isViewingHelp());
     }
 
     @Override
@@ -126,5 +122,16 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
 
     public void setKeymap(PlayerKeymap keymap) {
         this.keymap = keymap;
+    }
+
+    /**
+     * If true, display help page on their screen
+     */
+    public boolean isViewingHelp() {
+        return viewingHelp;
+    }
+
+    public void setViewingHelp(boolean viewingHelp) {
+        this.viewingHelp = viewingHelp;
     }
 }

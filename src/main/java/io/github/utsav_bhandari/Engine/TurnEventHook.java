@@ -1,16 +1,14 @@
 package io.github.utsav_bhandari.Engine;
 
-import io.github.utsav_bhandari.Game;
-
-public class GameHookEvent {
+public class TurnEventHook {
     public final AttackEvent attackEvent;
-    public final Game game;
+    public final World world;
 
     private boolean isCancelled = false;
 
-    public GameHookEvent(AttackEvent attackEvent, Game game) {
+    public TurnEventHook(AttackEvent attackEvent, World world) {
         this.attackEvent = attackEvent;
-        this.game = game;
+        this.world = world;
     }
 
     public boolean isCancelled() {
