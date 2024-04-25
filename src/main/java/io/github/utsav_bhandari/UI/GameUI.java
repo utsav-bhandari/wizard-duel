@@ -145,14 +145,13 @@ public class GameUI implements IRenderable {
 
                     int off = i * StdDrawBridge.width / 2;
 
-                    g.translate(off, 0);
 
                     var selection = round.getPlayerSelection(p);
 
-                    if (selection == null) continue;
+                    if (selection == null || p.isViewingHelp()) continue;
 
+                    g.translate(off, 0);
                     selection.render(g);
-
                     g.translate(-off, 0);
                 }
             }
