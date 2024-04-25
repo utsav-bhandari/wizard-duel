@@ -18,6 +18,7 @@ import java.util.List;
 public class Selection implements IRenderable {
     private final List<ITextEffectCard> textEffectCardChoices;
     private final List<ISpellCard> spellCardChoices;
+    private final AlphaComposite alphaComposite;
 
     private int textEffectCardChoice = 0;
     private int spellCardChoice = 0;
@@ -25,6 +26,7 @@ public class Selection implements IRenderable {
     private int state = 0;
 
     public Selection(List<ITextEffectCard> textEffectCardChoices, List<ISpellCard> spellCardChoices) {
+        alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
         this.textEffectCardChoices = textEffectCardChoices;
         this.spellCardChoices = spellCardChoices;
     }
@@ -96,6 +98,8 @@ public class Selection implements IRenderable {
      */
     @Override
     public void render(Graphics2D g) {
+        var t = g.getComposite();
+        g.setComposite(alphaComposite);
         int targetWidth = StdDrawBridge.width / 2 - 40;
         int targetHeight = StdDrawBridge.height - 400;
 
@@ -106,6 +110,8 @@ public class Selection implements IRenderable {
         g.drawString("Text effect " + textEffectCardChoice, 30, 240);
         g.drawString("Spell effect " + spellCardChoice, 30, 260);
         g.drawString("State " + state, 30, 280);
+
+        g.setComposite(t);
     }
 
     public ITextEffectCard getTextEffectCard() {

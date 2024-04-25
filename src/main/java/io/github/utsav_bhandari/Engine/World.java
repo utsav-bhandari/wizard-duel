@@ -106,7 +106,7 @@ public class World {
         players[0].x = 100;
         players[0].y = 520;
 
-        players[1].x = 1520;
+        players[1].x = 1720;
         players[1].y = 520;
 
         var km = new PlayerKeymap();

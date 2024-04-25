@@ -21,10 +21,14 @@ public class Turn {
         System.out.println("Running turn");
 
         var textEffectCard = round.getPlayerSelection(attacker).getTextEffectCard();
-        textEffectCard.setOwner(attacker);
+        if (textEffectCard != null) {
+            textEffectCard.setOwner(attacker);
+        }
         var spellCard = round.getPlayerSelection(attacker).getSpellCard();
-        spellCard.setOwner(attacker);
-        spellCard.setTarget(defender);
+        if (spellCard != null) {
+            spellCard.setOwner(attacker);
+            spellCard.setTarget(defender);
+        }
         attacker.textEffectCards.add(textEffectCard);
 
         round.world.setWorldState(World.WORLD_STATE_ON_CHARGE_ADD);
