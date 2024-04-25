@@ -34,6 +34,32 @@ public class DebugOverlay implements IRenderable {
         items.add("World locked? " + (game.getWorldThread().getState() == Thread.State.WAITING ? "Yes" : "No"));
         items.add("World debug: " + game.world.debugStatus);
 
+        for (int i = 0; i < game.world.players.length; i++) {
+            var player = game.world.players[i];
+            items.add("Player " + i);
+            items.add("  HP: " + player.getHealth() + "/" + player.getMaxHealth());
+            items.add("  Charge: " + player.getCharge() + "/" + player.getMaxCharge());
+
+            items.add("  TextEffectCards: ");
+
+            for (var card : player.textEffectCards) {
+                items.add("    " + card.getName());
+            }
+
+            var round = game.world.getCurrentRound();
+
+            if (round == null) continue;
+
+            var selection = round.getPlayerSelection(player);
+
+
+            if (selection == null) continue;
+
+            var spellCard = selection.getSpellCard();
+
+            items.add("  SpellCard: " + spellCard.getName());
+        }
+
         g.setFont(font);
         for (int i = 0; i < items.size(); i++) {
             var item = items.get(i);

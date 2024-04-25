@@ -23,13 +23,13 @@ public class Turn {
         var textEffectCard = round.getPlayerSelection(attacker).getTextEffectCard();
         if (textEffectCard != null) {
             textEffectCard.setOwner(attacker);
+            attacker.textEffectCards.add(textEffectCard);
         }
         var spellCard = round.getPlayerSelection(attacker).getSpellCard();
         if (spellCard != null) {
             spellCard.setOwner(attacker);
             spellCard.setTarget(defender);
         }
-        attacker.textEffectCards.add(textEffectCard);
 
         round.world.setWorldState(World.WORLD_STATE_ON_CHARGE_ADD);
 
