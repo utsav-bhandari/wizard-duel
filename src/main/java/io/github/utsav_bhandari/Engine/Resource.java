@@ -24,6 +24,7 @@ public final class Resource {
 
         var spells1 = loadResourceImage("/sprites/pixel-spell-effect/spells-0.png");
         var spells2 = loadResourceImage("/sprites/pixel-spell-effect/spells-1.png");
+        var wizardAttack1 = loadResourceImage("/wizards/Attack1.png");
 
         AnimatedSpriteRoot.registerAnimatedSprite(
                 "Charge Cascade",
@@ -153,8 +154,25 @@ public final class Resource {
                 false
         );
 
+        AnimatedSpriteRoot.registerAnimatedSprite(
+                "Wizard Attack 1",
+                wizardAttack1,
+                250,
+                250,
+                0,
+                0,
+                250,
+                0,
+                8,
+                60,
+                10,
+                -1,
+                false
+        );
+
         spells1.flush();
         spells2.flush();
+        wizardAttack1.flush();
     }
 
     /**

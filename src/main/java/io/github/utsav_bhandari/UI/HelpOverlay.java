@@ -13,12 +13,15 @@ public final class HelpOverlay implements IRenderable {
     private final Color helpBackgroundColorRight;
     private final Color helpBackgroundColorLeft;
     private ArrayList<AnimatedSprite> animatedSprites;
+    private AlphaComposite alphaComposite;
 
     /* side of 0 represents the left and side of 1 represents the right side of the screen */
     public HelpOverlay(int side) {
+        alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f);
+
         this.side = side;
-        this.helpBackgroundColorRight = new Color(1f, 0f, 0f, 0.2f);
-        this.helpBackgroundColorLeft = new Color(0f, 0f, 1f, 0.2f);
+        this.helpBackgroundColorRight = new Color(1f, 0f, 0f);
+        this.helpBackgroundColorLeft = new Color(0f, 0f, 1f);
 
         var r = Resource.getInstance();
         var spriteIDs = new ArrayList<String>();
@@ -31,6 +34,7 @@ public final class HelpOverlay implements IRenderable {
         spriteIDs.add("Infernal Circle");
         spriteIDs.add("Tempest Reversal");
         spriteIDs.add("Arcane Quota");
+        spriteIDs.add("Wizard Attack 1");
 
         this.animatedSprites = new ArrayList<>();
 
@@ -42,6 +46,8 @@ public final class HelpOverlay implements IRenderable {
 
     @Override
     public void render(Graphics2D g) {
+        var t = g.getComposite();
+        g.setComposite(alphaComposite);
         int screenWidth = StdDrawBridge.width;
         int screenHeight = StdDrawBridge.height;
         int helpScreenWidth = screenWidth/2;
@@ -70,5 +76,6 @@ public final class HelpOverlay implements IRenderable {
             sprite.render(g);
             i += 2;
         }
+        g.setComposite(t);
     }
 }
