@@ -37,7 +37,6 @@ public final class HelpOverlay implements IRenderable {
         spriteIDs.add("Infernal Circle");
         spriteIDs.add("Tempest Reversal");
         spriteIDs.add("Arcane Quota");
-//        spriteIDs.add("Wizard Attack 1");
 
         this.animatedSprites = new ArrayList<>();
 

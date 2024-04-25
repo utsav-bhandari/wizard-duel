@@ -56,7 +56,9 @@ public class DebugOverlay implements IRenderable {
             if (selection == null) continue;
 
             var spellCard = selection.getSpellCard();
-
+            if (spellCard == null) {
+                continue;
+            }
             items.add("  SpellCard: " + spellCard.getName());
         }
 
