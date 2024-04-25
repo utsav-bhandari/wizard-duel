@@ -4,11 +4,13 @@ public class TurnEventHook {
     public final AttackEvent attackEvent;
     public final World world;
 
+    public final Turn turn;
     private boolean isCancelled = false;
 
-    public TurnEventHook(AttackEvent attackEvent, World world) {
+    public TurnEventHook(AttackEvent attackEvent, World world, Turn turn) {
         this.attackEvent = attackEvent;
         this.world = world;
+        this.turn = turn;
     }
 
     public boolean isCancelled() {

@@ -17,32 +17,19 @@ public class Turn {
         this.round = round;
     }
 
+
     public void run() {
         System.out.println("Running turn");
 
-        var textEffectCard = round.getPlayerSelection(attacker).getTextEffectCard();
-        if (textEffectCard != null) {
-            textEffectCard.setOwner(attacker);
-            attacker.textEffectCards.add(textEffectCard);
-        }
-        var spellCard = round.getPlayerSelection(attacker).getSpellCard();
-        if (spellCard != null) {
-            spellCard.setOwner(attacker);
-            attacker.setCurrentSpellCard(spellCard);
-            spellCard.setTarget(defender);
-        }
-
         round.world.setWorldState(World.WORLD_STATE_ON_CHARGE_ADD);
-
-        var e = new TurnEventHook(null, round.world);
 
         /*
          * I have learned something new here...
          *
          * I will become stronger next time
          */
-        if (processHook(e, attacker)) return;
-        if (processHook(e, defender)) return;
+        if (processHook(attacker)) return;
+        if (processHook(defender)) return;
 
         int chargeToAdd = 2;
 
@@ -50,8 +37,10 @@ public class Turn {
 
         round.world.setWorldState(World.WORLD_STATE_CHARGE_ADDED);
 
-        if (processHook(e, attacker)) return;
-        if (processHook(e, defender)) return;
+        if (processHook(attacker)) return;
+        if (processHook(defender)) return;
+
+        var spellCard = round.getPlayerSelection(attacker).getSpellCard();
 
         if (spellCard != null) {
             System.out.println("Charge added");
@@ -61,8 +50,8 @@ public class Turn {
             spellCard.prime();
             round.world.setWorldState(World.WORLD_STATE_SPELL_PRIMED);
 
-            if (processHook(e, attacker)) return;
-            if (processHook(e, defender)) return;
+            if (processHook(attacker)) return;
+            if (processHook(defender)) return;
 
             round.world.setWorldState(World.WORLD_STATE_ON_CAST);
             spellCard.cast();
@@ -75,7 +64,9 @@ public class Turn {
         System.out.println("Turn ended");
     }
 
-    private boolean processHook(TurnEventHook e, Player player) {
+    private boolean processHook(Player player) {
+        var e = new TurnEventHook(null, round.world, this);
+
         for (var t : cloneArray(player.textEffectCards)) {
             boolean r = t.hook(e);
 

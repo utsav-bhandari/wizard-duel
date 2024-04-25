@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class ThePowerOfExample extends ASpellCard implements ISpellCard {
     private final ArrayList<AnimatedSprite> sprites = new ArrayList<>();
+    private int radius;
 
     private float angle = 0;
 
@@ -18,6 +19,8 @@ public class ThePowerOfExample extends ASpellCard implements ISpellCard {
         // trigger update
         setDamage(10);
         scale = 4;
+
+        radius = 100;
 
         var trans = new AffineTransform();
 
@@ -54,6 +57,7 @@ public class ThePowerOfExample extends ASpellCard implements ISpellCard {
         setDamage(0);
         for (int i = 0; i < dmg; i++) {
             setDamage(getDamage() + 1);
+            radius = 30 + i * 20;
             Util.unsafeWait(300);
         }
 
@@ -76,7 +80,11 @@ public class ThePowerOfExample extends ASpellCard implements ISpellCard {
             spellX = Util.lerp(owner.x, getTarget().x, i / niter);
             spellY = Util.lerp(owner.y, getTarget().y, i / niter);
         }
-        Util.unsafeWait(1000);
+
+        for (int i = 0; i < 10; i++) {
+            Util.unsafeWait(50);
+            radius -= 20;
+        }
     }
 
     @Override
@@ -106,8 +114,6 @@ public class ThePowerOfExample extends ASpellCard implements ISpellCard {
 
     @Override
     public void renderSpell(Graphics2D g) {
-        float RADIUS = 100;
-
         angle += 0.04f;
 
         for (int i = 0; i < sprites.size(); i++) {
@@ -116,7 +122,7 @@ public class ThePowerOfExample extends ASpellCard implements ISpellCard {
             var sprite = sprites.get(i);
 
 //            float r = (float) Math.sin(angle / 4) * RADIUS;
-            float r = 2.0f * RADIUS;
+            float r = radius;
 
             sprite.x = (int) (spellX + Math.cos(angle + angleOffset) * r) - scale * sprite.getWidth() / 2;
             sprite.y = (int) (spellY + Math.sin(angle + angleOffset) * r) - scale * sprite.getHeight() / 2;

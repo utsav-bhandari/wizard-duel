@@ -46,6 +46,24 @@ public class Round {
             world.waitForUi();
         }
 
+
+        for (int i = 0; i < 2; i++) {
+            var attacker = world.players[i];
+            var defender = world.players[1 - i];
+
+            var textEffectCard = this.getPlayerSelection(attacker).getTextEffectCard();
+            if (textEffectCard != null) {
+                textEffectCard.setOwner(attacker);
+                attacker.textEffectCards.add(textEffectCard);
+            }
+            var spellCard = this.getPlayerSelection(attacker).getSpellCard();
+            if (spellCard != null) {
+                spellCard.setOwner(attacker);
+                spellCard.setTarget(defender);
+            }
+            attacker.setCurrentSpellCard(spellCard);
+        }
+
         int goesFirst = (int) (Math.random() * 2);
 
         for (int i = 0; i < 2; i++) {
@@ -61,6 +79,8 @@ public class Round {
             turns.add(turn);
 
             turn.run();
+
+            world.setWorldState(World.WORLD_STATE_TURN_ENDED);
         }
 
         world.setWorldState(World.WORLD_STATE_ROUND_ENDED);
