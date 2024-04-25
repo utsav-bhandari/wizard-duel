@@ -139,8 +139,8 @@ public class GameUI implements IRenderable {
                 p.render(g);
             }
 
-            if (game.world.getWorldState() >= io.github.utsav_bhandari.Engine.World.WORLD_STATE_SELECTION_STARTED
-                    && game.world.getWorldState() < io.github.utsav_bhandari.Engine.World.WORLD_STATE_ON_TURN) {
+            if (game.world.getWorldState() >= World.WORLD_STATE_SELECTION_STARTED
+                    && game.world.getWorldState() < World.WORLD_STATE_ON_TURN) {
                 var round = game.world.getCurrentRound();
                 Player[] players = game.world.players;
                 for (int i = 0; i < players.length; i++) {
@@ -161,7 +161,7 @@ public class GameUI implements IRenderable {
 
 
             if (game.world.getWorldState() >= World.WORLD_STATE_ON_SPELL_PRIME
-                    && game.world.getWorldState() < io.github.utsav_bhandari.Engine.World.WORLD_STATE_TURN_ENDED) {
+                    && game.world.getWorldState() < World.WORLD_STATE_TURN_ENDED) {
                 // render spell
                 var turn = game.world.getCurrentTurn();
                 if (turn != null) {

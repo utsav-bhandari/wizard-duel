@@ -158,7 +158,7 @@ public class World {
     }
 
     /**
-     * Literally just stops until the UI "frees" the world to run again
+     * Stops until the UI "frees" the world to run again
      */
     public synchronized void waitForUi() {
         try {

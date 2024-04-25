@@ -66,11 +66,8 @@ public final class HelpOverlay implements IRenderable {
         g.setComposite(t);
 
         int spriteStartX;
-        if (side == 0) {
-            spriteStartX = xPosition + 40; // Start position for left side
-        } else {
-            spriteStartX = xPosition + 40; // Adjusted start position for right side
-        }
+        // Adjusted start position for right side
+        spriteStartX = xPosition + 40; // Start position for left side
 
         for (int i = 0; i < animatedSprites.size(); i++) {
             var sprite = animatedSprites.get(i);
