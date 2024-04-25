@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Round {
     public final List<Turn> turns = new ArrayList<>();
-    private final World world;
+    public final World world;
 
     private final HashMap<Player, Selection> playerSelections = new HashMap<>();
 
@@ -41,6 +41,21 @@ public class Round {
         while (!allPlayersSelected()) {
             world.setWorldState(World.WORLD_STATE_SELECTION_STARTED);
             world.waitForUi();
+        }
+
+        int goesFirst = (int) (Math.random() * 2);
+
+        for (int i = 0; i < 2; i++) {
+            int attackerIdx = (goesFirst + i) % 2;
+
+            var attacker = world.players[attackerIdx];
+            var defender = world.players[1 - attackerIdx];
+
+            var turn = new Turn(this, attacker, defender);
+
+            turns.add(turn);
+
+            turn.run();
         }
 
         world.setWorldState(World.WORLD_STATE_ROUND_ENDED);

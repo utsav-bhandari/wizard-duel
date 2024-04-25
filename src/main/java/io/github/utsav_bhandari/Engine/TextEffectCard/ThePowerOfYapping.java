@@ -1,7 +1,6 @@
 package io.github.utsav_bhandari.Engine.TextEffectCard;
 
-import io.github.utsav_bhandari.Engine.GameHookEvent;
-import io.github.utsav_bhandari.Engine.ICard;
+import io.github.utsav_bhandari.Engine.TurnEventHook;
 import io.github.utsav_bhandari.Render.IRenderable;
 
 import java.awt.*;
@@ -23,7 +22,7 @@ public class ThePowerOfYapping extends ATextEffectCard implements IRenderable, I
     }
 
     @Override
-    public boolean hook(GameHookEvent event) {
+    public boolean hook(TurnEventHook event) {
         System.out.println("Yap Yap Yap");
         return true;
     }

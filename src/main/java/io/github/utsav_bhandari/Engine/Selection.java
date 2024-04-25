@@ -107,4 +107,12 @@ public class Selection implements IRenderable {
         g.drawString("Spell effect " + spellCardChoice, 30, 260);
         g.drawString("State " + state, 30, 280);
     }
+
+    public ITextEffectCard getTextEffectCard() {
+        return textEffectCardChoices.get(textEffectCardChoice);
+    }
+
+    public ISpellCard getSpellCard() {
+        return spellCardChoices.get(spellCardChoice);
+    }
 }

@@ -5,7 +5,6 @@ import io.github.utsav_bhandari.Engine.SpellCard.ThePowerOfExample;
 import io.github.utsav_bhandari.Engine.TextEffectCard.ITextEffectCard;
 import io.github.utsav_bhandari.Engine.TextEffectCard.ThePowerOfYapping;
 import io.github.utsav_bhandari.Game;
-import io.github.utsav_bhandari.Lib.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +76,9 @@ public class World {
     public static final int WORLD_STATE_ON_CHARGE_ADD = worldStateOn(100);
     public static final int WORLD_STATE_CHARGE_ADDED = worldStateDoneHook(200);
     public static final int WORLD_STATE_ON_SPELL_PRIME = worldStateOn(300);
+    public static final int WORLD_STATE_SPELL_PRIMED = worldStateOn(350);
+    public static final int WORLD_STATE_ON_CHARGE_PROMPT = worldStateDoneHook(400);
+    public static final int WORLD_STATE_ON_CAST = worldStateOn(500);
 
     public static final int WORLD_STATE_TURN_ENDED = worldStateOn(1000);
     public static final int WORLD_STATE_ROUND_ENDED = worldStateOn(2000);
@@ -100,6 +102,12 @@ public class World {
 
         players[0].world = this;
         players[1].world = this;
+
+        players[0].x = 100;
+        players[0].y = 520;
+
+        players[1].x = 1520;
+        players[1].y = 520;
 
         var km = new PlayerKeymap();
 

@@ -1,7 +1,6 @@
 package io.github.utsav_bhandari;
 
 import io.github.utsav_bhandari.Engine.Resource;
-import io.github.utsav_bhandari.Engine.World;
 import io.github.utsav_bhandari.UI.GameUI;
 
 import javax.swing.*;
@@ -27,7 +26,7 @@ public final class Game {
         GAME_OVER
     }
 
-    public final World world;
+    public final io.github.utsav_bhandari.Engine.World world;
     private final GameUI ui;
     public final Resource resource;
 
@@ -35,9 +34,8 @@ public final class Game {
         this.frame = frame;
 
         resource = Resource.getInstance();
-        world = new World(this);
+        world = new io.github.utsav_bhandari.Engine.World(this);
         ui = new GameUI(this);
-        // TODO
 
         worldThread = new Thread(() -> {
             setGameState(GameState.GAME_RUNNING);

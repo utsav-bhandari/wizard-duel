@@ -1,5 +1,6 @@
 package io.github.utsav_bhandari.Lib;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,5 +40,9 @@ public class Util {
         threadPool.put(r, t);
 
         t.start();
+    }
+
+    public static <T> ArrayList<T> cloneArray(List<T> list) {
+        return new ArrayList<>(list);
     }
 }
