@@ -30,6 +30,14 @@ public class AnimatedSprite implements IRenderable {
         frameMixer = new FrameMixer(r.sourceTargetFps, r.destRenderFps);
     }
 
+    public int getWidth() {
+        return root.width;
+    }
+
+    public int getHeight() {
+        return root.height;
+    }
+
     public boolean isDone() {
         return repeatCount >= root.repeat;
     }

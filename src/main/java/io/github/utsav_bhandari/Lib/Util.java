@@ -45,4 +45,8 @@ public class Util {
     public static <T> ArrayList<T> cloneArray(List<T> list) {
         return new ArrayList<>(list);
     }
+
+    public static float lerp(float a, float b, float t) {
+        return a + (b - a) * t;
+    }
 }

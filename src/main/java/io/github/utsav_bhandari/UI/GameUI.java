@@ -3,6 +3,7 @@ package io.github.utsav_bhandari.UI;
 import edu.princeton.cs.algs4.StdDraw;
 import io.github.utsav_bhandari.Engine.KeyboardInputHandler;
 import io.github.utsav_bhandari.Engine.Player;
+import io.github.utsav_bhandari.Engine.World;
 import io.github.utsav_bhandari.Game;
 import io.github.utsav_bhandari.Lib.StdDrawBridge;
 import io.github.utsav_bhandari.Render.IRenderable;
@@ -159,6 +160,16 @@ public class GameUI implements IRenderable {
             }
 
 
+            if (game.world.getWorldState() >= World.WORLD_STATE_ON_SPELL_PRIME
+                    && game.world.getWorldState() < io.github.utsav_bhandari.Engine.World.WORLD_STATE_TURN_ENDED) {
+                // render spell
+                var turn = game.world.getCurrentTurn();
+                if (turn != null) {
+                    turn.attacker.getCurrentSpellCard().renderSpell(g);
+                }
+            }
+
+
             Player[] players = game.world.players;
             for (int i = 0; i < players.length; i++) {
                 var p = players[i];
@@ -168,9 +179,9 @@ public class GameUI implements IRenderable {
             }
 
             if (game.world.splashScreenText != null) {
-                g.setColor(Color.BLACK);
-                g.setFont(splashScreenFont);
-                g.drawString(game.world.splashScreenText, 600, 400);
+                StdDraw.setPenColor(Color.BLACK);
+                StdDraw.setFont(splashScreenFont);
+               StdDraw.text((double) StdDrawBridge.width / 2, (double) StdDrawBridge.height / 2, game.world.splashScreenText);
             }
         } else if (game.getGameState() == Game.GameState.GAME_OVER) {
             g.drawImage(r.titleScreen, 0, 0, 1920, 200, null);

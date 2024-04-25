@@ -175,7 +175,7 @@ public class World {
     public void splashScreenText(String text) {
         splashScreenText = text;
 
-        Util.unsafeWait(1000);
+        Util.unsafeWait(100);
 
         splashScreenText = null;
     }

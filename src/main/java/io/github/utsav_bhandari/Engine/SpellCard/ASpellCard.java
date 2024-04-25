@@ -9,6 +9,11 @@ import java.awt.image.BufferedImage;
 public abstract class ASpellCard extends ACard {
     private Player target;
 
+    public float spellX;
+    public float spellY;
+
+    public float scale;
+
     public void setTarget(Player target) {
         this.target = target;
     }
@@ -48,7 +53,6 @@ public abstract class ASpellCard extends ACard {
     public boolean isCasting() {
         return state == 2;
     }
-
 
     public float getDamage() {
         return damage;

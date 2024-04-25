@@ -9,7 +9,7 @@ import java.awt.*;
 public class ThePowerOfYapping extends ATextEffectCard implements IRenderable, ITextEffectCard {
     @Override
     public void render(Graphics2D g) {
-        g.drawString("The Power of Yapping", 100, 100);
+        g.drawString("The Power of Yapping", x, y);
     }
 
     @Override

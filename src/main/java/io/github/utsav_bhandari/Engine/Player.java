@@ -15,6 +15,7 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
     private final int id;
     private final AnimatedSprite idleAnimation;
     private final BufferedImageOp flipTransformOp;
+    private final AffineTransform flipTransform;
 
     private int health = 80;
     private int maxHealth = 90;
@@ -40,7 +41,7 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
 
         idleAnimation = r.getAnimatedSprite("Wizard Idle");
 
-        var flipTransform = new AffineTransform();
+        flipTransform = new AffineTransform();
 
         flipTransform.scale(id == 0 ? 1 : -1, 1);
 
@@ -124,14 +125,14 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
 
     @Override
     public void render(Graphics2D g) {
-        idleAnimation.x = x;
-        idleAnimation.y = y;
 
         g.translate(x, y);
         g.setColor(Color.BLACK);
-        g.drawString("Player " + id, 10, 10);
+        g.drawString("Player " + (id + 1), 0, 0);
         g.translate(-x, -y);
 
+        idleAnimation.x = (float) (x - flipTransform.getScaleX() * idleAnimation.getWidth() / 2);
+        idleAnimation.y = (float) (y - flipTransform.getScaleY() * idleAnimation.getHeight() / 2);
         idleAnimation.op = flipTransformOp;
         idleAnimation.render(g);
     }
@@ -153,5 +154,13 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
 
     public void setViewingHelp(boolean viewingHelp) {
         this.viewingHelp = viewingHelp;
+    }
+
+    public ISpellCard getCurrentSpellCard() {
+        return currentSpellCard;
+    }
+
+    public void setCurrentSpellCard(ISpellCard currentSpellCard) {
+        this.currentSpellCard = currentSpellCard;
     }
 }

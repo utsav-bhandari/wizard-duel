@@ -28,6 +28,7 @@ public class Turn {
         var spellCard = round.getPlayerSelection(attacker).getSpellCard();
         if (spellCard != null) {
             spellCard.setOwner(attacker);
+            attacker.setCurrentSpellCard(spellCard);
             spellCard.setTarget(defender);
         }
 
@@ -52,21 +53,24 @@ public class Turn {
         if (processHook(e, attacker)) return;
         if (processHook(e, defender)) return;
 
-        System.out.println("Charge added");
+        if (spellCard != null) {
+            System.out.println("Charge added");
+            System.out.println("Priming spell card");
 
-        System.out.println("Priming spell card");
+            round.world.setWorldState(World.WORLD_STATE_ON_SPELL_PRIME);
+            spellCard.prime();
+            round.world.setWorldState(World.WORLD_STATE_SPELL_PRIMED);
 
-        round.world.setWorldState(World.WORLD_STATE_ON_SPELL_PRIME);
-        spellCard.prime();
-        round.world.setWorldState(World.WORLD_STATE_SPELL_PRIMED);
+            if (processHook(e, attacker)) return;
+            if (processHook(e, defender)) return;
 
-        if (processHook(e, attacker)) return;
-        if (processHook(e, defender)) return;
+            round.world.setWorldState(World.WORLD_STATE_ON_CAST);
+            spellCard.cast();
 
-        round.world.setWorldState(World.WORLD_STATE_ON_CAST);
-        spellCard.cast();
-
-        Util.unsafeWait(500);
+            Util.unsafeWait(500);
+        } else {
+            System.out.println("Spell card is null");
+        }
 
         System.out.println("Turn ended");
     }
