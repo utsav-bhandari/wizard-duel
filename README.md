@@ -1,4 +1,4 @@
-# Wizard Duel game
+# Wizard Duel
 
 Turn based tabletop simulator with fancy animations. The game has text effect cards and spell effects cards and 
 text effects modify the game and give interesting effects to the game and player itself.
