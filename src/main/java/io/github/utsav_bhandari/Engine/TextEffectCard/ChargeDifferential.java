@@ -1,16 +1,19 @@
 package io.github.utsav_bhandari.Engine.TextEffectCard;
 
 import io.github.utsav_bhandari.Engine.ICard;
+import io.github.utsav_bhandari.Engine.Resource;
 import io.github.utsav_bhandari.Render.IRenderable;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class ChargeDifferential extends ATextEffectCard implements IRenderable, ICard {
+    public static final BufferedImage thumbnail = Resource.getInstance().cardThumbnails.get("ChargeDifferential");
+
     @Override
     public void render(Graphics2D g) {
-        g.drawString("Charge Differential", 100, 100);
+        g.drawImage(thumbnail, null, (int)this.x, (int)this.y);
     }
-
     @Override
     public String getName() {
         return "Charge Differential";

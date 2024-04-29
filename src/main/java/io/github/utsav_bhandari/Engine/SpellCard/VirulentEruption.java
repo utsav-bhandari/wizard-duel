@@ -1,5 +1,8 @@
 package io.github.utsav_bhandari.Engine.SpellCard;
 
+import io.github.utsav_bhandari.Engine.Resource;
+import io.github.utsav_bhandari.Render.AnimatedSprite;
+
 import java.awt.*;
 
 public class VirulentEruption extends ASpellCard implements ISpellCard {
@@ -24,4 +27,8 @@ public class VirulentEruption extends ASpellCard implements ISpellCard {
     public void renderSpell(Graphics2D g) {
 
     }
+    private static AnimatedSprite getNewSprite() {
+        return Resource.getInstance().getAnimatedSprite("VirulentEruption");
+    }
+
 }

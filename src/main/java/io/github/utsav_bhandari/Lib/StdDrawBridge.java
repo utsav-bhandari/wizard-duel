@@ -4,8 +4,6 @@ import edu.princeton.cs.algs4.StdDraw;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.NoninvertibleTransformException;
 import java.awt.image.BufferedImage;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -13,7 +11,6 @@ import java.util.function.Consumer;
 
 public class StdDrawBridge {
     public static JFrame frame;
-    ;
     private static ArrayList<Consumer<Graphics2D>> callbacks = new ArrayList<>();
     public static Graphics2D screen;
 
@@ -31,6 +28,8 @@ public class StdDrawBridge {
     private static Timer timer;
 
     public static void init(int width, int height) {
+        System.setProperty("sun.java2d.opengl", "true");
+
         if (frame != null) {
             throw new IllegalStateException(".init() can only be called once");
         }

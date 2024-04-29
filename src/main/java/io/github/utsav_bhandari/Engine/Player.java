@@ -29,7 +29,6 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
 
     private PlayerKeymap keymap;
 
-
     public ArrayList<ITextEffectCard> textEffectCards = new ArrayList<>();
 
     private boolean viewingHelp = false;

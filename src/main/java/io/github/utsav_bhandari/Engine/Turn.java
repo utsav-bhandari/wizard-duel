@@ -21,13 +21,12 @@ public class Turn {
     public void run() {
         System.out.println("Running turn");
 
-        round.world.setWorldState(World.WORLD_STATE_ON_CHARGE_ADD);
-
         /*
          * I have learned something new here...
          *
          * I will become stronger next time
          */
+        round.world.setWorldState(World.WORLD_STATE_ON_CHARGE_ADD);
         if (processHook(attacker)) return;
         if (processHook(defender)) return;
 
@@ -36,7 +35,6 @@ public class Turn {
         attacker.setCharge(attacker.getCharge() + chargeToAdd);
 
         round.world.setWorldState(World.WORLD_STATE_CHARGE_ADDED);
-
         if (processHook(attacker)) return;
         if (processHook(defender)) return;
 
@@ -47,13 +45,19 @@ public class Turn {
             System.out.println("Priming spell card");
 
             round.world.setWorldState(World.WORLD_STATE_ON_SPELL_PRIME);
+            if (processHook(attacker)) return;
+            if (processHook(defender)) return;
             spellCard.prime();
-            round.world.setWorldState(World.WORLD_STATE_SPELL_PRIMED);
 
+
+            round.world.setWorldState(World.WORLD_STATE_SPELL_PRIMED);
             if (processHook(attacker)) return;
             if (processHook(defender)) return;
 
             round.world.setWorldState(World.WORLD_STATE_ON_CAST);
+            if (processHook(attacker)) return;
+            if (processHook(defender)) return;
+
             spellCard.cast();
 
             Util.unsafeWait(500);

@@ -181,7 +181,7 @@ public class GameUI implements IRenderable {
             if (game.world.splashScreenText != null) {
                 StdDraw.setPenColor(Color.BLACK);
                 StdDraw.setFont(splashScreenFont);
-               StdDraw.text((double) StdDrawBridge.width / 2, (double) StdDrawBridge.height / 2, game.world.splashScreenText);
+                StdDraw.text((double) StdDrawBridge.width / 2, (double) StdDrawBridge.height / 2, game.world.splashScreenText);
             }
         } else if (game.getGameState() == Game.GameState.GAME_OVER) {
             g.drawImage(r.titleScreen, 0, 0, 1920, 200, null);

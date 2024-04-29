@@ -29,14 +29,14 @@ public final class HelpOverlay implements IRenderable {
         scroll = r.scroll;
         var spriteIDs = new ArrayList<String>();
 
-        spriteIDs.add("Charge Cascade");
-        spriteIDs.add("Nullifying Glyphs");
-        spriteIDs.add("Arcane Flurry");
-        spriteIDs.add("Virulent Eruption");
-        spriteIDs.add("Ethereal Cyclone");
-        spriteIDs.add("Infernal Circle");
-        spriteIDs.add("Tempest Reversal");
-        spriteIDs.add("Arcane Quota");
+        spriteIDs.add("ChargeCascade");
+        spriteIDs.add("NullifyingGlyphs");
+        spriteIDs.add("ArcaneFlurry");
+        spriteIDs.add("VirulentEruption");
+        spriteIDs.add("EtherealCyclone");
+        spriteIDs.add("InfernalCircle");
+        spriteIDs.add("TempestReversal");
+        spriteIDs.add("ArcaneQuota");
 
         this.animatedSprites = new ArrayList<>();
 
