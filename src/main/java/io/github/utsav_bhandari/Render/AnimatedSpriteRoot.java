@@ -3,6 +3,7 @@ package io.github.utsav_bhandari.Render;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Terrible implementation. Should be <code>SpriteManager -> AnimatedSpriteRoot -> AnimatedSprite</code>
@@ -80,5 +81,13 @@ public class AnimatedSpriteRoot {
         animatedSpriteRoots.put(id, root);
 
         return root;
+    }
+
+    public static AnimatedSpriteRoot getAnimatedSpriteRoot(String id) {
+        return animatedSpriteRoots.get(id);
+    }
+
+    public static Set<String> getAnimatedSpriteIds() {
+        return animatedSpriteRoots.keySet();
     }
 }

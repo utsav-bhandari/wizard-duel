@@ -4,8 +4,15 @@ import io.github.utsav_bhandari.Render.AnimatedSprite;
 import io.github.utsav_bhandari.Render.AnimatedSpriteRoot;
 
 import javax.imageio.ImageIO;
+import javax.naming.spi.ResolveResult;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
+import java.io.*;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Singleton. Simple resource manager.
@@ -17,18 +24,22 @@ public final class Resource {
     public final BufferedImage gameBackground;
     public final BufferedImage scroll;
 
+    public final BufferedImage charge;
+    public final HashMap<String, BufferedImage> cardThumbnails;
+
     private Resource() {
         // TODO: init stuff here
         titleScreen = loadResourceImage("/backgrounds/title_screen.png");
         gameBackground = loadResourceImage("/backgrounds/game_background.png");
         scroll = loadResourceImage("/backgrounds/scroll.png");
+        charge = loadResourceImage("/icons/charge.png");
 
         var spells1 = loadResourceImage("/sprites/pixel-spell-effect/spells-0.png");
         var spells2 = loadResourceImage("/sprites/pixel-spell-effect/spells-1.png");
         var wizardIdle = loadResourceImage("/wizards/Idle.png");
 
         AnimatedSpriteRoot.registerAnimatedSprite(
-                "Charge Cascade",
+                "ChargeCascade",
                 spells1,
                 64,
                 64,
@@ -44,7 +55,7 @@ public final class Resource {
         );
 
         AnimatedSpriteRoot.registerAnimatedSprite(
-                "Nullifying Glyphs",
+                "NullifyingGlyphs",
                 spells1,
                 64,
                 64,
@@ -60,7 +71,7 @@ public final class Resource {
         );
 
         AnimatedSpriteRoot.registerAnimatedSprite(
-                "Arcane Flurry",
+                "ArcaneFlurry",
                 spells1,
                 64,
                 64,
@@ -76,7 +87,7 @@ public final class Resource {
         );
 
         AnimatedSpriteRoot.registerAnimatedSprite(
-                "Virulent Eruption",
+                "VirulentEruption",
                 spells2,
                 64,
                 64,
@@ -92,7 +103,7 @@ public final class Resource {
         );
 
         AnimatedSpriteRoot.registerAnimatedSprite(
-                "Ethereal Cyclone",
+                "EtherealCyclone",
                 spells2,
                 64,
                 64,
@@ -108,7 +119,7 @@ public final class Resource {
         );
 
         AnimatedSpriteRoot.registerAnimatedSprite(
-                "Infernal Circle",
+                "InfernalCircle",
                 spells2,
                 64,
                 64,
@@ -124,7 +135,7 @@ public final class Resource {
         );
 
         AnimatedSpriteRoot.registerAnimatedSprite(
-                "Tempest Reversal",
+                "TempestReversal",
                 spells2,
                 64,
                 64,
@@ -140,7 +151,7 @@ public final class Resource {
         );
 
         AnimatedSpriteRoot.registerAnimatedSprite(
-                "Arcane Quota",
+                "ArcaneQuota",
                 spells2,
                 64,
                 64,
@@ -155,7 +166,13 @@ public final class Resource {
                 false
         );
 
-
+        cardThumbnails = new HashMap<>();
+        for (File file : getDirFiles("card-thumbnails")) {
+            cardThumbnails.put(file.getName().replace(".png", ""), loadResourceImage(file));
+        }
+        for (String id : AnimatedSpriteRoot.getAnimatedSpriteIds()) {
+            cardThumbnails.put(id, AnimatedSpriteRoot.getAnimatedSpriteRoot(id).frames.get(4));
+        }
         int wizbord = 50;
         AnimatedSpriteRoot.registerAnimatedSprite(
                 "Wizard Idle",
@@ -178,21 +195,29 @@ public final class Resource {
         wizardIdle.flush();
     }
 
-    /**
-     * Make sure to dispose if ephemeral used!!!
-     */
     private static BufferedImage loadResourceImage(String path) {
+        return loadResourceImage(Resource.class.getResourceAsStream(path), path);
+    }
+    private static BufferedImage loadResourceImage(File file) {
+        try {
+            return loadResourceImage(new FileInputStream(file), file.getPath());
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private static BufferedImage loadResourceImage(InputStream stream, String name) {
         BufferedImage image;
 
-        try (var stream = Resource.class.getResourceAsStream(path)) {
-            if (stream == null) {
-                System.out.println("Resource not found: " + path);
-                if (NULL == null) {
-                    throw new RuntimeException("NULL.png not found");
-                }
-
-                return NULL;
+        if (stream == null) {
+            System.out.println("Resource not found: " + name);
+            if (NULL == null) {
+                throw new RuntimeException("NULL.png not found");
             }
+
+            return NULL;
+        }
+
+        try {
             image = ImageIO.read(stream);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -210,5 +235,29 @@ public final class Resource {
 
     public AnimatedSprite getAnimatedSprite(String id) {
         return AnimatedSpriteRoot.getAnimatedSprite(id);
+    }
+
+    public static File[] getDirFiles(String name) {
+        // Get the class loader
+        ClassLoader classLoader = Resource.class.getClassLoader();
+
+        // Get the resource directory path
+        String resourceDirectoryPath = classLoader.getResource(name).getPath();
+        try {
+            resourceDirectoryPath = URLDecoder.decode(resourceDirectoryPath, StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        // Create a File object for the directory
+        File resourceDirectory = new File(resourceDirectoryPath);
+        // List files in the directory
+        return resourceDirectory.listFiles();
+    }
+
+    public static void main(String[] args) {
+        var r = new Resource();
+        for (Map.Entry<String, BufferedImage> entry : r.cardThumbnails.entrySet()) {
+            System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
+        }
     }
 }

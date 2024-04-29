@@ -12,7 +12,6 @@ import java.util.ArrayList;
 public class ThePowerOfExample extends ASpellCard implements ISpellCard {
     private final ArrayList<AnimatedSprite> sprites = new ArrayList<>();
     private int radius;
-
     private float angle = 0;
 
     public ThePowerOfExample() {
@@ -40,7 +39,7 @@ public class ThePowerOfExample extends ASpellCard implements ISpellCard {
     private final AffineTransformOp op;
 
     private static AnimatedSprite getNewSprite() {
-        return Resource.getInstance().getAnimatedSprite("Charge Cascade");
+        return Resource.getInstance().getAnimatedSprite("ChargeCascade");
     }
 
     @Override
