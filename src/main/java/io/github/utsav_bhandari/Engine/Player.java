@@ -10,11 +10,12 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImageOp;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Player extends AEntity implements IEntity, IPlayerControl, IRenderable {
     private final int id;
     private final AnimatedSprite idleAnimation;
-    private final BufferedImageOp flipTransformOp;
+    private final BufferedImageOp transformOp;
     private final AffineTransform flipTransform;
 
     private int health = 80;
@@ -23,6 +24,14 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
     private int charge = 0;
     private int maxCharge = 5;
 
+    /**
+     * TODO comment
+     */
+    public final java.util.List<ISpellCard> spellCardPile = new ArrayList<>();
+    /**
+     * TODO comment
+     */
+    public final List<ITextEffectCard> textEffectCardPile = new ArrayList<>();
     // Their hand
     private ISpellCard currentSpellCard;
     private ITextEffectCard currentTextEffectCard;
@@ -43,8 +52,8 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
         flipTransform = new AffineTransform();
 
         flipTransform.scale(id == 0 ? 1 : -1, 1);
-
-        flipTransformOp = new AffineTransformOp(flipTransform, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+        flipTransform.scale(2, 2);
+        transformOp = new AffineTransformOp(flipTransform, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
     }
 
 
@@ -125,14 +134,12 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
     @Override
     public void render(Graphics2D g) {
 
-        g.translate(x, y);
         g.setColor(Color.BLACK);
         g.drawString("Player " + (id + 1), 0, 0);
-        g.translate(-x, -y);
 
         idleAnimation.x = (float) (x - flipTransform.getScaleX() * idleAnimation.getWidth() / 2);
         idleAnimation.y = (float) (y - flipTransform.getScaleY() * idleAnimation.getHeight() / 2);
-        idleAnimation.op = flipTransformOp;
+        idleAnimation.op = transformOp;
         idleAnimation.render(g);
     }
 
@@ -161,5 +168,32 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
 
     public void setCurrentSpellCard(ISpellCard currentSpellCard) {
         this.currentSpellCard = currentSpellCard;
+    }
+
+
+    /**
+     * Take the last spell card from the pile and remove it
+     */
+    public ISpellCard drawSpellCard() {
+        if (spellCardPile.isEmpty()) {
+            return null;
+        }
+
+        int lastIndex = spellCardPile.size() - 1;
+
+        return spellCardPile.remove(lastIndex);
+    }
+
+    /**
+     * Take the last text effect card from the pile and remove it
+     */
+    public ITextEffectCard drawTextEffectCard() {
+        if (textEffectCardPile.isEmpty()) {
+            return null;
+        }
+
+        int lastIndex = textEffectCardPile.size() - 1;
+
+        return textEffectCardPile.remove(lastIndex);
     }
 }

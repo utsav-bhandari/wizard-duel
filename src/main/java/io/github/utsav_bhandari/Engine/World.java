@@ -1,30 +1,22 @@
 package io.github.utsav_bhandari.Engine;
 
-import io.github.utsav_bhandari.Engine.SpellCard.ISpellCard;
-import io.github.utsav_bhandari.Engine.SpellCard.ThePowerOfExample;
-import io.github.utsav_bhandari.Engine.TextEffectCard.ITextEffectCard;
-import io.github.utsav_bhandari.Engine.TextEffectCard.ThePowerOfYapping;
+import io.github.utsav_bhandari.Engine.SpellCard.*;
+import io.github.utsav_bhandari.Engine.TextEffectCard.*;
 import io.github.utsav_bhandari.Game;
 import io.github.utsav_bhandari.Lib.Util;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class World {
     public final Game game;
 
     private final List<Round> rounds = new ArrayList<>();
-
-    /**
-     * TODO comment
-     */
-    private final List<ISpellCard> spellCardPile = new ArrayList<>();
-    /**
-     * TODO comment
-     */
-    private final List<ITextEffectCard> textEffectCardPile = new ArrayList<>();
 
     public final Player[] players = new Player[2];
 
@@ -109,10 +101,10 @@ public class World {
         players[1].world = this;
 
         players[0].x = 100;
-        players[0].y = 520;
+        players[0].y = 720; // was 520
 
         players[1].x = 1720;
-        players[1].y = 520;
+        players[1].y = 720; // was 520
 
         var km = new PlayerKeymap();
 
@@ -131,9 +123,34 @@ public class World {
 
         players[1].setKeymap(km);
 
-        for (int i = 0; i < 8; i++) {
-            spellCardPile.add(new ThePowerOfExample());
-            textEffectCardPile.add(new ThePowerOfYapping());
+        var spellCardFactory = new ArrayList<Supplier<ISpellCard>>();
+
+        spellCardFactory.add(ArcaneFlurry::new);
+        spellCardFactory.add(ArcaneQuota::new);
+        spellCardFactory.add(ChargeCascade::new);
+        spellCardFactory.add(EtherealCyclone::new);
+        spellCardFactory.add(InfernalCircle::new);
+        spellCardFactory.add(NullifyingGlyphs::new);
+        spellCardFactory.add(TempestReversal::new);
+        spellCardFactory.add(VirulentEruption::new);
+
+        var textEffectCardFactory = new ArrayList<Supplier<ITextEffectCard>>();
+        textEffectCardFactory.add(ArcaneDrainage::new);
+        textEffectCardFactory.add(ArcaneInterference::new);
+        textEffectCardFactory.add(ChargeDifferential::new);
+        textEffectCardFactory.add(ChargeSurge::new);
+        textEffectCardFactory.add(EyeOfTheStorm::new);
+        textEffectCardFactory.add(HealingIncantation::new);
+        textEffectCardFactory.add(Judgment::new);
+        textEffectCardFactory.add(SiphoningEnchantment::new);
+
+        for (var player : players) {
+            Collections.shuffle(spellCardFactory);
+            Collections.shuffle(textEffectCardFactory);
+            for (int i = 0; i < 8; i++) {
+                player.spellCardPile.add(spellCardFactory.get(i).get());
+                player.textEffectCardPile.add(textEffectCardFactory.get(i).get());
+            }
         }
     }
 
@@ -208,29 +225,4 @@ public class World {
         currentRound.update();
     }
 
-    /**
-     * Take the last spell card from the pile and remove it
-     */
-    public ISpellCard drawSpellCard() {
-        if (spellCardPile.isEmpty()) {
-            return null;
-        }
-
-        int lastIndex = spellCardPile.size() - 1;
-
-        return spellCardPile.remove(lastIndex);
-    }
-
-    /**
-     * Take the last text effect card from the pile and remove it
-     */
-    public ITextEffectCard drawTextEffectCard() {
-        if (textEffectCardPile.isEmpty()) {
-            return null;
-        }
-
-        int lastIndex = textEffectCardPile.size() - 1;
-
-        return textEffectCardPile.remove(lastIndex);
-    }
 }

@@ -21,11 +21,6 @@ public class Turn {
     public void run() {
         System.out.println("Running turn");
 
-        /*
-         * I have learned something new here...
-         *
-         * I will become stronger next time
-         */
         round.world.setWorldState(World.WORLD_STATE_ON_CHARGE_ADD);
         if (processHook(attacker)) return;
         if (processHook(defender)) return;
@@ -61,6 +56,8 @@ public class Turn {
             spellCard.cast();
 
             Util.unsafeWait(500);
+
+            attacker.setCurrentSpellCard(null);
         } else {
             System.out.println("Spell card is null");
         }

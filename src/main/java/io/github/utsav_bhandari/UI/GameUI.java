@@ -3,10 +3,14 @@ package io.github.utsav_bhandari.UI;
 import edu.princeton.cs.algs4.StdDraw;
 import io.github.utsav_bhandari.Engine.KeyboardInputHandler;
 import io.github.utsav_bhandari.Engine.Player;
+import io.github.utsav_bhandari.Engine.SpellCard.ASpellCard;
+import io.github.utsav_bhandari.Engine.TextEffectCard.ATextEffectCard;
+import io.github.utsav_bhandari.Engine.TextEffectCard.ITextEffectCard;
 import io.github.utsav_bhandari.Engine.World;
 import io.github.utsav_bhandari.Game;
 import io.github.utsav_bhandari.Lib.StdDrawBridge;
 import io.github.utsav_bhandari.Render.IRenderable;
+import io.github.utsav_bhandari.Scripts.StdDrawProvider;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -139,10 +143,47 @@ public class GameUI implements IRenderable {
                 p.render(g);
             }
 
+
+            Player[] players = game.world.players;
+            for (int i = 0; i < players.length; i++) {
+                Player p = players[i];
+                int sxPosition = 0;
+                int txPosition = 0;
+                var spellCard = p.getCurrentSpellCard();
+                if (i == 0) {
+                    sxPosition = 50;
+                    txPosition = 64;
+                } else if (i == 1) {
+                    sxPosition = StdDrawBridge.width - 242;
+                txPosition = (StdDrawBridge.width / 2);
+                }
+                if (spellCard != null) {
+                    if (spellCard instanceof ASpellCard aSpellCard) {
+                        aSpellCard.x = sxPosition;
+                        aSpellCard.y = 850;
+                        spellCard.render(g);
+                    } else {
+                        throw new RuntimeException();
+                    }
+                }
+                var textEffectCard = p.textEffectCards;
+                for (int j = 0; j < textEffectCard.size(); j++) {
+                    int off = j * (64 + 192);
+                    ITextEffectCard tec = textEffectCard.get(j);
+                    if (tec instanceof ATextEffectCard aTextEffectCard) {
+                        aTextEffectCard.x = txPosition + off;
+                        aTextEffectCard.y = 200;
+                        tec.render(g);
+                    } else {
+                        throw new RuntimeException();
+                    }
+                }
+
+            }
+
             if (game.world.getWorldState() >= World.WORLD_STATE_SELECTION_STARTED
                     && game.world.getWorldState() < World.WORLD_STATE_ON_TURN) {
                 var round = game.world.getCurrentRound();
-                Player[] players = game.world.players;
                 for (int i = 0; i < players.length; i++) {
                     var p = players[i];
 
@@ -158,8 +199,6 @@ public class GameUI implements IRenderable {
                     g.translate(-off, 0);
                 }
             }
-
-
             if (game.world.getWorldState() >= World.WORLD_STATE_ON_SPELL_PRIME
                     && game.world.getWorldState() < World.WORLD_STATE_TURN_ENDED) {
                 // render spell
@@ -168,9 +207,6 @@ public class GameUI implements IRenderable {
                     turn.attacker.getCurrentSpellCard().renderSpell(g);
                 }
             }
-
-
-            Player[] players = game.world.players;
             for (int i = 0; i < players.length; i++) {
                 var p = players[i];
                 if (p.isViewingHelp()) {

@@ -4,8 +4,10 @@ import io.github.utsav_bhandari.Engine.Resource;
 import io.github.utsav_bhandari.Render.AnimatedSprite;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class EtherealCyclone extends ASpellCard implements ISpellCard {
+    public static final BufferedImage thumbnail = Resource.getInstance().cardThumbnails.get("EtherealCyclone");
     public String getName() {
         return "Ethereal Cyclone";
     }
@@ -16,6 +18,7 @@ public class EtherealCyclone extends ASpellCard implements ISpellCard {
 
     @Override
     public void render(Graphics2D g) {
+        g.drawImage(thumbnail, (int) x, (int) y, 192, 192, null);
     }
 
     @Override
@@ -27,7 +30,10 @@ public class EtherealCyclone extends ASpellCard implements ISpellCard {
     public void renderSpell(Graphics2D g) {
 
     }
-
+    @Override
+    public void setDamage(float damage) {
+        super.setDamage(damage);
+    }
     private static AnimatedSprite getNewSprite() {
         return Resource.getInstance().getAnimatedSprite("EtherealCyclone");
     }

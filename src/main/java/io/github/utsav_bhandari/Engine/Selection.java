@@ -6,6 +6,7 @@ import io.github.utsav_bhandari.Lib.StdDrawBridge;
 import io.github.utsav_bhandari.Render.IRenderable;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,11 +36,11 @@ public class Selection implements IRenderable {
      * 1 for right, -1 for left
      */
     public void moveSelection(int direction) {
-        int d = direction == 0 ? 1 : -1;
-
         if (state == 0) {
+            if (textEffectCardChoices.isEmpty()) return;
             setCurrentChoice((getCurrentChoice() + direction + textEffectCardChoices.size()) % textEffectCardChoices.size());
         } else if (state == 1) {
+            if (spellCardChoices.isEmpty()) return;
             setCurrentChoice((getCurrentChoice() + direction + spellCardChoices.size()) % spellCardChoices.size());
         }
     }
@@ -113,12 +114,36 @@ public class Selection implements IRenderable {
 
         g.setComposite(t);
     }
+    public ArrayList<ISpellCard> getRemainingSpellCards() {
+        var n = new ArrayList<>(spellCardChoices);
+        if (spellCardChoices.isEmpty()) {
+            return n;
+        }
+        n.remove(spellCardChoice);
+
+        return n;
+    }
+    public ArrayList<ITextEffectCard> getRemainingTextEffectCards() {
+        var n = new ArrayList<>(textEffectCardChoices);
+        if (textEffectCardChoices.isEmpty()) {
+            return n;
+        }
+        n.remove(textEffectCardChoice);
+
+        return n;
+    }
 
     public ITextEffectCard getTextEffectCard() {
+        if (textEffectCardChoices.isEmpty()) {
+            return null;
+        }
         return textEffectCardChoices.get(textEffectCardChoice);
     }
 
     public ISpellCard getSpellCard() {
+        if (spellCardChoices.isEmpty()) {
+            return null;
+        }
         return spellCardChoices.get(spellCardChoice);
     }
 }

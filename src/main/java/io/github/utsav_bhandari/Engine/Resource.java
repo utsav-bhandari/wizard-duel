@@ -169,7 +169,7 @@ public final class Resource {
             cardThumbnails.put(file.getName().replace(".png", ""), loadResourceImage(file));
         }
         for (String id : AnimatedSpriteRoot.getAnimatedSpriteIds()) {
-            cardThumbnails.put(id, AnimatedSpriteRoot.getAnimatedSpriteRoot(id).frames.get(4));
+            cardThumbnails.put(id, AnimatedSpriteRoot.getAnimatedSpriteRoot(id).frames.get(3));
         }
         int wizbord = 50;
         AnimatedSpriteRoot.registerAnimatedSprite(

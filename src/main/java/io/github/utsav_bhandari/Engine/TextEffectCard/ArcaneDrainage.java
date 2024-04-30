@@ -31,35 +31,40 @@ public class ArcaneDrainage extends ATextEffectCard implements IRenderable, ITex
 
     @Override
     public boolean hook(TurnEventHook event) {
-        if (state == 0) {
-            // enemy debuff
-            if (event.turn.attacker == owner) return false;
-//            Player opponent = event.turn.attacker == owner ? event.turn.defender : event.turn.attacker;
-            if (event.world.getWorldState() != World.WORLD_STATE_CHARGE_ADDED) return false;
-
-            int newCharge = event.turn.attacker.getCharge() - 2;
-
-            if (newCharge <= 0) {
-                newCharge = 0;
-                state = 1;
-            }
-
-            event.turn.attacker.setCharge(newCharge);
-
-            return state == 0;
-        }
-        if (state == 1) {
-            // attacker's buff
-            if (event.turn.attacker != owner) return false;
-            if (event.world.getWorldState() != World.WORLD_STATE_SPELL_PRIMED) return false;
-
-            event.attackEvent.spell.setDamage(
-                event.attackEvent.spell.getDamage() * 1.2f
-            );
-
-            return true;
-        }
-
-        throw new RuntimeException("Cannot reach this state");
+        return false;
     }
+//        if (event.attackEvent == null) {
+//            return false;
+//        }
+//        if (state == 0) {
+//            // enemy debuff
+//            if (event.turn.attacker == owner) return false;
+////            Player opponent = event.turn.attacker == owner ? event.turn.defender : event.turn.attacker;
+//            if (event.world.getWorldState() != World.WORLD_STATE_CHARGE_ADDED) return false;
+//
+//            int newCharge = event.turn.attacker.getCharge() - 2;
+//
+//            if (newCharge <= 0) {
+//                newCharge = 0;
+//                state = 1;
+//            }
+//
+//            event.turn.attacker.setCharge(newCharge);
+//
+//            return state == 0;
+//        }
+//        if (state == 1) {
+//            // attacker's buff
+//            if (event.turn.attacker != owner) return false;
+//            if (event.world.getWorldState() != World.WORLD_STATE_SPELL_PRIMED) return false;
+//
+//            event.attackEvent.spell.setDamage(
+//                event.attackEvent.spell.getDamage() * 1.2f
+//            );
+//
+//            return true;
+//        }
+//
+//        throw new RuntimeException("Cannot reach this state");
+//    }
 }

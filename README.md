@@ -4,6 +4,8 @@ Turn based tabletop simulator with fancy animations. The game has text effect ca
 text effects modify the game and give interesting effects to the game and player itself.
 Spell cards do damage, have an effect, and have fancy animations. 
 
+Press A to get past the title screen!
+
 P1:
 A, D for left and right and for charge toggle
 Z for help

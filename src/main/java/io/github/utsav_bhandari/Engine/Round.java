@@ -21,13 +21,17 @@ public class Round {
             var textEffectCardChoices = new ArrayList<ITextEffectCard>();
 
             for (int i = 0; i < 3; i++) {
-                textEffectCardChoices.add(world.drawTextEffectCard());
+                ITextEffectCard t = player.drawTextEffectCard();
+                if (t == null) break;
+                textEffectCardChoices.add(t);
             }
 
             var spellCardChoices = new ArrayList<ISpellCard>();
 
             for (int i = 0; i < 2; i++) {
-                spellCardChoices.add(world.drawSpellCard());
+                ISpellCard s = player.drawSpellCard();
+                if (s == null) break;
+                spellCardChoices.add(s);
             }
 
             playerSelections.put(player, new Selection(textEffectCardChoices, spellCardChoices));
@@ -46,6 +50,21 @@ public class Round {
             world.waitForUi();
         }
 
+        // add back to player1 pool
+        for (ISpellCard c : getPlayerSelection(world.players[0]).getRemainingSpellCards()) {
+            world.players[0].spellCardPile.add(c);
+        }
+        for (ITextEffectCard c : getPlayerSelection(world.players[0]).getRemainingTextEffectCards()) {
+            world.players[0].textEffectCardPile.add(c);
+        }
+
+        // add back to player2 pool
+        for (ISpellCard c : getPlayerSelection(world.players[1]).getRemainingSpellCards()) {
+            world.players[1].spellCardPile.add(c);
+        }
+        for (ITextEffectCard c : getPlayerSelection(world.players[1]).getRemainingTextEffectCards()) {
+            world.players[1].textEffectCardPile.add(c);
+        }
 
         for (int i = 0; i < 2; i++) {
             var attacker = world.players[i];

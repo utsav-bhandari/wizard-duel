@@ -7,6 +7,7 @@ import io.github.utsav_bhandari.Render.AnimatedSprite;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class ThePowerOfExample extends ASpellCard implements ISpellCard {
@@ -140,8 +141,7 @@ public class ThePowerOfExample extends ASpellCard implements ISpellCard {
 
     @Override
     public void render(Graphics2D g) {
-        g.setColor(Color.RED);
-        g.drawString("The Power of Example", x, y);
+        throw new RuntimeException();
     }
 
     @Override

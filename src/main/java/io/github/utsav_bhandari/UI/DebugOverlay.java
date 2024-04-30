@@ -1,5 +1,7 @@
 package io.github.utsav_bhandari.UI;
 
+import io.github.utsav_bhandari.Engine.SpellCard.ISpellCard;
+import io.github.utsav_bhandari.Engine.TextEffectCard.ITextEffectCard;
 import io.github.utsav_bhandari.Game;
 import io.github.utsav_bhandari.Render.IRenderable;
 
@@ -60,6 +62,14 @@ public class DebugOverlay implements IRenderable {
                 continue;
             }
             items.add("  SpellCard: " + spellCard.getName());
+            items.add("  SpellCardPileCount: " + player.spellCardPile.size());
+            for (ISpellCard s : player.spellCardPile) {
+                items.add("    Spell from pile: " + s.getName());
+            }
+            items.add("  TextEffectPileCount: " + player.textEffectCardPile.size());
+            for (ITextEffectCard t : player.textEffectCardPile) {
+                items.add("    TE from pile: " + t.getName());
+            }
         }
 
         g.setFont(font);
