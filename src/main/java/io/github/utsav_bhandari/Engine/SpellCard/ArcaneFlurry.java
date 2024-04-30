@@ -8,11 +8,13 @@ import java.awt.image.BufferedImage;
 
 public class ArcaneFlurry extends ASpellCard implements ISpellCard {
     {
-      thumbnail = Resource.getInstance().cardThumbnails.get("ArcaneFlurry");
+        thumbnail = Resource.getInstance().cardThumbnails.get("ArcaneFlurry");
     }
+
     public String getName() {
         return "Arcane Flurry";
     }
+
     public String getDescription() {
         return "Unleashes a flurry of mystical energy. 1/3 chance to inflict double damage.";
     }
@@ -31,10 +33,12 @@ public class ArcaneFlurry extends ASpellCard implements ISpellCard {
     public void renderSpell(Graphics2D g) {
 
     }
+
     @Override
     public void setDamage(float damage) {
         super.setDamage(damage);
     }
+
     private static AnimatedSprite getNewSprite() {
         return Resource.getInstance().getAnimatedSprite("ArcaneFlurry");
     }

@@ -180,20 +180,18 @@ public final class Resource {
         );
 
         cardThumbnails = new HashMap<>();
-        for (File file : getDirFiles("card-thumbnails")) {
-            cardThumbnails.put(file.getName().replace(".png", ""), loadResourceImage(file));
-        }
+
         for (String id : AnimatedSpriteRoot.getAnimatedSpriteIds()) {
             cardThumbnails.put(id, AnimatedSpriteRoot.getAnimatedSpriteRoot(id).frames.get(3));
         }
-        int wizbord = 50;
+        int wizard_border = 50;
         AnimatedSpriteRoot.registerAnimatedSprite(
                 "Wizard Idle",
                 wizardIdle,
-                250 - 2 * wizbord,
-                250 - 2 * wizbord,
-                wizbord,
-                wizbord,
+                250 - 2 * wizard_border,
+                250 - 2 * wizard_border,
+                wizard_border,
+                wizard_border,
                 250,
                 0,
                 8,
@@ -213,13 +211,6 @@ public final class Resource {
 
     private static BufferedImage loadResourceImage(String path) {
         return loadResourceImage(Resource.class.getResourceAsStream(path), path);
-    }
-    private static BufferedImage loadResourceImage(File file) {
-        try {
-            return loadResourceImage(new FileInputStream(file), file.getPath());
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
     }
     private static BufferedImage loadResourceImage(InputStream stream, String name) {
         BufferedImage image;
@@ -253,20 +244,23 @@ public final class Resource {
         return AnimatedSpriteRoot.getAnimatedSprite(id);
     }
 
-    public static File[] getDirFiles(String name) {
-        // Get the class loader
-        ClassLoader classLoader = Resource.class.getClassLoader();
-
-        // Get the resource directory path
-        String resourceDirectoryPath = classLoader.getResource(name).getPath();
-        try {
-            resourceDirectoryPath = URLDecoder.decode(resourceDirectoryPath, StandardCharsets.UTF_8);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+    public BufferedImage getCardThumbnailArt(String id) {
+        if (cardThumbnails.containsKey(id)) {
+            return cardThumbnails.get(id);
         }
-        // Create a File object for the directory
-        File resourceDirectory = new File(resourceDirectoryPath);
-        // List files in the directory
-        return resourceDirectory.listFiles();
+
+        String p = "/card-thumbnails/" + id + ".png";
+        var stream = Resource.class.getResourceAsStream(p);
+
+        if (stream == null) {
+            System.out.println("Resource not found: " + p);
+            cardThumbnails.put(id, NULL);
+            return NULL;
+        }
+
+        var img = loadResourceImage(stream, p);
+        cardThumbnails.put(id, img);
+
+        return img;
     }
 }

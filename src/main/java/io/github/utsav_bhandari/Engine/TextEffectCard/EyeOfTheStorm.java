@@ -10,13 +10,14 @@ import java.awt.image.BufferedImage;
 
 public class EyeOfTheStorm extends ATextEffectCard implements IRenderable, ITextEffectCard {
     {
-  thumbnail = Resource.getInstance().cardThumbnails.get("EyeOfTheStorm");
-}
+        thumbnail = Resource.getInstance().getCardThumbnailArt("EyeOfTheStorm");
+    }
 
     @Override
     public void render(Graphics2D g) {
-        g.drawImage(thumbnail, null, (int)this.x, (int)this.y);
+        g.drawImage(thumbnail, null, (int) this.x, (int) this.y);
     }
+
     @Override
     public String getName() {
         return "Eye Of The Storm";

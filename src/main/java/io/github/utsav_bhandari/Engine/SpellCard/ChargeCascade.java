@@ -8,11 +8,13 @@ import java.awt.image.BufferedImage;
 
 public class ChargeCascade extends ASpellCard implements ISpellCard {
     {
-  thumbnail = Resource.getInstance().cardThumbnails.get("ChargeCascade");
-}
+        thumbnail = Resource.getInstance().cardThumbnails.get("ChargeCascade");
+    }
+
     public String getName() {
         return "Charge Cascade";
     }
+
     public String getDescription() {
         return "Unleashes a burst of energy.\n" +
                 "Damage scales based on the number of charges your opponent possesses.";
@@ -37,6 +39,7 @@ public class ChargeCascade extends ASpellCard implements ISpellCard {
     public void setDamage(float damage) {
         super.setDamage(damage);
     }
+
     private static AnimatedSprite getNewSprite() {
         return Resource.getInstance().getAnimatedSprite("ChargeCascade");
     }

@@ -8,8 +8,9 @@ import java.awt.image.BufferedImage;
 
 public class ArcaneQuota extends ASpellCard implements ISpellCard {
     {
-  thumbnail = Resource.getInstance().cardThumbnails.get("ArcaneQuota");
-}
+        thumbnail = Resource.getInstance().cardThumbnails.get("ArcaneQuota");
+    }
+
     public String getName() {
         return "Arcane Quota";
     }
@@ -33,10 +34,12 @@ public class ArcaneQuota extends ASpellCard implements ISpellCard {
     public void renderSpell(Graphics2D g) {
 
     }
+
     @Override
     public void setDamage(float damage) {
         super.setDamage(damage);
     }
+
     private static AnimatedSprite getNewSprite() {
         return Resource.getInstance().getAnimatedSprite("ArcaneQuota");
     }

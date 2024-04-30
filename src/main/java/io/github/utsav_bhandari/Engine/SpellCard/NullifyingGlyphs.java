@@ -8,11 +8,13 @@ import java.awt.image.BufferedImage;
 
 public class NullifyingGlyphs extends ASpellCard implements ISpellCard {
     {
-  thumbnail = Resource.getInstance().cardThumbnails.get("NullifyingGlyphs");
-}
+        thumbnail = Resource.getInstance().cardThumbnails.get("NullifyingGlyphs");
+    }
+
     public String getName() {
         return "Nullifying Glyphs";
     }
+
     public String getDescription() {
         return "Conjures glyphs of nullification.\n" +
                 "Removes a random text effect card from the enemy's side.";
@@ -32,6 +34,7 @@ public class NullifyingGlyphs extends ASpellCard implements ISpellCard {
     public void renderSpell(Graphics2D g) {
 
     }
+
     @Override
     public void setDamage(float damage) {
         super.setDamage(damage);

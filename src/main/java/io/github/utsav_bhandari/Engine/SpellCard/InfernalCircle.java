@@ -8,11 +8,13 @@ import java.awt.image.BufferedImage;
 
 public class InfernalCircle extends ASpellCard implements ISpellCard {
     {
-  thumbnail = Resource.getInstance().cardThumbnails.get("InfernalCircle");
-}
+        thumbnail = Resource.getInstance().cardThumbnails.get("InfernalCircle");
+    }
+
     public String getName() {
         return "Infernal Circle";
     }
+
     public String getDescription() {
         return "Conjures a ring of searing flames. 40% chance to amplify damage by 1.5x.\n " +
                 "However, there's a 20% chance of being singed, dealing half the damage to yourself.";
@@ -32,10 +34,12 @@ public class InfernalCircle extends ASpellCard implements ISpellCard {
     public void renderSpell(Graphics2D g) {
 
     }
+
     @Override
     public void setDamage(float damage) {
         super.setDamage(damage);
     }
+
     private static AnimatedSprite getNewSprite() {
         return Resource.getInstance().getAnimatedSprite("InfernalCircle");
     }

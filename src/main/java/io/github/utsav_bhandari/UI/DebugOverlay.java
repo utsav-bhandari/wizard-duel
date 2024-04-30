@@ -61,6 +61,7 @@ public class DebugOverlay implements IRenderable {
             if (spellCard == null) {
                 continue;
             }
+//            items.add("  TE Card Count: " + selection.getTextEffectCardChoices().size());
             items.add("  SpellCard: " + spellCard.getName());
             items.add("  SpellCardPileCount: " + player.spellCardPile.size());
             for (ISpellCard s : player.spellCardPile) {

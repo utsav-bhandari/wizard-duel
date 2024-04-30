@@ -10,13 +10,14 @@ import java.awt.image.BufferedImage;
 
 public class ChargeDifferential extends ATextEffectCard implements IRenderable, ITextEffectCard {
     {
-  thumbnail = Resource.getInstance().cardThumbnails.get("ChargeDifferential");
-}
+        thumbnail = Resource.getInstance().getCardThumbnailArt("ChargeDifferential");
+    }
 
     @Override
     public void render(Graphics2D g) {
-        g.drawImage(thumbnail, null, (int)this.x, (int)this.y);
+        g.drawImage(thumbnail, null, (int) this.x, (int) this.y);
     }
+
     @Override
     public String getName() {
         return "Charge Differential";

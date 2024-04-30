@@ -10,13 +10,14 @@ import java.awt.image.BufferedImage;
 
 public class SiphoningEnchantment extends ATextEffectCard implements IRenderable, ITextEffectCard {
     {
-  thumbnail = Resource.getInstance().cardThumbnails.get("SiphoningEnchantment");
-}
+        thumbnail = Resource.getInstance().getCardThumbnailArt("SiphoningEnchantment");
+    }
 
     @Override
     public void render(Graphics2D g) {
-        g.drawImage(thumbnail, null, (int)this.x, (int)this.y);
+        g.drawImage(thumbnail, null, (int) this.x, (int) this.y);
     }
+
     @Override
     public String getName() {
         return "Siphoning Enchantment";

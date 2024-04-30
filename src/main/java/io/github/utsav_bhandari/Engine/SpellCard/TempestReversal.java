@@ -1,14 +1,15 @@
 package io.github.utsav_bhandari.Engine.SpellCard;
+
 import io.github.utsav_bhandari.Engine.Resource;
 import io.github.utsav_bhandari.Render.AnimatedSprite;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class TempestReversal extends ASpellCard implements ISpellCard{
+public class TempestReversal extends ASpellCard implements ISpellCard {
     {
-  thumbnail = Resource.getInstance().cardThumbnails.get("TempestReversal");
-}
+        thumbnail = Resource.getInstance().cardThumbnails.get("TempestReversal");
+    }
 
     @Override
     public String getName() {
@@ -21,6 +22,7 @@ public class TempestReversal extends ASpellCard implements ISpellCard{
                 "Decreases enemy charge by 2. If \"Eye of the Storm\" is in play,\n" +
                 "wipe all enemy charges.\n";
     }
+
     @Override
     public void render(Graphics2D g) {
         g.drawImage(thumbnail, (int) x, (int) y, 192, 192, null);
@@ -35,6 +37,7 @@ public class TempestReversal extends ASpellCard implements ISpellCard{
     public void renderSpell(Graphics2D g) {
 
     }
+
     @Override
     public void setDamage(float damage) {
         super.setDamage(damage);

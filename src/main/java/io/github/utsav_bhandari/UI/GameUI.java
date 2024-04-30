@@ -247,6 +247,6 @@ public class GameUI implements IRenderable {
             StdDraw.text(960, 100, "GAME OVER");
         }
 
-//        debugOverlay.render(g);
+        debugOverlay.render(g);
     }
 }

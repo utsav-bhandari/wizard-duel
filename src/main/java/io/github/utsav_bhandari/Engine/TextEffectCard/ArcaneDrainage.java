@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 public class ArcaneDrainage extends ATextEffectCard implements IRenderable, ITextEffectCard {
     {
-        thumbnail = Resource.getInstance().cardThumbnails.get("ArcaneDrainage");
+        thumbnail = Resource.getInstance().getCardThumbnailArt("ArcaneDrainage");
     }
 
     @Override

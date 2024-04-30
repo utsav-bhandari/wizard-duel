@@ -9,6 +9,4 @@ public interface ITextEffectCard extends ICard, IRenderable {
      * Return true if card wishes to be removed
      */
     boolean hook(TurnEventHook event);
-
-
 }

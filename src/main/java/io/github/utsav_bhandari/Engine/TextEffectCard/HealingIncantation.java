@@ -10,13 +10,14 @@ import java.awt.image.BufferedImage;
 
 public class HealingIncantation extends ATextEffectCard implements IRenderable, ITextEffectCard {
     {
-  thumbnail = Resource.getInstance().cardThumbnails.get("HealingIncantation");
-}
+        thumbnail = Resource.getInstance().getCardThumbnailArt("HealingIncantation");
+    }
 
     @Override
     public void render(Graphics2D g) {
-        g.drawImage(thumbnail, null, (int)this.x, (int)this.y);
+        g.drawImage(thumbnail, null, (int) this.x, (int) this.y);
     }
+
     @Override
     public String getName() {
         return "Healing Incantation";

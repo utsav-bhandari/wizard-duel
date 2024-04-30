@@ -8,11 +8,13 @@ import java.awt.image.BufferedImage;
 
 public class EtherealCyclone extends ASpellCard implements ISpellCard {
     {
-  thumbnail = Resource.getInstance().cardThumbnails.get("EtherealCyclone");
-}
+        thumbnail = Resource.getInstance().cardThumbnails.get("EtherealCyclone");
+    }
+
     public String getName() {
         return "Ethereal Cyclone";
     }
+
     public String getDescription() {
         return "Unleashes a swirling vortex of energy. If your charges exceed your opponent's,\n" +
                 "inflict 1.5x damage. Otherwise, gain 2 charges.";
@@ -32,10 +34,12 @@ public class EtherealCyclone extends ASpellCard implements ISpellCard {
     public void renderSpell(Graphics2D g) {
 
     }
+
     @Override
     public void setDamage(float damage) {
         super.setDamage(damage);
     }
+
     private static AnimatedSprite getNewSprite() {
         return Resource.getInstance().getAnimatedSprite("EtherealCyclone");
     }

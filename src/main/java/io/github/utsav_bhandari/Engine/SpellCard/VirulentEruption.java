@@ -8,11 +8,13 @@ import java.awt.image.BufferedImage;
 
 public class VirulentEruption extends ASpellCard implements ISpellCard {
     {
-  thumbnail = Resource.getInstance().cardThumbnails.get("VirulentEruption");
-}
+        thumbnail = Resource.getInstance().cardThumbnails.get("VirulentEruption");
+    }
+
     public String getName() {
         return "Virulent Eruption";
     }
+
     public String getDescription() {
         return "Unleashes a corrosive blast of acidic energy.\n" +
                 "Damage scales based on the health lost by the opponent."; // every 10 health lost +1 dmg for now
@@ -32,10 +34,12 @@ public class VirulentEruption extends ASpellCard implements ISpellCard {
     public void renderSpell(Graphics2D g) {
 
     }
+
     @Override
     public void setDamage(float damage) {
         super.setDamage(damage);
     }
+
     private static AnimatedSprite getNewSprite() {
         return Resource.getInstance().getAnimatedSprite("VirulentEruption");
     }

@@ -147,7 +147,7 @@ public class World {
         for (var player : players) {
             Collections.shuffle(spellCardFactory);
             Collections.shuffle(textEffectCardFactory);
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < 3; i++) {
                 player.spellCardPile.add(spellCardFactory.get(i).get());
                 player.textEffectCardPile.add(textEffectCardFactory.get(i).get());
             }
