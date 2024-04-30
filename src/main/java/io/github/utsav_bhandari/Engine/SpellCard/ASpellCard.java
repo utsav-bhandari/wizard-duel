@@ -4,7 +4,6 @@ import io.github.utsav_bhandari.Engine.ACard;
 import io.github.utsav_bhandari.Engine.Player;
 
 import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
 
 public abstract class ASpellCard extends ACard {
     private Player target;
@@ -62,4 +61,19 @@ public abstract class ASpellCard extends ACard {
         this.damage = damage;
     }
 
+
+    protected boolean hasConfirmedChargeUse = false;
+    protected boolean chargeUse = false;
+
+    public void confirmChargeUse() {
+        hasConfirmedChargeUse = true;
+    }
+
+    public boolean isChargeUseConfirmed() {
+        return hasConfirmedChargeUse;
+    }
+
+    public void toggleChargeUse() {
+        chargeUse = !chargeUse;
+    }
 }

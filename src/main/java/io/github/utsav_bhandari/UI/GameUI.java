@@ -10,13 +10,10 @@ import io.github.utsav_bhandari.Engine.World;
 import io.github.utsav_bhandari.Game;
 import io.github.utsav_bhandari.Lib.StdDrawBridge;
 import io.github.utsav_bhandari.Render.IRenderable;
-import io.github.utsav_bhandari.Scripts.StdDrawProvider;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.function.Function;
 
 import static io.github.utsav_bhandari.Engine.PlayerKeymap.Action;
@@ -109,13 +106,30 @@ public class GameUI implements IRenderable {
                         case Action.SELECT -> p.confirmChoice();
                         default -> {}
                     }
-
                     game.world.notifyUi();
                 }
 
                 if (game.world.getWorldState() >= io.github.utsav_bhandari.Engine.World.WORLD_STATE_ON_CHARGE_PROMPT
                         && game.world.getWorldState() < io.github.utsav_bhandari.Engine.World.WORLD_STATE_ON_TURN) {
                     //
+                }
+
+                if (World.WORLD_STATE_ON_CHARGE_PROMPT == game.world.getWorldState()) {
+                    var round = game.world.getCurrentRound();
+                    if (round != null) {
+                        var turn = round.getCurrentTurn();
+                        if (turn != null) {
+                            var sc =  turn.attacker.getCurrentSpellCard();
+                            if (sc != null) {
+                                switch (action) {
+                                    case Action.MOVE_LEFT, Action.MOVE_RIGHT -> sc.toggleChargeUse();
+                                    case Action.SELECT -> sc.confirmChargeUse();
+                                    default -> {}
+                                }
+                                game.world.notifyUi();
+                            }
+                        }
+                    }
                 }
             }
 

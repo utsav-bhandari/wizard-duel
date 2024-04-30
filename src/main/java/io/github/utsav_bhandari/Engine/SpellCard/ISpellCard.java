@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.image.AffineTransformOp;
 
 public interface ISpellCard extends ICard {
+
     Player getTarget();
 
     void setTarget(Player target);
@@ -49,4 +50,10 @@ public interface ISpellCard extends ICard {
      * @param g
      */
     void renderSpell(Graphics2D g);
+
+    void confirmChargeUse();
+
+    boolean isChargeUseConfirmed();
+
+    void toggleChargeUse();
 }

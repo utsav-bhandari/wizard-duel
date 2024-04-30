@@ -21,37 +21,39 @@ public class Turn {
     public void run() {
         System.out.println("Running turn");
 
-        round.world.setWorldState(World.WORLD_STATE_ON_CHARGE_ADD);
-        if (processHook(attacker)) return;
-        if (processHook(defender)) return;
-
         int chargeToAdd = 2;
 
-        attacker.setCharge(attacker.getCharge() + chargeToAdd);
+        if (!processNewWorldState(World.WORLD_STATE_ON_CHARGE_ADD)) {
+            attacker.setCharge(attacker.getCharge() + chargeToAdd);
+        } else {
+            System.out.println("Charge add cancelled");
+        }
 
-        round.world.setWorldState(World.WORLD_STATE_CHARGE_ADDED);
-        if (processHook(attacker)) return;
-        if (processHook(defender)) return;
+        if (processNewWorldState(World.WORLD_STATE_CHARGE_ADDED)) return;
 
         var spellCard = round.getPlayerSelection(attacker).getSpellCard();
+
+        // player can decide whether to charge spell or not
+        if (!processNewWorldState(World.WORLD_STATE_ON_CHARGE_PROMPT)) {
+            round.world.splashScreenText = "Charge spell card?";
+            while (!spellCard.isChargeUseConfirmed()) {
+                round.world.waitForUi();
+            }
+            round.world.splashScreenText = null;
+        } else {
+            System.out.println("Charge prompt cancelled");
+        }
 
         if (spellCard != null) {
             System.out.println("Charge added");
             System.out.println("Priming spell card");
 
-            round.world.setWorldState(World.WORLD_STATE_ON_SPELL_PRIME);
-            if (processHook(attacker)) return;
-            if (processHook(defender)) return;
+            if (processNewWorldState(World.WORLD_STATE_ON_SPELL_PRIME)) return;
             spellCard.prime();
 
+            if (processNewWorldState(World.WORLD_STATE_SPELL_PRIMED)) return;
 
-            round.world.setWorldState(World.WORLD_STATE_SPELL_PRIMED);
-            if (processHook(attacker)) return;
-            if (processHook(defender)) return;
-
-            round.world.setWorldState(World.WORLD_STATE_ON_CAST);
-            if (processHook(attacker)) return;
-            if (processHook(defender)) return;
+            if (processNewWorldState(World.WORLD_STATE_ON_CAST)) return;
 
             spellCard.cast();
 
@@ -63,6 +65,12 @@ public class Turn {
         }
 
         System.out.println("Turn ended");
+    }
+
+    public boolean processNewWorldState(int newState) {
+        round.world.setWorldState(newState);
+
+        return processHook(attacker) || processHook(defender);
     }
 
     private boolean processHook(Player player) {
