@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -24,6 +25,7 @@ public final class Resource {
 
     public final BufferedImage charge;
     public final HashMap<String, BufferedImage> cardThumbnails;
+    public final ArrayList<BufferedImage> borders;
 
     private Resource() {
         // TODO: init stuff here
@@ -32,9 +34,22 @@ public final class Resource {
         scroll = loadResourceImage("/backgrounds/scroll.png");
         charge = loadResourceImage("/icons/charge.png");
 
+        var borderGrid1 = loadResourceImage("/borders/Border All 1.png");
+        var borderGrid2 = loadResourceImage("/borders/Border All 16.png");
+        borders = new ArrayList<>();
+
+        borders.add(borderGrid1.getSubimage(64 * 9, 64 * 6, 64, 64));
+        borders.add(borderGrid1.getSubimage(64 * 3, 64 * 5, 64, 64));
+        borders.add(borderGrid1.getSubimage(0, 64 * 3, 64, 64));
+
+        borders.add(borderGrid2.getSubimage(64 * 9, 64 * 6, 64, 64));
+        borders.add(borderGrid2.getSubimage(64 * 3, 64 * 5, 64, 64));
+        borders.add(borderGrid2.getSubimage(0, 64 * 3, 64, 64));
+
         var spells1 = loadResourceImage("/sprites/pixel-spell-effect/spells-0.png");
         var spells2 = loadResourceImage("/sprites/pixel-spell-effect/spells-1.png");
         var wizardIdle = loadResourceImage("/wizards/Idle.png");
+
 
         AnimatedSpriteRoot.registerAnimatedSprite(
                 "ChargeCascade",
@@ -188,9 +203,12 @@ public final class Resource {
                 false
         );
 
+
         spells1.flush();
         spells2.flush();
         wizardIdle.flush();
+        borderGrid1.flush();
+        borderGrid2.flush();
     }
 
     private static BufferedImage loadResourceImage(String path) {

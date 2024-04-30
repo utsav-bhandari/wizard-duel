@@ -19,7 +19,7 @@ public final class HelpOverlay implements IRenderable {
 
     /* side of 0 represents the left and side of 1 represents the right side of the screen */
     public HelpOverlay(int side) {
-        alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
+        alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f);
 
         this.side = side;
         this.helpBackgroundColorRight = new Color(1f, 0f, 0f);

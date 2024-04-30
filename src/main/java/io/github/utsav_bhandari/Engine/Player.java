@@ -89,6 +89,10 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
         this.maxCharge = maxCharge;
     }
 
+    public int getId() {
+        return id;
+    }
+
     @Override
     public void toggleChargeUse() {
         var turn = world.getCurrentTurn();

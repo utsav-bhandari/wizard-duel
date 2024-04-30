@@ -14,7 +14,9 @@ import io.github.utsav_bhandari.Scripts.StdDrawProvider;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.function.Function;
 
 import static io.github.utsav_bhandari.Engine.PlayerKeymap.Action;
@@ -145,23 +147,29 @@ public class GameUI implements IRenderable {
 
 
             Player[] players = game.world.players;
-            for (int i = 0; i < players.length; i++) {
-                Player p = players[i];
+            var borders = r.borders;
+            for (int playerIdx = 0; playerIdx < players.length; playerIdx++) {
+                Player p = players[playerIdx];
                 int sxPosition = 0;
                 int txPosition = 0;
                 var spellCard = p.getCurrentSpellCard();
-                if (i == 0) {
+                if (playerIdx == 0) {
                     sxPosition = 50;
                     txPosition = 64;
-                } else if (i == 1) {
+                } else if (playerIdx == 1) {
                     sxPosition = StdDrawBridge.width - 242;
-                txPosition = (StdDrawBridge.width / 2);
+                    txPosition = StdDrawBridge.width - 242;
                 }
                 if (spellCard != null) {
                     if (spellCard instanceof ASpellCard aSpellCard) {
                         aSpellCard.x = sxPosition;
                         aSpellCard.y = 850;
                         spellCard.render(g);
+                        if (players[playerIdx].getId() == 0) {
+                            g.drawImage(borders.get(0), (int) aSpellCard.x - 10, (int) aSpellCard.y - 10, 212, 212, null);
+                        } else if (players[playerIdx].getId() == 1) {
+                            g.drawImage(borders.get(3), (int) aSpellCard.x - 10, (int) aSpellCard.y - 10, 212, 212, null);
+                        }
                     } else {
                         throw new RuntimeException();
                     }
@@ -169,11 +177,22 @@ public class GameUI implements IRenderable {
                 var textEffectCard = p.textEffectCards;
                 for (int j = 0; j < textEffectCard.size(); j++) {
                     int off = j * (64 + 192);
+                    if (playerIdx == 1) {
+                        off = -off;
+                    }
                     ITextEffectCard tec = textEffectCard.get(j);
                     if (tec instanceof ATextEffectCard aTextEffectCard) {
                         aTextEffectCard.x = txPosition + off;
                         aTextEffectCard.y = 200;
                         tec.render(g);
+                        // 6 borders in the ArrayList
+                        var p1bc = 3;
+                        var p2bc = borders.size() - p1bc;
+                        if (players[playerIdx].getId() == 0) {
+                            g.drawImage(borders.get(j % p1bc), (int) aTextEffectCard.x - 10, (int) aTextEffectCard.y - 10, 212, 212, null);
+                        } else if (players[playerIdx].getId() == 1) {
+                            g.drawImage(borders.get((j % p2bc) + p1bc), (int) aTextEffectCard.x - 10, (int) aTextEffectCard.y - 10, 212, 212, null);
+                        }
                     } else {
                         throw new RuntimeException();
                     }
@@ -228,6 +247,6 @@ public class GameUI implements IRenderable {
             StdDraw.text(960, 100, "GAME OVER");
         }
 
-        debugOverlay.render(g);
+//        debugOverlay.render(g);
     }
 }
