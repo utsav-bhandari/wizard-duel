@@ -7,7 +7,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class EtherealCyclone extends ASpellCard implements ISpellCard {
-    public static final BufferedImage thumbnail = Resource.getInstance().cardThumbnails.get("EtherealCyclone");
+    {
+  thumbnail = Resource.getInstance().cardThumbnails.get("EtherealCyclone");
+}
     public String getName() {
         return "Ethereal Cyclone";
     }

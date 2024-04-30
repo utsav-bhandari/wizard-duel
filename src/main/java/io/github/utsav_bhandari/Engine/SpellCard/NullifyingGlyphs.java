@@ -7,7 +7,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class NullifyingGlyphs extends ASpellCard implements ISpellCard {
-    public static final BufferedImage thumbnail = Resource.getInstance().cardThumbnails.get("NullifyingGlyphs");
+    {
+  thumbnail = Resource.getInstance().cardThumbnails.get("NullifyingGlyphs");
+}
     public String getName() {
         return "Nullifying Glyphs";
     }

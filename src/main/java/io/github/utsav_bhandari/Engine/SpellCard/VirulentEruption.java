@@ -7,7 +7,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class VirulentEruption extends ASpellCard implements ISpellCard {
-    public static final BufferedImage thumbnail = Resource.getInstance().cardThumbnails.get("VirulentEruption");
+    {
+  thumbnail = Resource.getInstance().cardThumbnails.get("VirulentEruption");
+}
     public String getName() {
         return "Virulent Eruption";
     }

@@ -7,7 +7,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class ArcaneFlurry extends ASpellCard implements ISpellCard {
-    public static final BufferedImage thumbnail = Resource.getInstance().cardThumbnails.get("ArcaneFlurry");
+    {
+      thumbnail = Resource.getInstance().cardThumbnails.get("ArcaneFlurry");
+    }
     public String getName() {
         return "Arcane Flurry";
     }

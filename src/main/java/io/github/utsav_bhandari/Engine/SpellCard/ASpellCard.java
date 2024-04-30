@@ -62,7 +62,4 @@ public abstract class ASpellCard extends ACard {
         this.damage = damage;
     }
 
-    public BufferedImage getThumbnail() {
-        throw new UnsupportedOperationException();
-    }
 }

@@ -9,7 +9,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class SiphoningEnchantment extends ATextEffectCard implements IRenderable, ITextEffectCard {
-    public static final BufferedImage thumbnail = Resource.getInstance().cardThumbnails.get("SiphoningEnchantment");
+    {
+  thumbnail = Resource.getInstance().cardThumbnails.get("SiphoningEnchantment");
+}
 
     @Override
     public void render(Graphics2D g) {

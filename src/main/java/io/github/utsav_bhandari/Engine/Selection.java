@@ -103,14 +103,52 @@ public class Selection implements IRenderable {
         g.setComposite(alphaComposite);
         int targetWidth = StdDrawBridge.width / 2 - 40;
         int targetHeight = StdDrawBridge.height - 400;
+        int selectionBoxX = 20;
+        int selectionBoxY = 330;
 
         g.setColor(Color.BLUE);
-        g.fillRect(20, 200, targetWidth, targetHeight);
+        g.fillRect(selectionBoxX, selectionBoxY, targetWidth, targetHeight);
         g.setColor(Color.BLACK);
-        g.drawString("Choose a text effect card", 30, 220);
-        g.drawString("Text effect " + textEffectCardChoice, 30, 240);
-        g.drawString("Spell effect " + spellCardChoice, 30, 260);
-        g.drawString("State " + state, 30, 280);
+        g.drawString("Choose a text effect card", selectionBoxX + 10, selectionBoxY + 20);
+        g.drawString("Text effect " + textEffectCardChoice, selectionBoxX + 10, selectionBoxY + 40);
+        g.drawString("Spell effect " + spellCardChoice, selectionBoxX + 10, selectionBoxY + 60);
+        g.drawString("State " + state, selectionBoxX + 10, selectionBoxY + 80);
+
+        var r = Resource.getInstance();
+        for (int i = 0; i < textEffectCardChoices.size(); i++) {
+            ITextEffectCard te = textEffectCardChoices.get(i);
+            int off =  (targetWidth - (192 * textEffectCardChoices.size())) / (textEffectCardChoices.size() + 1);
+            int teCardX = selectionBoxX + (i + 1) * off + i * 192;
+            g.drawImage(te.getThumbnail(),
+                    teCardX,
+                    selectionBoxY + off,
+                    192,
+                    192,
+                    null);
+            g.drawImage(r.borders.get(i),
+                    teCardX - 10,
+                    (selectionBoxY + off) - 10,
+                    212,
+                    212,
+                    null);
+        }
+        for (int i = 0; i < spellCardChoices.size(); i++) {
+            ISpellCard sc = spellCardChoices.get(i);
+            int off =  ((targetWidth - (192 * spellCardChoices.size())) / (spellCardChoices.size() + 1));
+            int spellCardX = selectionBoxX + (i + 1) * off + i * 192;
+            g.drawImage(sc.getThumbnail(),
+                    spellCardX,
+                    selectionBoxY + 2 * off,
+                    192,
+                    192,
+                    null);
+            g.drawImage(r.borders.get(i + 3),
+                    spellCardX - 10,
+                    (selectionBoxY + 2 * off) - 10,
+                    212,
+                    212,
+                    null);
+        }
 
         g.setComposite(t);
     }

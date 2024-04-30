@@ -9,7 +9,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class ChargeSurge extends ATextEffectCard implements IRenderable, ITextEffectCard {
-    public static final BufferedImage thumbnail = Resource.getInstance().cardThumbnails.get("ChargeSurge");
+    {
+  thumbnail = Resource.getInstance().cardThumbnails.get("ChargeSurge");
+}
 
     @Override
     public void render(Graphics2D g) {

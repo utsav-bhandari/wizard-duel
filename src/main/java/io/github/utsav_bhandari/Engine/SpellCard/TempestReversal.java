@@ -6,7 +6,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class TempestReversal extends ASpellCard implements ISpellCard{
-    public static final BufferedImage thumbnail = Resource.getInstance().cardThumbnails.get("TempestReversal");
+    {
+  thumbnail = Resource.getInstance().cardThumbnails.get("TempestReversal");
+}
 
     @Override
     public String getName() {

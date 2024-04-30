@@ -9,7 +9,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class HealingIncantation extends ATextEffectCard implements IRenderable, ITextEffectCard {
-    public static final BufferedImage thumbnail = Resource.getInstance().cardThumbnails.get("HealingIncantation");
+    {
+  thumbnail = Resource.getInstance().cardThumbnails.get("HealingIncantation");
+}
 
     @Override
     public void render(Graphics2D g) {

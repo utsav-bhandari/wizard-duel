@@ -9,7 +9,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class ArcaneInterference extends ATextEffectCard implements IRenderable, ITextEffectCard {
-    public static final BufferedImage thumbnail = Resource.getInstance().cardThumbnails.get("ArcaneInterference");
+    {
+  thumbnail = Resource.getInstance().cardThumbnails.get("ArcaneInterference");
+}
 
     @Override
     public void render(Graphics2D g) {

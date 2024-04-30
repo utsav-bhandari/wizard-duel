@@ -7,7 +7,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class ChargeCascade extends ASpellCard implements ISpellCard {
-    public static final BufferedImage thumbnail = Resource.getInstance().cardThumbnails.get("ChargeCascade");
+    {
+  thumbnail = Resource.getInstance().cardThumbnails.get("ChargeCascade");
+}
     public String getName() {
         return "Charge Cascade";
     }

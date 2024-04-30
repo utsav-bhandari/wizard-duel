@@ -7,7 +7,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class InfernalCircle extends ASpellCard implements ISpellCard {
-    public static final BufferedImage thumbnail = Resource.getInstance().cardThumbnails.get("InfernalCircle");
+    {
+  thumbnail = Resource.getInstance().cardThumbnails.get("InfernalCircle");
+}
     public String getName() {
         return "Infernal Circle";
     }
