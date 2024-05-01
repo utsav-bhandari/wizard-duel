@@ -100,7 +100,7 @@ public class World {
         players[0].world = this;
         players[1].world = this;
 
-        players[0].x = 100;
+        players[0].x = 200;
         players[0].y = 720; // was 520
 
         players[1].x = 1720;
@@ -147,7 +147,7 @@ public class World {
         for (var player : players) {
             Collections.shuffle(spellCardFactory);
             Collections.shuffle(textEffectCardFactory);
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < spellCardFactory.size(); i++) {
                 var sc = spellCardFactory.get(i).get();
                 var te = textEffectCardFactory.get(i).get();
                 sc.setWorld(this);

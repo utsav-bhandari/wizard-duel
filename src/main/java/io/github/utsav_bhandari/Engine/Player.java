@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Player extends AEntity implements IEntity, IPlayerControl, IRenderable {
     private final int id;
-    private final AnimatedSprite idleAnimation;
+    private AnimationStateManager animationManager;
     private final BufferedImageOp transformOp;
     private final AffineTransform flipTransform;
 
@@ -47,7 +47,10 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
 
         var r = Resource.getInstance();
 
-        idleAnimation = r.getAnimatedSprite("Wizard Idle");
+        animationManager = new AnimationStateManager(r::getAnimatedSprite, "Wizard Idle");
+        animationManager.registerTransition("WizardAttack1", "Wizard Idle");
+        animationManager.registerTransition("WizardAttack2", "Wizard Idle");
+        animationManager.registerTransition("TakeHit", "Wizard Idle");
 
         flipTransform = new AffineTransform();
 
@@ -141,10 +144,10 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
         g.setColor(Color.BLACK);
         g.drawString("Player " + (id + 1), 0, 0);
 
-        idleAnimation.x = (float) (x - flipTransform.getScaleX() * idleAnimation.getWidth() / 2);
-        idleAnimation.y = (float) (y - flipTransform.getScaleY() * idleAnimation.getHeight() / 2);
-        idleAnimation.op = transformOp;
-        idleAnimation.render(g);
+        getSprite().x = (float) (x - flipTransform.getScaleX() * getSprite().getWidth() / 2);
+        getSprite().y = (float) (y - flipTransform.getScaleY() * getSprite().getHeight() / 2);
+        getSprite().op = transformOp;
+        getSprite().render(g);
     }
 
     public PlayerKeymap getKeymap() {
@@ -199,5 +202,13 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
         int lastIndex = textEffectCardPile.size() - 1;
 
         return textEffectCardPile.remove(lastIndex);
+    }
+
+    public AnimatedSprite getSprite() {
+        return animationManager.getSprite();
+    }
+
+    public void setAnimationState(String state) {
+        animationManager.setState(state);
     }
 }

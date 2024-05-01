@@ -13,32 +13,53 @@ import java.util.Random;
 public class ChargeCascade extends ASpellCard implements ISpellCard {
     {
         thumbnail = Resource.getInstance().cardThumbnails.get("ChargeCascade");
+        spell = Resource.getInstance().getAnimatedSprite("ChargeCascade");
+
     }
     private final AnimatedSprite spellPath;
+    private final AnimatedSprite spell;
     private AffineTransformOp op;
 
     public void cast() {
-        spellPath.x = owner.x - (float) spellPath.getWidth() / 2;
-        spellPath.y = owner.y - (float) spellPath.getHeight() / 2;
+        super.cast();
+
         var trans = new AffineTransform();
         trans.scale(scale, scale);
+
+        op = new AffineTransformOp(trans, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+        spell.op = op;
 
         if (owner.getId() == 0) {
             trans.scale(-1, 1);
         }
 
+        spell.x = getTarget().x + (float) -spell.getWidth() * scale / 2;
+        spell.y = getTarget().y + (float) -spell.getHeight() * scale / 2;
+
+        float spellPathOffX = (float) -spellPath.getWidth() * (float) trans.getScaleX() / 2;
+        float spellPathOffY = (float) -spellPath.getHeight() * (float) trans.getScaleY() / 2;
+
         op = new AffineTransformOp(trans, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
 
         spellPath.op = op;
 
+
         for (int i = 0; i < 100; i++) {
-            spellPath.x = Util.lerp(owner.x, getTarget().x, i / 100.f);
+            spellPath.x =  spellPathOffX + Util.lerp(owner.x, getTarget().x, i / 100.f);
+            spellPath.y =  spellPathOffY + Util.lerp(owner.y, getTarget().y, i / 100.f);
             world.waitUpdate();
         }
+
+        Util.unsafeWait(50);
     }
 
+    public void done() {
+        super.done();
+        world.waitUpdate();
+        Util.unsafeWait(700);
+    }
     public ChargeCascade() {
-        scale = 2;
+        scale = 3;
         Random randSpellPath = new Random();
         spellPath = Resource.getInstance().getAnimatedSprite("SpellPath" + randSpellPath.nextInt(1, 6));
     }
@@ -62,8 +83,11 @@ public class ChargeCascade extends ASpellCard implements ISpellCard {
 
     @Override
     public void renderSpell(Graphics2D g) {
-        if (!isNeutral()) {
+        if (isCasting()) {
             spellPath.render(g);
+        }
+        if (isDone()) {
+            spell.render(g);
         }
     }
 

@@ -237,7 +237,9 @@ public class GameUI implements IRenderable {
                 // render spell
                 var turn = game.world.getCurrentTurn();
                 if (turn != null) {
-                    turn.attacker.getCurrentSpellCard().renderSpell(g);
+                    if (turn.attacker.getCurrentSpellCard() != null) {
+                        turn.attacker.getCurrentSpellCard().renderSpell(g);
+                    }
                 }
             }
             for (int i = 0; i < players.length; i++) {
@@ -261,6 +263,6 @@ public class GameUI implements IRenderable {
             StdDraw.text(960, 100, "GAME OVER");
         }
 
-        debugOverlay.render(g);
+//        debugOverlay.render(g);
     }
 }

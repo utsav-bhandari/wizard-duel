@@ -2,8 +2,6 @@ package io.github.utsav_bhandari.Engine;
 
 import io.github.utsav_bhandari.Lib.Util;
 
-import static io.github.utsav_bhandari.Lib.Util.cloneArray;
-
 public class Turn {
     private final Round round;
     private boolean isUsingCharge = false;
@@ -20,6 +18,7 @@ public class Turn {
 
     public void run() {
         System.out.println("Running turn");
+        var r = Resource.getInstance();
 
 
         var spellCard = round.getPlayerSelection(attacker).getSpellCard();
@@ -46,11 +45,14 @@ public class Turn {
             if (processNewWorldState(World.WORLD_STATE_SPELL_PRIMED)) return;
 
             if (processNewWorldState(World.WORLD_STATE_ON_CAST)) return;
-
+            attacker.setAnimationState("WizardAttack1");
+            if (attacker.getId() == 1) {
+                attacker.setAnimationState("WizardAttack2");
+            }
             spellCard.cast();
-
-            Util.unsafeWait(500);
-
+            defender.setAnimationState("TakeHit");
+            spellCard.done();
+            Util.unsafeWait(300);
             attacker.setCurrentSpellCard(null);
         } else {
             System.out.println("Spell card is null");

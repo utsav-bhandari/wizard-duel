@@ -36,9 +36,12 @@ public interface ISpellCard extends ICard {
      */
     void cast();
 
+    void done();
+
     boolean isNeutral();
     boolean isPrimed();
     boolean isCasting();
+    boolean isDone();
 
     /**
      * Camera shake

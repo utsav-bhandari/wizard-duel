@@ -48,7 +48,12 @@ public final class Resource {
 
         var spells1 = loadResourceImage("/sprites/pixel-spell-effect/spells-0.png");
         var spells2 = loadResourceImage("/sprites/pixel-spell-effect/spells-1.png");
+
         var wizardIdle = loadResourceImage("/wizards/Idle.png");
+        var wizardAttack1 = loadResourceImage("/wizards/Attack1.png");
+        var wizardAttack2 = loadResourceImage("/wizards/Attack2.png");
+        var wizardTakeHit = loadResourceImage("/wizards/TakeHit.png");
+        var wizardDeath = loadResourceImage("/wizards/Death.png");
 
         var spellPath1 = loadResourceImage("/sprites/spell-paths/1.png");
         var spellPath2 = loadResourceImage("/sprites/spell-paths/2.png");
@@ -69,7 +74,7 @@ public final class Resource {
                 60,
                 10,
                 -1,
-                false
+                true
         );
 
         AnimatedSpriteRoot.registerAnimatedSprite(
@@ -85,7 +90,7 @@ public final class Resource {
                 60,
                 10,
                 -1,
-                false
+                true
         );
 
         AnimatedSpriteRoot.registerAnimatedSprite(
@@ -101,7 +106,7 @@ public final class Resource {
                 60,
                 10,
                 -1,
-                false
+                true
         );
 
         AnimatedSpriteRoot.registerAnimatedSprite(
@@ -117,7 +122,7 @@ public final class Resource {
                 60,
                 10,
                 -1,
-                false
+                true
         );
 
         AnimatedSpriteRoot.registerAnimatedSprite(
@@ -133,7 +138,7 @@ public final class Resource {
                 60,
                 10,
                 -1,
-                false
+                true
         );
 
         AnimatedSpriteRoot.registerAnimatedSprite(
@@ -149,7 +154,7 @@ public final class Resource {
                 60,
                 10,
                 -1,
-                false
+                true
         );
 
         AnimatedSpriteRoot.registerAnimatedSprite(
@@ -165,7 +170,7 @@ public final class Resource {
                 60,
                 10,
                 -1,
-                false
+                true
         );
 
         AnimatedSpriteRoot.registerAnimatedSprite(
@@ -181,7 +186,7 @@ public final class Resource {
                 60,
                 10,
                 -1,
-                false
+                true
         );
 
         cardThumbnails = new HashMap<>();
@@ -189,14 +194,13 @@ public final class Resource {
         for (String id : AnimatedSpriteRoot.getAnimatedSpriteIds()) {
             cardThumbnails.put(id, AnimatedSpriteRoot.getAnimatedSpriteRoot(id).frames.get(3));
         }
-        int wizard_border = 50;
         AnimatedSpriteRoot.registerAnimatedSprite(
                 "Wizard Idle",
                 wizardIdle,
-                250 - 2 * wizard_border,
-                250 - 2 * wizard_border,
-                wizard_border,
-                wizard_border,
+                250,
+                250,
+                0,
+                0,
                 250,
                 0,
                 8,
@@ -280,7 +284,66 @@ public final class Resource {
                 -1,
                 false
         );
-
+        AnimatedSpriteRoot.registerAnimatedSprite(
+                "WizardAttack1",
+                wizardAttack1,
+                250,
+                250,
+                0,
+                0,
+                250,
+                0,
+                8,
+                60,
+                10,
+                1,
+                false
+        );
+        AnimatedSpriteRoot.registerAnimatedSprite(
+                "WizardAttack2",
+                wizardAttack2,
+                250,
+                250,
+                0,
+                0,
+                250,
+                0,
+                8,
+                60,
+                10,
+                1,
+                false
+        );
+        AnimatedSpriteRoot.registerAnimatedSprite(
+                "TakeHit",
+                wizardTakeHit,
+                250,
+                250,
+                0,
+                0,
+                250,
+                0,
+                3,
+                60,
+                10,
+                1,
+                true
+        );
+        AnimatedSpriteRoot.registerAnimatedSprite(
+                "Death",
+                wizardDeath,
+                250,
+                250,
+                0,
+                0,
+                250,
+                0,
+                7,
+                60,
+                10,
+                0,
+                false
+        );
 
         spells1.flush();
         spells2.flush();
@@ -292,7 +355,10 @@ public final class Resource {
         spellPath3.flush();
         spellPath4.flush();
         spellPath5.flush();
-
+        wizardAttack1.flush();
+        wizardAttack2.flush();
+        wizardTakeHit.flush();
+        wizardDeath.flush();
     }
 
     private static BufferedImage loadResourceImage(String path) {

@@ -37,6 +37,8 @@ public abstract class ASpellCard extends ACard {
         state = 2;
     }
 
+    public void done() { state = 3; }
+
     public AffineTransformOp shake() {
         return null;
     }
@@ -52,6 +54,8 @@ public abstract class ASpellCard extends ACard {
     public boolean isCasting() {
         return state == 2;
     }
+
+    public boolean isDone() { return state == 3; }
 
     public float getDamage() {
         return damage;
@@ -80,4 +84,5 @@ public abstract class ASpellCard extends ACard {
     public boolean isChargeUse() {
         return chargeUse;
     }
+
 }
