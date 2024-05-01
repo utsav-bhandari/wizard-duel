@@ -83,7 +83,23 @@ public class Round {
             attacker.setCurrentSpellCard(spellCard);
         }
 
-        int goesFirst = (int) (Math.random() * 2);
+        int goesFirst;
+        if (world.players[0].getHealth() == world.players[1].getHealth()) {
+            goesFirst = (int) (Math.random() * 2);
+        } else {
+            goesFirst = (world.players[0].getHealth() < world.players[1].getHealth()) ? 0 : 1;
+        }
+
+        for (var p : world.players) {
+            int chargeToAdd = 1;
+
+            if (!world.processNewWorldState(World.WORLD_STATE_ON_CHARGE_ADD, null, p, null)) {
+                p.setCharge(p.getCharge() + chargeToAdd);
+                world.processNewWorldState(World.WORLD_STATE_CHARGE_ADDED, null, p, null);
+            } else {
+                System.out.println("Charge add cancelled");
+            }
+        }
 
         for (int i = 0; i < 2; i++) {
             int attackerIdx = (goesFirst + i) % 2;

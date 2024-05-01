@@ -54,6 +54,8 @@ public interface ISpellCard extends ICard {
     void confirmChargeUse();
 
     boolean isChargeUseConfirmed();
+    boolean isChargeUse();
 
     void toggleChargeUse();
+
 }

@@ -118,7 +118,7 @@ public class GameUI implements IRenderable {
                     var round = game.world.getCurrentRound();
                     if (round != null) {
                         var turn = round.getCurrentTurn();
-                        if (turn != null) {
+                        if (turn != null && turn.attacker == p) {
                             var sc =  turn.attacker.getCurrentSpellCard();
                             if (sc != null) {
                                 switch (action) {

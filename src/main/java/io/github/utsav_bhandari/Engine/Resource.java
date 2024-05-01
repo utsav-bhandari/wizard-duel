@@ -50,6 +50,11 @@ public final class Resource {
         var spells2 = loadResourceImage("/sprites/pixel-spell-effect/spells-1.png");
         var wizardIdle = loadResourceImage("/wizards/Idle.png");
 
+        var spellPath1 = loadResourceImage("/sprites/spell-paths/1.png");
+        var spellPath2 = loadResourceImage("/sprites/spell-paths/2.png");
+        var spellPath3 = loadResourceImage("/sprites/spell-paths/3.png");
+        var spellPath4 = loadResourceImage("/sprites/spell-paths/4.png");
+        var spellPath5 = loadResourceImage("/sprites/spell-paths/5.png");
 
         AnimatedSpriteRoot.registerAnimatedSprite(
                 "ChargeCascade",
@@ -200,6 +205,81 @@ public final class Resource {
                 -1,
                 false
         );
+        AnimatedSpriteRoot.registerAnimatedSprite(
+                "SpellPath1",
+                spellPath1,
+                100,
+                100,
+                0,
+                0,
+                100,
+                100,
+                60,
+                60,
+                60,
+                -1,
+                false
+        );
+        AnimatedSpriteRoot.registerAnimatedSprite(
+                "SpellPath2",
+                spellPath2,
+                100,
+                100,
+                0,
+                0,
+                100,
+                100,
+                60,
+                60,
+                60,
+                -1,
+                false
+        );
+        AnimatedSpriteRoot.registerAnimatedSprite(
+                "SpellPath3",
+                spellPath3,
+                100,
+                100,
+                0,
+                0,
+                100,
+                100,
+                60,
+                60,
+                60,
+                -1,
+                false
+        );
+        AnimatedSpriteRoot.registerAnimatedSprite(
+                "SpellPath4",
+                spellPath4,
+                100,
+                100,
+                0,
+                0,
+                100,
+                100,
+                60,
+                60,
+                60,
+                -1,
+                false
+        );
+        AnimatedSpriteRoot.registerAnimatedSprite(
+                "SpellPath5",
+                spellPath5,
+                100,
+                100,
+                0,
+                0,
+                100,
+                100,
+                60,
+                60,
+                60,
+                -1,
+                false
+        );
 
 
         spells1.flush();
@@ -207,6 +287,12 @@ public final class Resource {
         wizardIdle.flush();
         borderGrid1.flush();
         borderGrid2.flush();
+        spellPath1.flush();
+        spellPath2.flush();
+        spellPath3.flush();
+        spellPath4.flush();
+        spellPath5.flush();
+
     }
 
     private static BufferedImage loadResourceImage(String path) {

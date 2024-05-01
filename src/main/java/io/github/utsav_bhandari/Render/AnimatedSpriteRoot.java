@@ -40,11 +40,19 @@ public class AnimatedSpriteRoot {
         int sy = y;
 
         for (int i = 0; i < frameCount; i++) {
+            // wrap around hack
+            if (sx >= image.getWidth()) {
+                sx = x;
+                sy += dy;
+            };
+
             var subImage = image.getSubimage(sx, sy, width, height);
             frames.add(subImage);
 
             sx += dx;
-            sy += dy;
+            if (dx == 0) {
+                sy += dy;
+            }
         }
     }
 

@@ -13,52 +13,67 @@ import java.util.ArrayList;
 
 public class AnimatedSpriteDemo {
     public static void main(String[] args) {
-        try (var stream = AnimatedSpriteDemo.class.getResourceAsStream("/sprites/pixel-spell-effect/spells-0.png")) {
-            var image = ImageIO.read(stream);
+        try (var stream = AnimatedSpriteDemo.class.getResourceAsStream("/sprites/spell-paths/1.png")) {
+            var spellPath1 = ImageIO.read(stream);
 
+//            AnimatedSpriteRoot.registerAnimatedSprite(
+//                    "WHIRLWIND",
+//                    image,
+//                    64,
+//                    64,
+//                    0,
+//                    128,
+//                    64,
+//                    0,
+//                    18,
+//                    60,
+//                    10,
+//                    10,
+//                    false
+//            );
+//            AnimatedSpriteRoot.registerAnimatedSprite(
+//                    "GEOMETRY_DASH",
+//                    image,
+//                    64,
+//                    64,
+//                    0,
+//                    64,
+//                    64,
+//                    0,
+//                    18,
+//                    60,
+//                    20,
+//                    10,
+//                    true
+//            );
+//            AnimatedSpriteRoot.registerAnimatedSprite(
+//                    "WATER_PETALS",
+//                    image,
+//                    64,
+//                    64,
+//                    0,
+//                    0,
+//                    64,
+//                    0,
+//                    18,
+//                    60,
+//                    30,
+//                    10,
+//                    false
+//            );
             AnimatedSpriteRoot.registerAnimatedSprite(
-                    "WHIRLWIND",
-                    image,
-                    64,
-                    64,
+                    "SpellPath1",
+                    spellPath1,
+                    100,
+                    100,
                     0,
-                    128,
-                    64,
                     0,
-                    18,
+                    100,
+                    100,
                     60,
-                    10,
-                    10,
-                    false
-            );
-            AnimatedSpriteRoot.registerAnimatedSprite(
-                    "GEOMETRY_DASH",
-                    image,
-                    64,
-                    64,
-                    0,
-                    64,
-                    64,
-                    0,
-                    18,
                     60,
-                    20,
-                    10,
-                    true
-            );
-            AnimatedSpriteRoot.registerAnimatedSprite(
-                    "WATER_PETALS",
-                    image,
-                    64,
-                    64,
-                    0,
-                    0,
-                    64,
-                    0,
-                    18,
                     60,
-                    30,
-                    10,
+                    -1,
                     false
             );
         } catch (IOException e) {
@@ -67,41 +82,39 @@ public class AnimatedSpriteDemo {
 
         ArrayList<AnimatedSprite> sprites = new ArrayList<>();
 
-        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("WHIRLWIND"));
-        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("GEOMETRY_DASH"));
-        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("WATER_PETALS"));
-        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("WHIRLWIND"));
-        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("GEOMETRY_DASH"));
-        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("WATER_PETALS"));
-        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("WHIRLWIND"));
-        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("GEOMETRY_DASH"));
-        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("WATER_PETALS"));
-        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("WHIRLWIND"));
-        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("GEOMETRY_DASH"));
-        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("WATER_PETALS"));
-        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("WHIRLWIND"));
-        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("GEOMETRY_DASH"));
-        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("WATER_PETALS"));
+        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("SpellPath1"));
 
-        var transform = new AffineTransform();
+//        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("WHIRLWIND"));
+//        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("GEOMETRY_DASH"));
+//        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("WATER_PETALS"));
+//        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("WHIRLWIND"));
+//        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("GEOMETRY_DASH"));
+//        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("WATER_PETALS"));
+//        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("WHIRLWIND"));
+//        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("GEOMETRY_DASH"));
+//        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("WATER_PETALS"));
+//        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("WHIRLWIND"));
+//        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("GEOMETRY_DASH"));
+//        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("WATER_PETALS"));
+//        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("WHIRLWIND"));
+//        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("GEOMETRY_DASH"));
+//        sprites.add(AnimatedSpriteRoot.getAnimatedSprite("WATER_PETALS"));
 
-        transform.scale(3, 3);
+//        var transform = new AffineTransform();
+//
+//        transform.scale(3, 3);
+//
+//        var op = new AffineTransformOp(transform, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+//
+//        for (var sprite : sprites) {
+//            sprite.op = op;
+//        }
 
-        var op = new AffineTransformOp(transform, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-
-        for (var sprite : sprites) {
-            sprite.op = op;
-        }
-
+        var sprite = sprites.get(0);
+        sprite.x = 1920;
         StdDrawProvider.run(g -> {
-            for (int i = 0; i < sprites.size(); i++) {
-                var sprite = sprites.get(i);
-
-                sprite.x = i * 100;
-                sprite.y = 100;
-
-                sprite.render(g);
-            }
+            sprite.x -= 10;
+            sprite.render(g);
         });
     }
 }

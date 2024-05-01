@@ -57,8 +57,8 @@ public class ThePowerOfExample extends ASpellCard implements ISpellCard {
         setDamage(0);
         for (int i = 0; i < dmg; i++) {
             setDamage(getDamage() + 1);
-            radius = 30 + i * 20;
-            Util.unsafeWait(300);
+            radius = 3 + i * 2;
+            world.waitUpdate();
         }
 
         setDamage(dmg);

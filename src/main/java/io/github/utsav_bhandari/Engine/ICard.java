@@ -12,4 +12,6 @@ public interface ICard extends IEntity, IRenderable {
     void setOwner(Player owner);
     String getName();
     String getDescription();
+
+    void setWorld(World world);
 }

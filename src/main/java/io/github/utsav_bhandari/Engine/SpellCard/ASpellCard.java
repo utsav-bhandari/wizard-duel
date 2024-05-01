@@ -76,4 +76,8 @@ public abstract class ASpellCard extends ACard {
     public void toggleChargeUse() {
         chargeUse = !chargeUse;
     }
+
+    public boolean isChargeUse() {
+        return chargeUse;
+    }
 }

@@ -21,15 +21,6 @@ public class Turn {
     public void run() {
         System.out.println("Running turn");
 
-        int chargeToAdd = 2;
-
-        if (!processNewWorldState(World.WORLD_STATE_ON_CHARGE_ADD)) {
-            attacker.setCharge(attacker.getCharge() + chargeToAdd);
-        } else {
-            System.out.println("Charge add cancelled");
-        }
-
-        if (processNewWorldState(World.WORLD_STATE_CHARGE_ADDED)) return;
 
         var spellCard = round.getPlayerSelection(attacker).getSpellCard();
 
@@ -38,6 +29,7 @@ public class Turn {
             round.world.splashScreenText = "Charge spell card?";
             while (!spellCard.isChargeUseConfirmed()) {
                 round.world.waitForUi();
+                round.world.splashScreenText = spellCard.isChargeUse() ? "Using charge" : "Not using charge";
             }
             round.world.splashScreenText = null;
         } else {
@@ -67,32 +59,9 @@ public class Turn {
         System.out.println("Turn ended");
     }
 
+    // move to World
     public boolean processNewWorldState(int newState) {
-        round.world.setWorldState(newState);
-
-        return processHook(attacker) || processHook(defender);
-    }
-
-    private boolean processHook(Player player) {
-        var e = new TurnEventHook(null, round.world, this);
-
-        for (var t : cloneArray(player.textEffectCards)) {
-            boolean r = t.hook(e);
-
-            if (r) {
-                player.textEffectCards.remove(t);
-            }
-
-            if (e.isCancelled()) {
-                if (!World.isWorldStateCancellable(round.world.getWorldState())) {
-                    System.out.println("Attempted to cancel non-cancellable state");
-                    return false;
-                }
-                System.out.println("Turn cancelled");
-                return true;
-            }
-        }
-        return false;
+        return round.world.processNewWorldState(newState, this, attacker, defender);
     }
 
     public boolean isUsingCharge() {

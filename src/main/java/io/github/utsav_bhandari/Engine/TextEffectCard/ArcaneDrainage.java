@@ -4,7 +4,6 @@ import io.github.utsav_bhandari.Engine.*;
 import io.github.utsav_bhandari.Render.IRenderable;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class ArcaneDrainage extends ATextEffectCard implements IRenderable, ITextEffectCard {
     {
@@ -31,7 +30,7 @@ public class ArcaneDrainage extends ATextEffectCard implements IRenderable, ITex
     private int state = 0;
 
     @Override
-    public boolean hook(TurnEventHook event) {
+    public boolean hook(WorldEventHook event) {
         return false;
     }
 //        if (event.attackEvent == null) {

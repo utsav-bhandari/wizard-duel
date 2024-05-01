@@ -1,12 +1,10 @@
 package io.github.utsav_bhandari.Engine.TextEffectCard;
 
-import io.github.utsav_bhandari.Engine.ICard;
 import io.github.utsav_bhandari.Engine.Resource;
-import io.github.utsav_bhandari.Engine.TurnEventHook;
+import io.github.utsav_bhandari.Engine.WorldEventHook;
 import io.github.utsav_bhandari.Render.IRenderable;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class EyeOfTheStorm extends ATextEffectCard implements IRenderable, ITextEffectCard {
     {
@@ -30,7 +28,7 @@ public class EyeOfTheStorm extends ATextEffectCard implements IRenderable, IText
     }
 
     @Override
-    public boolean hook(TurnEventHook event) {
+    public boolean hook(WorldEventHook event) {
         return false;
     }
 }

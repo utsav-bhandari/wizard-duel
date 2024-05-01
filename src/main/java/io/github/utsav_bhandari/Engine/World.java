@@ -5,13 +5,12 @@ import io.github.utsav_bhandari.Engine.TextEffectCard.*;
 import io.github.utsav_bhandari.Game;
 import io.github.utsav_bhandari.Lib.Util;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
+
+import static io.github.utsav_bhandari.Lib.Util.cloneArray;
 
 public class World {
     public final Game game;
@@ -67,11 +66,12 @@ public class World {
 
     public static final int WORLD_STATE_ON_ROUND = worldStateOn(0);
     public static final int WORLD_STATE_SELECTION_STARTED = worldStateOn(50);
-    public static final int WORLD_STATE_ON_TURN = worldStateOn(70);
+
+    public static final int WORLD_STATE_ON_CHARGE_ADD = worldStateOn(70);
+    public static final int WORLD_STATE_CHARGE_ADDED = worldStateDoneHook(100);
+    public static final int WORLD_STATE_ON_TURN = worldStateOn(200);
 
     // TODO add more i guess
-    public static final int WORLD_STATE_ON_CHARGE_ADD = worldStateOn(100);
-    public static final int WORLD_STATE_CHARGE_ADDED = worldStateDoneHook(200);
     public static final int WORLD_STATE_ON_SPELL_PRIME = worldStateOn(300);
     public static final int WORLD_STATE_SPELL_PRIMED = worldStateOn(350);
     public static final int WORLD_STATE_ON_CHARGE_PROMPT = worldStateDoneHook(400);
@@ -147,9 +147,14 @@ public class World {
         for (var player : players) {
             Collections.shuffle(spellCardFactory);
             Collections.shuffle(textEffectCardFactory);
-            for (int i = 0; i < 3; i++) {
-                player.spellCardPile.add(spellCardFactory.get(i).get());
-                player.textEffectCardPile.add(textEffectCardFactory.get(i).get());
+            for (int i = 0; i < 8; i++) {
+                var sc = spellCardFactory.get(i).get();
+                var te = textEffectCardFactory.get(i).get();
+                sc.setWorld(this);
+                te.setWorld(this);
+
+                player.spellCardPile.add(sc);
+                player.textEffectCardPile.add(te);
             }
         }
     }
@@ -178,6 +183,14 @@ public class World {
      * Stops until the UI "frees" the world to run again
      */
     public synchronized void waitForUi() {
+        try {
+            this.wait();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public synchronized void waitUpdate() {
         try {
             this.wait();
         } catch (InterruptedException e) {
@@ -215,7 +228,42 @@ public class World {
         return currentRound.getCurrentTurn();
     }
 
-    public void update() {
+    public boolean processNewWorldState(int newState, Turn turn, Player attacker, Player defender) {
+        this.setWorldState(newState);
+
+        return processHook(attacker, turn) || processHook(defender, turn);
+    }
+
+
+    // move to World
+    public boolean processHook(Player player, Turn turn) {
+        var e = new WorldEventHook(null, this, turn);
+
+        if (player != null) {
+            for (var t : cloneArray(player.textEffectCards)) {
+                boolean r = t.hook(e);
+
+                if (r) {
+                    player.textEffectCards.remove(t);
+                }
+
+                if (e.isCancelled()) {
+                    if (!World.isWorldStateCancellable(getWorldState())) {
+                        System.out.println("Attempted to cancel non-cancellable state");
+                        return false;
+                    }
+                    System.out.println("Turn cancelled");
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public synchronized void update() {
+        this.notify();
+
         var currentRound = getCurrentRound();
 
         if (currentRound == null) {
@@ -224,5 +272,4 @@ public class World {
 
         currentRound.update();
     }
-
 }

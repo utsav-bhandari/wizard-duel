@@ -104,7 +104,7 @@ public class Selection implements IRenderable {
         int targetWidth = StdDrawBridge.width / 2 - 40;
         int targetHeight = StdDrawBridge.height - 400;
         int selectionBoxX = 20;
-        int selectionBoxY = 330;
+        int selectionBoxY = 360;
 
         g.setColor(Color.BLUE);
         g.fillRect(selectionBoxX, selectionBoxY, targetWidth, targetHeight);
@@ -121,30 +121,30 @@ public class Selection implements IRenderable {
             int teCardX = selectionBoxX + (i + 1) * off + i * 192;
             g.drawImage(te.getThumbnail(),
                     teCardX,
-                    selectionBoxY + off,
+                    selectionBoxY,
                     192,
                     192,
                     null);
             g.drawImage(r.borders.get(i),
                     teCardX - 10,
-                    (selectionBoxY + off) - 10,
+                    (selectionBoxY) - 10,
                     212,
                     212,
                     null);
         }
         for (int i = 0; i < spellCardChoices.size(); i++) {
             ISpellCard sc = spellCardChoices.get(i);
-            int off =  ((targetWidth - (192 * spellCardChoices.size())) / (spellCardChoices.size() + 1));
+            int off =  (targetWidth - (192 * spellCardChoices.size())) / (spellCardChoices.size() + 1);
             int spellCardX = selectionBoxX + (i + 1) * off + i * 192;
             g.drawImage(sc.getThumbnail(),
                     spellCardX,
-                    selectionBoxY + 2 * off,
+                    (selectionBoxY + (targetHeight / 2)),
                     192,
                     192,
                     null);
             g.drawImage(r.borders.get(i + 3),
                     spellCardX - 10,
-                    (selectionBoxY + 2 * off) - 10,
+                    ((selectionBoxY + targetHeight / 2) - 10),
                     212,
                     212,
                     null);

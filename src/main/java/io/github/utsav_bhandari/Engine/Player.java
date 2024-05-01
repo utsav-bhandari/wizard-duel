@@ -19,10 +19,10 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
     private final AffineTransform flipTransform;
 
     private int health = 80;
-    private int maxHealth = 90;
+    private int maxHealth = 80;
 
     private int charge = 0;
-    private int maxCharge = 5;
+    private int maxCharge = 3;
 
     /**
      * TODO comment

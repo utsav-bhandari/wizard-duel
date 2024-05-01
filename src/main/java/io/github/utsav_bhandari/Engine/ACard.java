@@ -20,4 +20,8 @@ public class ACard extends AEntity {
     public void setOwner(Player owner) {
         this.owner = owner;
     }
+
+    public void setWorld(World w) {
+        world = w;
+    }
 }
