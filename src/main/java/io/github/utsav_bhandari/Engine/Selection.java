@@ -108,11 +108,6 @@ public class Selection implements IRenderable {
         int selectionBoxY = 160;
 
         g.drawImage(Resource.getInstance().selection, selectionBoxX, selectionBoxY, null);
-        g.setColor(Color.BLACK);
-        g.drawString("Choose a text effect card", selectionBoxX + 10, selectionBoxY + 20);
-        g.drawString("Text effect " + textEffectCardChoice, selectionBoxX + 10, selectionBoxY + 40);
-        g.drawString("Spell effect " + spellCardChoice, selectionBoxX + 10, selectionBoxY + 60);
-        g.drawString("State " + state, selectionBoxX + 10, selectionBoxY + 80);
 
         var r = Resource.getInstance();
         int teGap = (int) ((innerWidth - textEffectCardChoices.size() * 192) / (textEffectCardChoices.size() - 1.00001f));
@@ -194,6 +189,7 @@ public class Selection implements IRenderable {
             if (dotCount > 4) {
                 dotCount = 0;
             }
+            StdDraw.setFont(displayFont);
             StdDraw.setPenColor();
             StdDraw.text(targetWidth * 0.5, targetHeight * 0.5 + padding, "Waiting for other player to finish selecting" + ".".repeat((int) dotCount));
         }

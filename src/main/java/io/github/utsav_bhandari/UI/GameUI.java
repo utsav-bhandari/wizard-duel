@@ -258,7 +258,7 @@ public class GameUI implements IRenderable {
                 BufferedImage hpBar = r.hpBars[i];
                 int hpWidth = hpBar.getWidth();
                 int hpHeight = hpBar.getHeight();
-                int hpXPad = 2;
+                int hpXPad = 225;
 
                 int hpX = center + (i == 0 ? -hpWidth - hpXPad : hpXPad);
                 int hpY = StdDrawBridge.height - hpHeight;
