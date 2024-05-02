@@ -31,7 +31,7 @@ $ java -jar build/libs/wizard-duel-1.0-SNAPSHOT-all.jar
 ```
 
 ## Windows
-
+ee
 ```ps
 > .\gradlew.bat shadowJar
 > java -jar build\libs\wizard-duel-1.0-SNAPSHOT-all.jar

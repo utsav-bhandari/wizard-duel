@@ -52,6 +52,8 @@ public class World {
     private int worldState;
     private Player winner;
     private boolean gameEnded = false;
+    private final Object updateLock = new Object();
+    private final Object uiLock = new Object();
 
     private static int worldStateOn(int idx) {
         return idx << _WORLD_STATE_MODIFIER_WIDTH | _WORLD_STATE_MODIFIER_CANCELLABLE;
@@ -153,7 +155,7 @@ public class World {
         for (var player : players) {
             Collections.shuffle(spellCardFactory);
             Collections.shuffle(textEffectCardFactory);
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < 3; i++) {
                 var sc = spellCardFactory.get(i % spellCardFactory.size()).get();
                 var te = textEffectCardFactory.get(i % textEffectCardFactory.size()).get();
                 sc.setWorld(this);
@@ -204,24 +206,30 @@ public class World {
     /**
      * Stops until the UI "frees" the world to run again
      */
-    public synchronized void waitForUi() {
+    public void waitForUi() {
         try {
-            this.wait();
+            synchronized (uiLock) {
+                uiLock.wait();
+            }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public synchronized void waitUpdate() {
+    public void waitUpdate() {
         try {
-            this.wait();
+            synchronized (updateLock) {
+                updateLock.wait();
+            }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public synchronized void notifyUi() {
-        this.notify();
+    public void notifyUi() {
+        synchronized (uiLock) {
+            uiLock.notify();
+        }
     }
 
     public void splashScreenText(String text) {
@@ -288,7 +296,11 @@ public class World {
         this.winner = winner;
     }
 
-    public synchronized void update() {
+    public void update() {
+        synchronized (updateLock) {
+            updateLock.notify();
+        }
+
         var currentRound = getCurrentRound();
 
         if (currentRound == null) {
