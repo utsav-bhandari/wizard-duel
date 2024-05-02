@@ -25,6 +25,7 @@ public final class Resource {
     public final BufferedImage charge;
     public final HashMap<String, BufferedImage> cardThumbnails;
     public final ArrayList<BufferedImage> borders;
+    public final BufferedImage[] hpBars = new BufferedImage[2];
 
     private Resource() {
         // TODO: init stuff here
@@ -60,6 +61,9 @@ public final class Resource {
         var spellPath3 = loadResourceImage("/sprites/spell-paths/3.png");
         var spellPath4 = loadResourceImage("/sprites/spell-paths/4.png");
         var spellPath5 = loadResourceImage("/sprites/spell-paths/5.png");
+
+        hpBars[0] = loadResourceImage("/backgrounds/p1heathbar.png");
+        hpBars[1] = loadResourceImage("/backgrounds/p2heathbar.png");
 
         AnimatedSpriteRoot.registerAnimatedSprite(
                 "ChargeCascade",

@@ -18,8 +18,6 @@ public class Turn {
 
     public void run() {
         System.out.println("Running turn");
-        var r = Resource.getInstance();
-
 
         var spellCard = round.getPlayerSelection(attacker).getSpellCard();
 

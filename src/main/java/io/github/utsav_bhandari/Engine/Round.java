@@ -110,9 +110,9 @@ public class Round {
 
             var turn = new Turn(this, attacker, defender);
 
-            world.splashScreenText("Player " + (attackerIdx + 1) + " is attacking");
-
             turns.add(turn);
+
+            world.splashScreenText("Player " + (attackerIdx + 1) + " is attacking");
 
             turn.run();
 

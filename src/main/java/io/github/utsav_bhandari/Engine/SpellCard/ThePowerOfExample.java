@@ -22,7 +22,7 @@ public class ThePowerOfExample extends ASpellCard implements ISpellCard {
 
     public ThePowerOfExample() {
         // trigger update
-        setDamage(100);
+        setDamage(40);
         scale = 4;
 
         radius = 100;

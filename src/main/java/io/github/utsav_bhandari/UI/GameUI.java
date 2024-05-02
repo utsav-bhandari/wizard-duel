@@ -13,6 +13,7 @@ import io.github.utsav_bhandari.Render.IRenderable;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.function.Function;
 
@@ -20,13 +21,15 @@ import static io.github.utsav_bhandari.Engine.PlayerKeymap.Action;
 import static io.github.utsav_bhandari.Lib.Util.*;
 
 public class GameUI implements IRenderable {
+    private static final Color[] COLOR_HP_BAR = {new Color(77, 210, 140), new Color(210, 77, 80)};
+    private static final Font FONT_HP_BAR = new Font("Arial", Font.BOLD, 20);
     private final Game game;
 
     private final DebugOverlay debugOverlay;
     private final HelpOverlay[] helpOverlays;
 
     private final Color titleColor = new Color(84, 98, 65);
-    private final Font splashScreenFont = new Font("Arial", Font.PLAIN, 100);
+    private final Font FONT_SPLASH_SCREEN = new Font("Arial", Font.PLAIN, 100);
     private final Font titleScreenFont = new Font("Palatino", Font.BOLD, 150);
     private float titleScreenFontHue = 0;
     private String visibleText = "";
@@ -248,6 +251,50 @@ public class GameUI implements IRenderable {
 
             }
 
+            // draw hp bar
+            int center = StdDrawBridge.width / 2;
+
+            for (int i = 0; i < players.length; i++) {
+                BufferedImage hpBar = r.hpBars[i];
+                int hpWidth = hpBar.getWidth();
+                int hpHeight = hpBar.getHeight();
+                int hpXPad = 2;
+
+                int hpX = center + (i == 0 ? -hpWidth - hpXPad : hpXPad);
+                int hpY = StdDrawBridge.height - hpHeight;
+
+                g.drawImage(hpBar, hpX, hpY, null);
+
+                // 97 132
+                // 412 155
+
+                int hpBarWidth = 412 - 97;
+                int hpBarHeight = 155 - 132;
+
+                int aw = (int) (hpBarWidth * players[i].getHealth() / players[i].getMaxHealth());
+
+                g.setColor(COLOR_HP_BAR[i]);
+                g.fillRect(hpX + 97, hpY + 132, aw, hpBarHeight);
+                g.setColor(Color.WHITE);
+                g.fillRect(hpX + 97, hpY + 132 + 4, aw, 5);
+                g.setFont(FONT_HP_BAR);
+                g.drawString("Player " + (i + 1), hpX + 40, hpY + 70);
+
+                g.drawString("HP: " + ((int) players[i].getHealth()) + "/" + ((int) players[i].getMaxHealth()), hpX + 40, hpY + 100);
+
+                g.drawImage(
+                        r.charge,
+                        hpX + 146,
+                        hpY + 44,
+                        null
+                );
+                g.drawString(
+                        "Charge: " + players[i].getCharge(),
+                        hpX + 213,
+                        hpY + 83
+                );
+            }
+
             if (game.world.getWorldState() >= World.WORLD_STATE_SELECTION_STARTED
                     && game.world.getWorldState() < World.WORLD_STATE_ON_TURN) {
                 var round = game.world.getCurrentRound();
@@ -266,6 +313,7 @@ public class GameUI implements IRenderable {
                     g.translate(-off, 0);
                 }
             }
+
             if (game.world.getWorldState() >= World.WORLD_STATE_ON_SPELL_PRIME
                     && game.world.getWorldState() < World.WORLD_STATE_TURN_ENDED) {
                 // render spell
@@ -284,8 +332,14 @@ public class GameUI implements IRenderable {
             }
 
             if (game.world.splashScreenText != null) {
+//                Color penColor = Color.BLACK;
+//                var turn = game.world.getCurrentTurn();
+//                if (turn != null && turn.attacker != null) {
+//                    penColor = COLOR_HP_BAR[1 - turn.attacker.getId()];
+//                }
+//                StdDraw.setPenColor(penColor);
                 StdDraw.setPenColor(Color.BLACK);
-                StdDraw.setFont(splashScreenFont);
+                StdDraw.setFont(FONT_SPLASH_SCREEN);
                 StdDraw.text((double) StdDrawBridge.width / 2, (double) StdDrawBridge.height / 2, game.world.splashScreenText);
             }
         } else if (game.getGameState() == Game.GameState.GAME_OVER) {
