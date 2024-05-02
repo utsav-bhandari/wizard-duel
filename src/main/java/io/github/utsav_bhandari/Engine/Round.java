@@ -94,7 +94,8 @@ public class Round {
             int chargeToAdd = 1;
 
             if (!world.processNewWorldState(World.WORLD_STATE_ON_CHARGE_ADD, null, p, null)) {
-                p.setCharge(p.getCharge() + chargeToAdd);
+                int nc = Math.min(p.getCharge() + chargeToAdd, p.getMaxCharge());
+                p.setCharge(nc);
                 world.processNewWorldState(World.WORLD_STATE_CHARGE_ADDED, null, p, null);
             } else {
                 System.out.println("Charge add cancelled");
@@ -114,6 +115,16 @@ public class Round {
             turns.add(turn);
 
             turn.run();
+
+            if (attacker.getHealth() <= 0) {
+                if (defender.getHealth() <= 0) {
+                    this.world.markGameEnd(null);
+                } else {
+                    this.world.markGameEnd(defender);
+                }
+            } else if (defender.getHealth() <= 0) {
+                this.world.markGameEnd(attacker);
+            }
 
             world.setWorldState(World.WORLD_STATE_TURN_ENDED);
         }

@@ -25,12 +25,17 @@ public class Turn {
 
         // player can decide whether to charge spell or not
         if (!processNewWorldState(World.WORLD_STATE_ON_CHARGE_PROMPT)) {
-            round.world.splashScreenText = "Charge spell card?";
-            while (!spellCard.isChargeUseConfirmed()) {
-                round.world.waitForUi();
-                round.world.splashScreenText = spellCard.isChargeUse() ? "Using charge" : "Not using charge";
+            if (attacker.getCharge() >= spellCard.getCharge()) {
+                round.world.splashScreenText = "Charge spell card?";
+                while (!spellCard.isChargeUseConfirmed()) {
+                    round.world.waitForUi();
+                    round.world.splashScreenText = spellCard.isChargeUse() ? "Using charge (press select to confirm)" : "Not using charge (press select to confirm)";
+                }
+                round.world.splashScreenText = null;
+            } else {
+                round.world.splashScreenText("Not enough charge to use spell card");
             }
-            round.world.splashScreenText = null;
+
         } else {
             System.out.println("Charge prompt cancelled");
         }
@@ -50,6 +55,9 @@ public class Turn {
                 attacker.setAnimationState("WizardAttack2");
             }
             spellCard.cast();
+            defender.setHealth(
+                    Math.max(0, (int) defender.getHealth() - spellCard.getDamage())
+            );
             defender.setAnimationState("TakeHit");
             spellCard.done();
             Util.unsafeWait(300);

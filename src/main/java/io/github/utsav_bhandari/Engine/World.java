@@ -51,6 +51,7 @@ public class World {
     private static final int _WORLD_STATE_MODIFIER_WIDTH = 1;
     private int worldState;
     private Player winner;
+    private boolean gameEnded = false;
 
     private static int worldStateOn(int idx) {
         return idx << _WORLD_STATE_MODIFIER_WIDTH | _WORLD_STATE_MODIFIER_CANCELLABLE;
@@ -163,7 +164,7 @@ public class World {
      * Blocking
      */
     public void run() throws InterruptedException {
-        while (winner == null) {
+        while (!gameEnded) {
             var round = new Round(this);
             rounds.add(round);
 
@@ -259,6 +260,11 @@ public class World {
         }
 
         return false;
+    }
+
+    public void markGameEnd(Player winner) {
+        gameEnded = true;
+        this.winner = winner;
     }
 
     public synchronized void update() {

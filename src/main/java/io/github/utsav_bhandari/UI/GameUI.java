@@ -28,6 +28,7 @@ public class GameUI implements IRenderable {
     private final Font splashScreenFont = new Font("Arial", Font.PLAIN, 100);
 
     private String visibleText = "";
+    private boolean showDebugOverlay = false;
 
     public GameUI(Game game) {
         this.game = game;
@@ -82,7 +83,7 @@ public class GameUI implements IRenderable {
         }
     }
 
-    private static ArrayList<Function<KeyEvent, Boolean>> getGameScreenHandlers(Game game) {
+    private ArrayList<Function<KeyEvent, Boolean>> getGameScreenHandlers(Game game) {
         var gameScreenHandlers = new ArrayList<Function<KeyEvent, Boolean>>();
 
         gameScreenHandlers.add(e -> {
@@ -104,7 +105,8 @@ public class GameUI implements IRenderable {
                         case Action.MOVE_LEFT -> p.moveChoice(-1);
                         case Action.MOVE_RIGHT -> p.moveChoice(1);
                         case Action.SELECT -> p.confirmChoice();
-                        default -> {}
+                        default -> {
+                        }
                     }
                     game.world.notifyUi();
                 }
@@ -119,12 +121,13 @@ public class GameUI implements IRenderable {
                     if (round != null) {
                         var turn = round.getCurrentTurn();
                         if (turn != null && turn.attacker == p) {
-                            var sc =  turn.attacker.getCurrentSpellCard();
+                            var sc = turn.attacker.getCurrentSpellCard();
                             if (sc != null) {
                                 switch (action) {
                                     case Action.MOVE_LEFT, Action.MOVE_RIGHT -> sc.toggleChargeUse();
                                     case Action.SELECT -> sc.confirmChargeUse();
-                                    default -> {}
+                                    default -> {
+                                    }
                                 }
                                 game.world.notifyUi();
                             }
@@ -136,7 +139,18 @@ public class GameUI implements IRenderable {
             return false;
         });
 
+        gameScreenHandlers.add(
+                (e) -> {
+                    toggleDebugOverlay();
+                    return true;
+                }
+        );
+
         return gameScreenHandlers;
+    }
+
+    public void toggleDebugOverlay() {
+        showDebugOverlay = !showDebugOverlay;
     }
 
     private void resetText() {
@@ -263,6 +277,6 @@ public class GameUI implements IRenderable {
             StdDraw.text(960, 100, "GAME OVER");
         }
 
-//        debugOverlay.render(g);
+        if (showDebugOverlay) debugOverlay.render(g);
     }
 }

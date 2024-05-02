@@ -18,8 +18,8 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
     private final BufferedImageOp transformOp;
     private final AffineTransform flipTransform;
 
-    private int health = 80;
-    private int maxHealth = 80;
+    private float health = 80;
+    private float maxHealth = 80;
 
     private int charge = 0;
     private int maxCharge = 3;
@@ -60,15 +60,15 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
     }
 
 
-    public int getHealth() {
+    public float getHealth() {
         return health;
     }
 
-    public void setHealth(int health) {
+    public void setHealth(float health) {
         this.health = health;
     }
 
-    public int getMaxHealth() {
+    public float getMaxHealth() {
         return maxHealth;
     }
 
