@@ -21,9 +21,7 @@ F3 is for toggling debug overlay.
 Complied using gradle and jvm version 21.0.2. 
 Game can be run by running main in the main directory.
 
-## OR 
-
-# Running the game
+# Running the game (Without IntelliJ)
 
 ## Bash
 
