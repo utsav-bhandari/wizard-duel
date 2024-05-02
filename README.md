@@ -16,6 +16,8 @@ J, L for left and right and for charge toggle
 H for help
 M for select
 
+F3 is for toggling debug overlay.
+
 Complied using gradle and jvm version 21.0.2. 
 Game can be run by running main in the main directory.
 

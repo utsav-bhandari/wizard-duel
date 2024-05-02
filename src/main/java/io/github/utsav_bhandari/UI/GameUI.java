@@ -25,8 +25,10 @@ public class GameUI implements IRenderable {
     private final DebugOverlay debugOverlay;
     private final HelpOverlay[] helpOverlays;
 
+    private final Color titleColor = new Color(84, 98, 65);
     private final Font splashScreenFont = new Font("Arial", Font.PLAIN, 100);
-
+    private final Font titleScreenFont = new Font("Palatino", Font.BOLD, 150);
+    private float titleScreenFontHue = 0;
     private String visibleText = "";
     private boolean showDebugOverlay = false;
 
@@ -154,18 +156,23 @@ public class GameUI implements IRenderable {
     }
 
     private void resetText() {
-        visibleText = "WizardDuel";
+        visibleText = "Wizard Duel";
     }
 
     public void render(Graphics2D g) {
         var r = game.resource;
 
         if (game.getGameState() == Game.GameState.TITLE_SCREEN) {
-            g.drawImage(r.titleScreen, 0, 0, 1920, 200, null);
+            g.drawImage(r.titleScreen, 0, 0, null);
 
-            StdDraw.setPenColor(Color.BLACK);
-            StdDraw.setFont(new Font("Arial", Font.PLAIN, 50));
+            titleScreenFontHue += 0.01f;
+            if (titleScreenFontHue > 1) {
+                titleScreenFontHue = 0;
+            }
+            StdDraw.setPenColor(Color.getHSBColor(titleScreenFontHue, 1,1));
+            StdDraw.setFont(titleScreenFont);
             StdDraw.text(960, 100, visibleText);
+
         } else if (game.getGameState() == Game.GameState.GAME_RUNNING) {
             g.drawImage(r.gameBackground, 0, 0, 1920, 1080, null);
 
@@ -269,12 +276,9 @@ public class GameUI implements IRenderable {
                 StdDraw.text((double) StdDrawBridge.width / 2, (double) StdDrawBridge.height / 2, game.world.splashScreenText);
             }
         } else if (game.getGameState() == Game.GameState.GAME_OVER) {
-            g.drawImage(r.titleScreen, 0, 0, 1920, 200, null);
-
-            StdDraw.setPenColor(Color.BLACK);
-            StdDraw.setFont(new Font("Arial", Font.PLAIN, 50));
-
-            StdDraw.text(960, 100, "GAME OVER");
+            StdDraw.setPenColor(Color.getHSBColor(titleScreenFontHue, 1, 1));
+            StdDraw.setFont(titleScreenFont);
+            StdDraw.text(960, 540, "GAME OVER");
         }
 
         if (showDebugOverlay) debugOverlay.render(g);

@@ -28,7 +28,7 @@ public class StdDrawBridge {
     private static Timer timer;
 
     public static void init(int width, int height) {
-//        System.setProperty("sun.java2d.opengl", "true");
+        System.setProperty("sun.java2d.opengl", "true");
 
         if (frame != null) {
             throw new IllegalStateException(".init() can only be called once");
