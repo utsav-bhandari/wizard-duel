@@ -25,21 +25,26 @@ public class AnimationStateManager {
 
             if (target == null) return this._sprite;
 
+            System.out.println("Transitioning from " + state + " to " + target);
+
             this._sprite = this._spriteCache.get(target);
+            this.state = target;
+
+            this._sprite.reset();
         }
 
         return this._sprite;
     }
 
     public void setState(String state) {
-        String s = this.state;
-        this.state = state;
+        if (this.state.equals(state)) return;
 
-        if (!s.equals(state)) {
-            registerCacheIfNotExist(state);
-            this._sprite = _spriteCache.get(this.state);
-            this._sprite.reset();
-        }
+        System.out.println("Changing state from " + this.state + " to " + state);
+
+        this.state = state;
+        registerCacheIfNotExist(state);
+        this._sprite = _spriteCache.get(this.state);
+        this._sprite.reset();
     }
 
     private void registerCacheIfNotExist(String id) {
