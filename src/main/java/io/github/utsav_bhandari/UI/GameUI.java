@@ -147,6 +147,7 @@ public class GameUI implements IRenderable {
                         toggleDebugOverlay();
                         return true;
                     }
+                    return false;
                 }
         );
 
