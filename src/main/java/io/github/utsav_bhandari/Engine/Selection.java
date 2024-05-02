@@ -1,5 +1,6 @@
 package io.github.utsav_bhandari.Engine;
 
+import edu.princeton.cs.algs4.StdDraw;
 import io.github.utsav_bhandari.Engine.SpellCard.ISpellCard;
 import io.github.utsav_bhandari.Engine.TextEffectCard.ITextEffectCard;
 import io.github.utsav_bhandari.Lib.StdDrawBridge;
@@ -19,15 +20,15 @@ import java.util.List;
 public class Selection implements IRenderable {
     private final List<ITextEffectCard> textEffectCardChoices;
     private final List<ISpellCard> spellCardChoices;
-    private final AlphaComposite alphaComposite;
-    private final Color selctionBoxColor = new Color(0f, 0f, 0f, 0.5f);
-
+    private final Color selctionHoverBoxColor = new Color(0f, 0f, 0f, 0.5f);
+    private final Font displayFont = new Font("Palatino", Font.PLAIN, 20);
+    private float displayTextHue = 0;
     private int textEffectCardChoice = 0;
     private int spellCardChoice = 0;
     private int state = 0;
+    private float dotCount = 0;
 
     public Selection(List<ITextEffectCard> textEffectCardChoices, List<ISpellCard> spellCardChoices) {
-        alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
         this.textEffectCardChoices = textEffectCardChoices;
         this.spellCardChoices = spellCardChoices;
     }
@@ -114,7 +115,7 @@ public class Selection implements IRenderable {
         g.drawString("State " + state, selectionBoxX + 10, selectionBoxY + 80);
 
         var r = Resource.getInstance();
-        int teGap = (innerWidth - textEffectCardChoices.size() * 192) / (textEffectCardChoices.size() - 1);
+        int teGap = (int) ((innerWidth - textEffectCardChoices.size() * 192) / (textEffectCardChoices.size() - 1.00001f));
         for (int i = 0; i < textEffectCardChoices.size(); i++) {
             ITextEffectCard te = textEffectCardChoices.get(i);
             int teCardX = selectionBoxX + padding + (192 + teGap) * i;
@@ -131,34 +132,76 @@ public class Selection implements IRenderable {
                     212,
                     null);
             if (i != textEffectCardChoice) {
-                g.setColor(selctionBoxColor);
-                g.fillRect(teCardX,selectionBoxY + padding, 192, 192);
-             }
+                g.setColor(selctionHoverBoxColor);
+                g.fillRect(teCardX, selectionBoxY + padding, 192, 192);
+            }
+            if (i == textEffectCardChoice && state == 0) {
+                displayTextHue += 0.01f;
+                if (displayTextHue > 1) {
+                    displayTextHue = 0;
+                }
+                StdDraw.setPenColor(Color.getHSBColor(displayTextHue, 1, 1));
+                StdDraw.setFont(displayFont);
+                StdDraw.text(targetWidth * 0.5, targetHeight * 0.5 + padding, "Text Effect Card: " + te.getName());
+                int off = 0;
+                StdDraw.setPenColor();
+                for (String line : te.getDescription().split("\n", -1)) {
+                    off += 30;
+                    StdDraw.text(targetWidth * 0.5, targetHeight * 0.5 + padding + off, line);
+                }
+            }
         }
+
+        int scGap = (int) ((innerWidth - spellCardChoices.size() * 192) / (spellCardChoices.size() - 1.00001f));
         for (int i = 0; i < spellCardChoices.size(); i++) {
             ISpellCard sc = spellCardChoices.get(i);
-            int off =  (targetWidth - (192 * spellCardChoices.size())) / (spellCardChoices.size() + 1);
-            int spellCardX = selectionBoxX + (i + 1) * off + i * 192;
+            int spellCardX = selectionBoxX + padding + (192 + scGap) * i;
             g.drawImage(sc.getThumbnail(),
                     spellCardX,
-                    (selectionBoxY + (targetHeight / 2) + off / 3),
+                    selectionBoxY + targetHeight - padding - 192,
                     192,
                     192,
                     null);
             g.drawImage(r.borders.get(i + 3),
                     spellCardX - 10,
-                    ((selectionBoxY + (targetHeight / 2) + off / 3) - 10),
+                    selectionBoxY + targetHeight - padding - 192 - 10,
                     212,
                     212,
                     null);
-            if (i != spellCardChoice) {
-                g.setColor(selctionBoxColor);
-                g.fillRect(spellCardX, (selectionBoxY + (targetHeight / 2) + off / 3), 192, 192);
+            if (i != spellCardChoice || state < 1) {
+                g.setColor(selctionHoverBoxColor);
+                g.fillRect(spellCardX,selectionBoxY + targetHeight - padding - 192, 192, 192);
+            }
+            if (i == spellCardChoice && state == 1)  {
+                displayTextHue += 0.01f;
+                if (displayTextHue > 1) {
+                    displayTextHue = 0;
+                }
+                StdDraw.setPenColor(Color.getHSBColor(displayTextHue, 1, 1));
+                StdDraw.setFont(displayFont);
+                StdDraw.text(targetWidth * 0.5, targetHeight * 0.5 + padding, "Spell: " + sc.getName());
+                int off = 0;
+                StdDraw.setPenColor();
+                for (String line : sc.getDescription().split("\n", -1)) {
+                    off += 30;
+                    StdDraw.text(targetWidth * 0.5, targetHeight * 0.5 + padding + off, line);
+                }
             }
         }
 
+        if (state == 2) {
+            dotCount += 0.03f;
+            if (dotCount > 4) {
+                dotCount = 0;
+            }
+            StdDraw.setPenColor();
+            StdDraw.text(targetWidth * 0.5, targetHeight * 0.5 + padding, "Waiting for other player to finish selecting" + ".".repeat((int) dotCount));
+        }
+
+
 //        g.setComposite(t);
     }
+
     public ArrayList<ISpellCard> getRemainingSpellCards() {
         var n = new ArrayList<>(spellCardChoices);
         if (spellCardChoices.isEmpty()) {
@@ -168,6 +211,7 @@ public class Selection implements IRenderable {
 
         return n;
     }
+
     public ArrayList<ITextEffectCard> getRemainingTextEffectCards() {
         var n = new ArrayList<>(textEffectCardChoices);
         if (textEffectCardChoices.isEmpty()) {

@@ -23,7 +23,8 @@ public class Judgment extends ATextEffectCard implements IRenderable, ITextEffec
 
     @Override
     public String getDescription() {
-        return "Enforces balance upon the duel. Reduces both players' charges to the lowest current charge.\n" +
+        return "Enforces balance upon the duel. Reduces both players' charges \n" +
+                "to the lowest current charge.\n" +
                 "If you had the lower charge, gain a damage buff;\n" +
                 "otherwise, wipe the enemy's charges.";
     }
