@@ -7,8 +7,6 @@ import javax.imageio.ImageIO;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -22,6 +20,7 @@ public final class Resource {
     public final BufferedImage titleScreen;
     public final BufferedImage gameBackground;
     public final BufferedImage scroll;
+    public final BufferedImage selection;
 
     public final BufferedImage charge;
     public final HashMap<String, BufferedImage> cardThumbnails;
@@ -32,6 +31,7 @@ public final class Resource {
         titleScreen = loadResourceImage("/backgrounds/title_screen.png");
         gameBackground = loadResourceImage("/backgrounds/game_background.png");
         scroll = loadResourceImage("/backgrounds/scroll.png");
+        selection = loadResourceImage("/backgrounds/selection.png");
         charge = loadResourceImage("/icons/charge.png");
 
         var borderGrid1 = loadResourceImage("/borders/Border All 1.png");
@@ -345,6 +345,13 @@ public final class Resource {
                 false
         );
 
+        titleScreen.flush();
+        gameBackground.flush();
+        borderGrid1.flush();
+        borderGrid2.flush();
+        charge.flush();
+        scroll.flush();
+        selection.flush();
         spells1.flush();
         spells2.flush();
         wizardIdle.flush();

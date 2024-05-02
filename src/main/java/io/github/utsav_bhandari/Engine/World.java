@@ -111,15 +111,15 @@ public class World {
         km.setKey('A', PlayerKeymap.Action.MOVE_LEFT);
         km.setKey('D', PlayerKeymap.Action.MOVE_RIGHT);
         km.setKey('Z', PlayerKeymap.Action.HELP);
-        km.setKey('X', PlayerKeymap.Action.SELECT);
+        km.setKey('E', PlayerKeymap.Action.SELECT);
 
         players[0].setKeymap(km);
 
         km = new PlayerKeymap();
         km.setKey('J', PlayerKeymap.Action.MOVE_LEFT);
         km.setKey('L', PlayerKeymap.Action.MOVE_RIGHT);
-        km.setKey('/', PlayerKeymap.Action.HELP);
-        km.setKey('.', PlayerKeymap.Action.SELECT);
+        km.setKey('H', PlayerKeymap.Action.HELP);
+        km.setKey('M', PlayerKeymap.Action.SELECT);
 
         players[1].setKeymap(km);
 

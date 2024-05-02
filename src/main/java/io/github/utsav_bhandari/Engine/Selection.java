@@ -20,10 +20,10 @@ public class Selection implements IRenderable {
     private final List<ITextEffectCard> textEffectCardChoices;
     private final List<ISpellCard> spellCardChoices;
     private final AlphaComposite alphaComposite;
+    private final Color selctionBoxColor = new Color(0f, 0f, 0f, 0.5f);
 
     private int textEffectCardChoice = 0;
     private int spellCardChoice = 0;
-
     private int state = 0;
 
     public Selection(List<ITextEffectCard> textEffectCardChoices, List<ISpellCard> spellCardChoices) {
@@ -100,14 +100,13 @@ public class Selection implements IRenderable {
     @Override
     public void render(Graphics2D g) {
         var t = g.getComposite();
-        g.setComposite(alphaComposite);
+//        g.setComposite(alphaComposite);
         int targetWidth = StdDrawBridge.width / 2 - 40;
-        int targetHeight = StdDrawBridge.height - 400;
+        int targetHeight = StdDrawBridge.height - 200;
         int selectionBoxX = 20;
-        int selectionBoxY = 360;
+        int selectionBoxY = 160;
 
-        g.setColor(Color.BLUE);
-        g.fillRect(selectionBoxX, selectionBoxY, targetWidth, targetHeight);
+        g.drawImage(Resource.getInstance().selection, selectionBoxX, selectionBoxY, null);
         g.setColor(Color.BLACK);
         g.drawString("Choose a text effect card", selectionBoxX + 10, selectionBoxY + 20);
         g.drawString("Text effect " + textEffectCardChoice, selectionBoxX + 10, selectionBoxY + 40);
@@ -121,16 +120,20 @@ public class Selection implements IRenderable {
             int teCardX = selectionBoxX + (i + 1) * off + i * 192;
             g.drawImage(te.getThumbnail(),
                     teCardX,
-                    selectionBoxY,
+                    selectionBoxY + off,
                     192,
                     192,
                     null);
             g.drawImage(r.borders.get(i),
                     teCardX - 10,
-                    (selectionBoxY) - 10,
+                    (selectionBoxY + off) - 10,
                     212,
                     212,
                     null);
+            if (i != textEffectCardChoice) {
+                g.setColor(selctionBoxColor);
+                g.fillRect(teCardX,selectionBoxY + off, 192, 192);
+             }
         }
         for (int i = 0; i < spellCardChoices.size(); i++) {
             ISpellCard sc = spellCardChoices.get(i);
@@ -138,19 +141,23 @@ public class Selection implements IRenderable {
             int spellCardX = selectionBoxX + (i + 1) * off + i * 192;
             g.drawImage(sc.getThumbnail(),
                     spellCardX,
-                    (selectionBoxY + (targetHeight / 2)),
+                    (selectionBoxY + (targetHeight / 2) + off / 2),
                     192,
                     192,
                     null);
             g.drawImage(r.borders.get(i + 3),
                     spellCardX - 10,
-                    ((selectionBoxY + targetHeight / 2) - 10),
+                    ((selectionBoxY + (targetHeight / 2) + off / 2) - 10),
                     212,
                     212,
                     null);
+            if (i != spellCardChoice) {
+                g.setColor(selctionBoxColor);
+                g.fillRect(spellCardX, (selectionBoxY + (targetHeight / 2) + off / 2), 192, 192);
+            }
         }
 
-        g.setComposite(t);
+//        g.setComposite(t);
     }
     public ArrayList<ISpellCard> getRemainingSpellCards() {
         var n = new ArrayList<>(spellCardChoices);
