@@ -59,6 +59,7 @@ public class NullifyingGlyphs extends ASpellCard implements ISpellCard {
     }
 
     public NullifyingGlyphs() {
+        setDamage(5);
         scale = 3;
         Random randSpellPath = new Random();
         spellPath = Resource.getInstance().getAnimatedSprite("SpellPath" + randSpellPath.nextInt(1, 6));
@@ -70,7 +71,8 @@ public class NullifyingGlyphs extends ASpellCard implements ISpellCard {
 
     public String getDescription() {
         return "Conjures glyphs of nullification.\n" +
-                "Removes a random text effect card from the enemy's side.";
+                "Removes a random text effect card from the enemy's\n" +
+                "side, if there is one in play.";
     }
 
     @Override

@@ -23,7 +23,8 @@ public class ChargeSurge extends ATextEffectCard implements IRenderable, ITextEf
 
     @Override
     public String getDescription() {
-        return "A surge of energy revitalizes the caster. When below half health, charges are maxed.\n" +
+        return "A surge of energy revitalizes the caster.\n" +
+                "When health drops below half, charges are maxed.\n" +
                 "If already below half health, instantly gain max charges.\n";
     }
 

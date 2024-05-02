@@ -23,6 +23,7 @@ import static io.github.utsav_bhandari.Lib.Util.*;
 public class GameUI implements IRenderable {
     private static final Color[] COLOR_HP_BAR = {new Color(77, 210, 140), new Color(210, 77, 80)};
     private static final Font FONT_HP_BAR = new Font("Arial", Font.BOLD, 20);
+    private static final Font FONT_ROUND = new Font("Arial", Font.BOLD, 60);
     private final Game game;
 
     private final DebugOverlay debugOverlay;
@@ -191,6 +192,9 @@ public class GameUI implements IRenderable {
 
         } else if (game.getGameState() == Game.GameState.GAME_RUNNING) {
             g.drawImage(r.gameBackground, 0, 0, 1920, 1080, null);
+            StdDraw.setPenColor(Color.WHITE);
+            StdDraw.setFont(FONT_ROUND);
+            StdDraw.text(960, 980, "Round: " + game.world.rounds.size());
 
             for (var p : game.world.players) {
                 p.render(g);

@@ -60,6 +60,7 @@ public class EtherealCyclone extends ASpellCard implements ISpellCard {
 
 
     public EtherealCyclone() {
+        setDamage(10);
         scale = 3;
         Random randSpellPath = new Random();
         spellPath = Resource.getInstance().getAnimatedSprite("SpellPath" + randSpellPath.nextInt(1, 6));
@@ -69,8 +70,9 @@ public class EtherealCyclone extends ASpellCard implements ISpellCard {
     }
 
     public String getDescription() {
-        return "Unleashes a swirling vortex of energy. If your charges exceed your opponent's,\n" +
-                "inflict 1.5x damage. Otherwise, gain 2 charges.";
+        return "Unleashes a swirling vortex of energy.\n" +
+                "If your charges exceed your opponent's,\n" +
+                "inflict double damage.";
     }
 
     @Override

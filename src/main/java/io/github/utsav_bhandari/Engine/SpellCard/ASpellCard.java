@@ -62,6 +62,14 @@ public abstract class ASpellCard extends ACard {
     }
 
     public void setDamage(float damage) {
+        var s = Thread.currentThread().getStackTrace();
+
+        System.out.println("Damage updated to " + damage + " (old value " + this.damage + ")");
+
+        for (StackTraceElement element : s) {
+            System.out.println(element);
+        }
+
         this.damage = damage;
     }
 

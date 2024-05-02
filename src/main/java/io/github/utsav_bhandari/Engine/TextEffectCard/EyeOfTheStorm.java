@@ -23,7 +23,8 @@ public class EyeOfTheStorm extends ATextEffectCard implements IRenderable, IText
 
     @Override
     public String getDescription() {
-        return "A tranquil aura envelops the battlefield. If you have zero charge,\n" +
+        return "A tranquil aura envelops the battlefield.\n" +
+                "If you have zero charge,\n" +
                 "gain 1 charge and 5 health, else gain 1 charge only."; // 5 health for now
     }
 

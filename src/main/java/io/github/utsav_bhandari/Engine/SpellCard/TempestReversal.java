@@ -59,6 +59,7 @@ public class TempestReversal extends ASpellCard implements ISpellCard {
     }
 
     public TempestReversal() {
+        setDamage(10);
         scale = 3;
         Random randSpellPath = new Random();
         spellPath = Resource.getInstance().getAnimatedSprite("SpellPath" + randSpellPath.nextInt(1, 6));
@@ -71,8 +72,9 @@ public class TempestReversal extends ASpellCard implements ISpellCard {
     @Override
     public String getDescription() {
         return "Conjures a tempest to disrupt the enemy's charges.\n" +
-                "Decreases enemy charge by 2. If \"Eye of the Storm\" is in play,\n" +
-                "wipe all enemy charges.\n";
+                "Decreases enemy charge by 2.\n" +
+                "If \"Eye of the Storm\" is in play,\n" +
+                "wipe all enemy charges.";
     }
 
     @Override

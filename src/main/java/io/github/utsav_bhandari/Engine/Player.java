@@ -149,10 +149,6 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
 
     @Override
     public void render(Graphics2D g) {
-
-        g.setColor(Color.BLACK);
-        g.drawString("Player " + (id + 1), 0, 0);
-
         getSprite().x = (float) (x - flipTransform.getScaleX() * getSprite().getWidth() / 2);
         getSprite().y = (float) (y - flipTransform.getScaleY() * getSprite().getHeight() / 2);
         getSprite().op = transformOp;

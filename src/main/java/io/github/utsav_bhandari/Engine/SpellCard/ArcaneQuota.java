@@ -59,6 +59,7 @@ public class ArcaneQuota extends ASpellCard implements ISpellCard {
         Util.unsafeWait(700);
     }
     public ArcaneQuota() {
+        setDamage(6);
         scale = 3;
         Random randSpellPath = new Random();
         spellPath = Resource.getInstance().getAnimatedSprite("SpellPath" + randSpellPath.nextInt(1, 6));

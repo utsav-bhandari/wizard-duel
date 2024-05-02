@@ -59,6 +59,7 @@ public class VirulentEruption extends ASpellCard implements ISpellCard {
     }
 
     public VirulentEruption() {
+        setDamage(8);
         scale = 3;
         Random randSpellPath = new Random();
         spellPath = Resource.getInstance().getAnimatedSprite("SpellPath" + randSpellPath.nextInt(1, 6));
@@ -69,7 +70,7 @@ public class VirulentEruption extends ASpellCard implements ISpellCard {
 
     public String getDescription() {
         return "Unleashes a corrosive blast of acidic energy.\n" +
-                "Damage scales based on the health lost by the opponent."; // every 10 health lost +1 dmg for now
+                "Damage scales based on the health lost by the opponent so far."; // every 10 health lost +1 dmg for now
     }
 
     @Override

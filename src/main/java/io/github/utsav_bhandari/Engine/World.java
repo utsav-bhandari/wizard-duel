@@ -15,7 +15,7 @@ import static io.github.utsav_bhandari.Lib.Util.cloneArray;
 public class World {
     public final Game game;
 
-    private final List<Round> rounds = new ArrayList<>();
+    public final List<Round> rounds = new ArrayList<>();
 
     public final Player[] players = new Player[2];
 
@@ -131,16 +131,16 @@ public class World {
 
         var spellCardFactory = new ArrayList<Supplier<ISpellCard>>();
 
-        spellCardFactory.add(ThePowerOfExample::new);
+//        spellCardFactory.add(ThePowerOfExample::new);
 
-//        spellCardFactory.add(ArcaneFlurry::new);
-//        spellCardFactory.add(ArcaneQuota::new);
-//        spellCardFactory.add(ChargeCascade::new);
-//        spellCardFactory.add(EtherealCyclone::new);
-//        spellCardFactory.add(InfernalCircle::new);
-//        spellCardFactory.add(NullifyingGlyphs::new);
-//        spellCardFactory.add(TempestReversal::new);
-//        spellCardFactory.add(VirulentEruption::new);
+        spellCardFactory.add(ArcaneFlurry::new);
+        spellCardFactory.add(ArcaneQuota::new);
+        spellCardFactory.add(ChargeCascade::new);
+        spellCardFactory.add(EtherealCyclone::new);
+        spellCardFactory.add(InfernalCircle::new);
+        spellCardFactory.add(NullifyingGlyphs::new);
+        spellCardFactory.add(TempestReversal::new);
+        spellCardFactory.add(VirulentEruption::new);
 
         var textEffectCardFactory = new ArrayList<Supplier<ITextEffectCard>>();
         textEffectCardFactory.add(ArcaneDrainage::new);
@@ -155,7 +155,7 @@ public class World {
         for (var player : players) {
             Collections.shuffle(spellCardFactory);
             Collections.shuffle(textEffectCardFactory);
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 8; i++) {
                 var sc = spellCardFactory.get(i % spellCardFactory.size()).get();
                 var te = textEffectCardFactory.get(i % textEffectCardFactory.size()).get();
                 sc.setWorld(this);

@@ -59,6 +59,7 @@ public class InfernalCircle extends ASpellCard implements ISpellCard {
     }
 
     public InfernalCircle() {
+        setDamage(8);
         scale = 3;
         Random randSpellPath = new Random();
         spellPath = Resource.getInstance().getAnimatedSprite("SpellPath" + randSpellPath.nextInt(1, 6));
@@ -68,7 +69,8 @@ public class InfernalCircle extends ASpellCard implements ISpellCard {
     }
 
     public String getDescription() {
-        return "Conjures a ring of searing flames. 40% chance to amplify damage by 1.5x.\n " +
+        return "Conjures a ring of searing flames.\n" +
+                "40% chance to amplify damage by 1.5x.\n " +
                 "However, there's a 20% chance of being\n" +
                 "singed, dealing half the damage to yourself.";
     }

@@ -48,9 +48,10 @@ public class Turn {
             if (processNewWorldState(World.WORLD_STATE_SPELL_PRIMED)) return;
 
             if (processNewWorldState(World.WORLD_STATE_ON_CAST)) return;
-            attacker.setAnimationState("WizardAttack1");
-            if (attacker.getId() == 1) {
+            if (attacker.getId() == 0) {
                 attacker.setAnimationState("WizardAttack2");
+            } else {
+                attacker.setAnimationState("WizardAttack1");
             }
             spellCard.cast();
             defender.setHealth(defender.getHealth() - spellCard.getDamage());

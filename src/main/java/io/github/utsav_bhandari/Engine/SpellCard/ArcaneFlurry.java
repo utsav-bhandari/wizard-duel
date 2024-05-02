@@ -54,11 +54,11 @@ public class ArcaneFlurry extends ASpellCard implements ISpellCard {
 
     public void done() {
         super.done();
-        world.waitUpdate();
         Util.unsafeWait(700);
     }
 
     public ArcaneFlurry() {
+        setDamage(10);
         scale = 3;
         Random randSpellPath = new Random();
         spellPath = Resource.getInstance().getAnimatedSprite("SpellPath" + randSpellPath.nextInt(1, 6));
@@ -68,7 +68,8 @@ public class ArcaneFlurry extends ASpellCard implements ISpellCard {
     }
 
     public String getDescription() {
-        return "Unleashes a flurry of mystical energy. 1/3 chance to inflict double damage.";
+        return "Unleashes a flurry of mystical energy.\n" +
+                " 1/3 chance to inflict double damage.";
     }
 
     @Override

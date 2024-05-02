@@ -181,6 +181,7 @@ public class Selection implements IRenderable {
                     off += 30;
                     StdDraw.text(targetWidth * 0.5, targetHeight * 0.5 + padding + off, line);
                 }
+                StdDraw.text(targetWidth * 0.5, targetHeight * 0.5 + padding + (1.5 * off), "Damage: " + (int) sc.getDamage() + "   Charge count: " + sc.getCharge());
             }
         }
 

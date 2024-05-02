@@ -14,8 +14,22 @@ public class Round {
 
     private final HashMap<Player, Selection> playerSelections = new HashMap<>();
 
+    private int turnIdx = 0;
+
     public Round(World world) {
         this.world = world;
+
+        System.out.println("Assigning player order");
+
+        int goesFirst;
+        if (world.players[0].getHealth() == world.players[1].getHealth()) {
+            goesFirst = (int) (Math.random() * 2);
+        } else {
+            goesFirst = (world.players[0].getHealth() < world.players[1].getHealth()) ? 0 : 1;
+        }
+
+        turns.add(new Turn(this, world.players[goesFirst], world.players[1 - goesFirst]));
+        turns.add(new Turn(this, world.players[1 - goesFirst], world.players[goesFirst]));
 
         for (var player : world.players) {
             var textEffectCardChoices = new ArrayList<ITextEffectCard>();
@@ -83,13 +97,6 @@ public class Round {
             attacker.setCurrentSpellCard(spellCard);
         }
 
-        int goesFirst;
-        if (world.players[0].getHealth() == world.players[1].getHealth()) {
-            goesFirst = (int) (Math.random() * 2);
-        } else {
-            goesFirst = (world.players[0].getHealth() < world.players[1].getHealth()) ? 0 : 1;
-        }
-
         for (var p : world.players) {
             int chargeToAdd = 1;
 
@@ -103,16 +110,13 @@ public class Round {
         }
 
         for (int i = 0; i < 2; i++) {
-            int attackerIdx = (goesFirst + i) % 2;
+            var turn = getCurrentTurn();
 
-            var attacker = world.players[attackerIdx];
-            var defender = world.players[1 - attackerIdx];
+            var attacker = turn.attacker;
+            var defender = turn.defender;
 
-            var turn = new Turn(this, attacker, defender);
 
-            turns.add(turn);
-
-            world.splashScreenText("Player " + (attackerIdx + 1) + " is attacking");
+            world.splashScreenText("Player " + (attacker.getId() + 1) + " is attacking");
 
             turn.run();
 
@@ -130,7 +134,9 @@ public class Round {
                 break;
             }
 
-            world.splashScreenText("End of player " + (attackerIdx + 1) + "'s turn");
+            world.splashScreenText("End of player " + (attacker.getId() + 1) + "'s turn");
+
+            turnIdx++;
         }
 
         world.setWorldState(World.WORLD_STATE_ROUND_ENDED);
@@ -147,9 +153,7 @@ public class Round {
     }
 
     public Turn getCurrentTurn() {
-        if (turns.isEmpty()) return null;
-
-        return turns.getLast();
+        return turns.get(turnIdx);
     }
 
     public void update() {
