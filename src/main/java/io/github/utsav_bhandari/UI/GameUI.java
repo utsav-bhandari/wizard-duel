@@ -143,8 +143,10 @@ public class GameUI implements IRenderable {
 
         gameScreenHandlers.add(
                 (e) -> {
-                    toggleDebugOverlay();
-                    return true;
+                    if (e.getKeyCode() == KeyEvent.VK_F3) {
+                        toggleDebugOverlay();
+                        return true;
+                    }
                 }
         );
 
@@ -169,7 +171,7 @@ public class GameUI implements IRenderable {
             if (titleScreenFontHue > 1) {
                 titleScreenFontHue = 0;
             }
-            StdDraw.setPenColor(Color.getHSBColor(titleScreenFontHue, 1,1));
+            StdDraw.setPenColor(Color.getHSBColor(titleScreenFontHue, 1, 1));
             StdDraw.setFont(titleScreenFont);
             StdDraw.text(960, 100, visibleText);
 
