@@ -7,7 +7,6 @@ import java.util.function.Function;
 
 public class AnimationStateManager {
     private final Function<String, AnimatedSprite> spriteProvider;
-    private final String defaultState;
     private AnimatedSprite _sprite;
     private final HashMap<String, String> transitionMap = new HashMap<>();
     private final HashMap<String, AnimatedSprite> _spriteCache = new HashMap<>();
@@ -15,7 +14,6 @@ public class AnimationStateManager {
 
     public AnimationStateManager(Function<String, AnimatedSprite> spriteProvider, String defaultState) {
         this.spriteProvider = spriteProvider;
-        this.defaultState = defaultState;
         this.state = defaultState;
         this._sprite = spriteProvider.apply(defaultState);
     }
@@ -25,7 +23,9 @@ public class AnimationStateManager {
         if (this._sprite.isDone()) {
             String target = transitionMap.get(state);
 
-            this._sprite = this._spriteCache.get(target != null ? target : defaultState);
+            if (target == null) return this._sprite;
+
+            this._sprite = this._spriteCache.get(target);
         }
 
         return this._sprite;
@@ -36,6 +36,7 @@ public class AnimationStateManager {
         this.state = state;
 
         if (!s.equals(state)) {
+            registerCacheIfNotExist(state);
             this._sprite = _spriteCache.get(this.state);
             this._sprite.reset();
         }

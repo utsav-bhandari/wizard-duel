@@ -75,6 +75,10 @@ public class GameUI implements IRenderable {
             } else if (gameState == Game.GameState.GAME_RUNNING) {
                 keyboardInputHandler.useKeymap("GAME_SCREEN");
             }
+
+            // if game over, use game over keymap
+            // update how world thread sets game state if you
+            // decide to do so
         });
 
         resetText();
@@ -136,6 +140,12 @@ public class GameUI implements IRenderable {
                         }
                     }
                 }
+            }
+
+            if (game.world.getWorldState() >= World.WORLD_STATE_WORLD_ENDED && e.getKeyCode() == KeyEvent.VK_A) {
+                game.world.shouldRestart = true;
+                game.world.notifyUi();
+                return true;
             }
 
             return false;

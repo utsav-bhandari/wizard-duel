@@ -80,6 +80,9 @@ public class World {
 
     public static final int WORLD_STATE_TURN_ENDED = worldStateOn(1000);
     public static final int WORLD_STATE_ROUND_ENDED = worldStateOn(2000);
+    public static final int WORLD_STATE_WORLD_ENDED = worldStateOn(5000);
+
+    public boolean shouldRestart = false;
 
     public void setWorldState(int worldState) {
         int tmp = this.worldState;
@@ -126,6 +129,8 @@ public class World {
 
         var spellCardFactory = new ArrayList<Supplier<ISpellCard>>();
 
+//        spellCardFactory.add(ThePowerOfExample::new);
+
         spellCardFactory.add(ArcaneFlurry::new);
         spellCardFactory.add(ArcaneQuota::new);
         spellCardFactory.add(ChargeCascade::new);
@@ -148,9 +153,9 @@ public class World {
         for (var player : players) {
             Collections.shuffle(spellCardFactory);
             Collections.shuffle(textEffectCardFactory);
-            for (int i = 0; i < spellCardFactory.size(); i++) {
-                var sc = spellCardFactory.get(i).get();
-                var te = textEffectCardFactory.get(i).get();
+            for (int i = 0; i < 8; i++) {
+                var sc = spellCardFactory.get(i % spellCardFactory.size()).get();
+                var te = textEffectCardFactory.get(i % textEffectCardFactory.size()).get();
                 sc.setWorld(this);
                 te.setWorld(this);
 
@@ -177,6 +182,22 @@ public class World {
             round.run();
 
             System.out.println("Round " + rounds.size() + " ended");
+        }
+
+        setWorldState(WORLD_STATE_WORLD_ENDED);
+
+        Util.unsafeWait(2000);
+
+        if (winner == null) {
+            splashScreenText("Game ended in a draw");
+        } else {
+            splashScreenText("Player " + (winner.getId() + 1) + " wins");
+        }
+
+        splashScreenText = "Press A to play again";
+
+        while (!shouldRestart) {
+            waitForUi();
         }
     }
 

@@ -341,7 +341,7 @@ public final class Resource {
                 7,
                 60,
                 10,
-                0,
+                1,
                 false
         );
 

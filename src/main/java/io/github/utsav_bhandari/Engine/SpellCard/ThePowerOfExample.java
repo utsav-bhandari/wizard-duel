@@ -15,9 +15,14 @@ public class ThePowerOfExample extends ASpellCard implements ISpellCard {
     private int radius;
     private float angle = 0;
 
+
+    {
+        thumbnail = Resource.getInstance().cardThumbnails.get("ChargeCascade");
+    }
+
     public ThePowerOfExample() {
         // trigger update
-        setDamage(10);
+        setDamage(100);
         scale = 4;
 
         radius = 100;
@@ -57,8 +62,8 @@ public class ThePowerOfExample extends ASpellCard implements ISpellCard {
         setDamage(0);
         for (int i = 0; i < dmg; i++) {
             setDamage(getDamage() + 1);
-            radius = 3 + i * 2;
-            world.waitUpdate();
+            radius = 30 + i * 10;
+            Util.unsafeWait(100);
         }
 
         setDamage(dmg);
@@ -72,18 +77,20 @@ public class ThePowerOfExample extends ASpellCard implements ISpellCard {
     public void cast() {
         super.cast();
 
-        float niter = 200.0f;
+        float niter = 100.0f;
 
         // incredible
         for (int i = 0; i < niter; i++) {
-            Util.unsafeWait(5);
+            world.waitUpdate();
             spellX = Util.lerp(owner.x, getTarget().x, i / niter);
             spellY = Util.lerp(owner.y, getTarget().y, i / niter);
         }
 
-        for (int i = 0; i < 10; i++) {
-            Util.unsafeWait(50);
-            radius -= 20;
+        int r = radius;
+
+        for (int i = 0; i < 100; i++) {
+            world.waitUpdate();
+            radius = (int) Util.lerp(r, 10, i / 100.0f);
         }
     }
 
@@ -114,6 +121,8 @@ public class ThePowerOfExample extends ASpellCard implements ISpellCard {
 
     @Override
     public void renderSpell(Graphics2D g) {
+        if (!(isCasting() || isPrimed())) return;
+
         angle += 0.04f;
 
         for (int i = 0; i < sprites.size(); i++) {
@@ -141,7 +150,7 @@ public class ThePowerOfExample extends ASpellCard implements ISpellCard {
 
     @Override
     public void render(Graphics2D g) {
-        throw new RuntimeException();
+        g.drawImage(thumbnail, (int) x, (int) y, 192, 192, null);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package io.github.utsav_bhandari;
 
 import io.github.utsav_bhandari.Engine.Resource;
+import io.github.utsav_bhandari.Engine.World;
 import io.github.utsav_bhandari.UI.GameUI;
 
 import javax.swing.*;
@@ -12,9 +13,9 @@ import java.util.function.Consumer;
 public final class Game {
 
     public final JFrame frame;
-    private final Thread worldThread;
+    private Thread worldThread;
     private GameState currentGameState = GameState.TITLE_SCREEN;
-    private final List<Consumer<GameState>> gameStateUpdateChannels = new ArrayList<>();
+    private List<Consumer<GameState>> gameStateUpdateChannels = new ArrayList<>();
 
     public void update() {
         world.update();
@@ -26,7 +27,7 @@ public final class Game {
         GAME_OVER
     }
 
-    public final io.github.utsav_bhandari.Engine.World world;
+    public World world;
     private final GameUI ui;
     public final Resource resource;
 
@@ -34,18 +35,22 @@ public final class Game {
         this.frame = frame;
 
         resource = Resource.getInstance();
-        world = new io.github.utsav_bhandari.Engine.World(this);
+        world = new World(this);
         ui = new GameUI(this);
 
         worldThread = new Thread(() -> {
-            setGameState(GameState.GAME_RUNNING);
-            try {
-                world.run();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                System.out.println("Game ended unexpectedly");
+            while (true) {
+                setGameState(GameState.GAME_RUNNING);
+                try {
+                    world.run();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    System.out.println("Game ended unexpectedly");
+                }
+//                setGameState(GameState.GAME_OVER);
+                // might be a bad hack
+                world = new World(this);
             }
-            setGameState(GameState.GAME_OVER);
         });
     }
 

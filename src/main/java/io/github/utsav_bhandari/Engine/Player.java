@@ -65,6 +65,15 @@ public class Player extends AEntity implements IEntity, IPlayerControl, IRendera
     }
 
     public void setHealth(float health) {
+        if (health <= 0) {
+            health = 0;
+            setAnimationState("Death");
+        } else if (health > maxHealth) {
+            health = maxHealth;
+        } else if (health < this.health) {
+            setAnimationState("TakeHit");
+        }
+
         this.health = health;
     }
 

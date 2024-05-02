@@ -55,10 +55,7 @@ public class Turn {
                 attacker.setAnimationState("WizardAttack2");
             }
             spellCard.cast();
-            defender.setHealth(
-                    Math.max(0, (int) defender.getHealth() - spellCard.getDamage())
-            );
-            defender.setAnimationState("TakeHit");
+            defender.setHealth(defender.getHealth() - spellCard.getDamage());
             spellCard.done();
             Util.unsafeWait(300);
             attacker.setCurrentSpellCard(null);

@@ -116,17 +116,21 @@ public class Round {
 
             turn.run();
 
+            world.setWorldState(World.WORLD_STATE_TURN_ENDED);
+
             if (attacker.getHealth() <= 0) {
                 if (defender.getHealth() <= 0) {
                     this.world.markGameEnd(null);
                 } else {
                     this.world.markGameEnd(defender);
                 }
+                break;
             } else if (defender.getHealth() <= 0) {
                 this.world.markGameEnd(attacker);
+                break;
             }
 
-            world.setWorldState(World.WORLD_STATE_TURN_ENDED);
+            world.splashScreenText("End of player " + (attackerIdx + 1) + "'s turn");
         }
 
         world.setWorldState(World.WORLD_STATE_ROUND_ENDED);
