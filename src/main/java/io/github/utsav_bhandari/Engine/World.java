@@ -131,16 +131,16 @@ public class World {
 
         var spellCardFactory = new ArrayList<Supplier<ISpellCard>>();
 
-//        spellCardFactory.add(ThePowerOfExample::new);
+        spellCardFactory.add(ThePowerOfExample::new);
 
-        spellCardFactory.add(ArcaneFlurry::new);
-        spellCardFactory.add(ArcaneQuota::new);
-        spellCardFactory.add(ChargeCascade::new);
-        spellCardFactory.add(EtherealCyclone::new);
-        spellCardFactory.add(InfernalCircle::new);
-        spellCardFactory.add(NullifyingGlyphs::new);
-        spellCardFactory.add(TempestReversal::new);
-        spellCardFactory.add(VirulentEruption::new);
+//        spellCardFactory.add(ArcaneFlurry::new);
+//        spellCardFactory.add(ArcaneQuota::new);
+//        spellCardFactory.add(ChargeCascade::new);
+//        spellCardFactory.add(EtherealCyclone::new);
+//        spellCardFactory.add(InfernalCircle::new);
+//        spellCardFactory.add(NullifyingGlyphs::new);
+//        spellCardFactory.add(TempestReversal::new);
+//        spellCardFactory.add(VirulentEruption::new);
 
         var textEffectCardFactory = new ArrayList<Supplier<ITextEffectCard>>();
         textEffectCardFactory.add(ArcaneDrainage::new);
@@ -235,7 +235,7 @@ public class World {
     public void splashScreenText(String text) {
         splashScreenText = text;
 
-        Util.unsafeWait(100);
+        Util.unsafeWait(3000);
 
         splashScreenText = null;
     }
