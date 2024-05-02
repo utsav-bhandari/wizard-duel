@@ -289,8 +289,6 @@ public class World {
     }
 
     public synchronized void update() {
-        this.notify();
-
         var currentRound = getCurrentRound();
 
         if (currentRound == null) {
