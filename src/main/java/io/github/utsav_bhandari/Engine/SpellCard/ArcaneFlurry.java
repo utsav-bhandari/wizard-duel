@@ -58,7 +58,7 @@ public class ArcaneFlurry extends ASpellCard implements ISpellCard {
     }
 
     public ArcaneFlurry() {
-        setDamage(10);
+        setDamage(19); //was 10
         scale = 3;
         Random randSpellPath = new Random();
         spellPath = Resource.getInstance().getAnimatedSprite("SpellPath" + randSpellPath.nextInt(1, 6));
