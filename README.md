@@ -43,4 +43,5 @@ $ java -jar build/libs/wizard-duel-1.0-SNAPSHOT-all.jar
 Credits for the assets used: \
 @LuizMelo - itch.io \
 @BDragon1727 - itch.io \
-@XYEzawr - itch.io
+@XYEzawr - itch.io \
+craftpix.net: https://craftpix.net/freebies/free-summer-pixel-art-backgrounds/
