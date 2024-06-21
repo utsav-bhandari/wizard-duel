@@ -1,7 +1,8 @@
 # Wizard Duel
 
-## THIS GAME IS INCOMPLETE AS THE CARD EFFECTS ARE NOT IMPLEMENTED
-## THE TEXT EFFECT CARDS OVERLAP BECAUSE THEIR LOGIC IS INCOMPLETE!
+### DISCLAIMER: THIS GAME IS INCOMPLETE AS THE CARD EFFECTS ARE NOT IMPLEMENTED!
+### THE TEXT EFFECT CARD ICONS OVERLAP BECAUSE THEIR LOGIC IS INCOMPLETE!
+### SAME FOR THE CHARGE MECHANIC!
 
 Turn based tabletop simulator with fancy animations. The game has text effect cards and spell effects cards and 
 text effects modify the game and give interesting effects to the game and player itself.
